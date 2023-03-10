@@ -6,23 +6,21 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
+import Timeline from './views/Timeline';
+import Dashboard from './views/Dashboard';
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className=" d-grid h-100">
+    
         
         <Routes>
           <Route path="/" element={<Login/>}/>
+          <Route path="/timeline" element={<Timeline/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       
       
-      </div>
-    
-    
-    </BrowserRouter>
-       
   );
 }
 
