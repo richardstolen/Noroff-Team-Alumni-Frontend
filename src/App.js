@@ -1,27 +1,26 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './views/Login.jsx';
 import {
   BrowserRouter,
   Routes,
   Route
 } from 'react-router-dom'
+import Timeline from './views/Timeline';
+import Dashboard from './views/Dashboard';
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
+    
         
         <Routes>
           <Route path="/" element={<Login/>}/>
+          <Route path="/timeline" element={<Timeline/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       
       
-      </div>
-    
-    
-    </BrowserRouter>
-       
   );
 }
 
