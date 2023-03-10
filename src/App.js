@@ -11,7 +11,7 @@ import {
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className=" d-grid h-100">
         
         <Routes>
           <Route path="/" element={<Login/>}/>
