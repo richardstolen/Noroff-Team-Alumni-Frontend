@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-
 const Login = () => {
   return (
     <Container id="main-container" className="d-grid h-100">
@@ -17,7 +16,7 @@ const Login = () => {
             className="position-relative"
           />
         </Form.Group>
-        <Form.Group className="mb-3"controlId="sign-in-password">
+        <Form.Group className="mb-3" controlId="sign-in-password">
           <Form.Control
             type="password"
             size="lg"
@@ -29,7 +28,7 @@ const Login = () => {
         <div className="mb-4 d-grid">
           <Button variant="primary" size="lg">
             Log in
-          </Button>          
+          </Button>
         </div>
         {/* <Button variant="primary" size="lg"></Button>
         <Button variant="primary" size="lg"></Button> */}
@@ -42,5 +41,3 @@ const Login = () => {
 //Note to self: - Form has not 100% height. - Kanskje fjern autocomplete.
 
 export default Login;
-
-

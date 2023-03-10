@@ -1,0 +1,15 @@
+/* id's */
+
+#main-container {
+    place-items: center center;
+}
+
+#sign-in-form{
+    max-width: 330px;
+}
+
+/* classes */
+
+.form-control:focus{
+    z-index: 5;
+}
