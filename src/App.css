@@ -13,3 +13,11 @@
 .form-control:focus{
     z-index: 5;
 }
+
+.center-h1{
+    text-align: center;
+}
+
+.sidebar {
+    height: 100vh;
+}

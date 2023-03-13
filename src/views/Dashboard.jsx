@@ -6,7 +6,7 @@ const Dashboard = () => {
         
         <>
         <NavBar1/>
-        <h1>A dashboard for Marcus Rashford.</h1>
+        <h1 className="center-h1">A dashboard for Marcus Rashford.</h1>
         </>
         
     );
