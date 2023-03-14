@@ -7,17 +7,24 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Navbar1() {
   return (
-    <Navbar bg="primary" variant="dark" fixed="top">
+    <Navbar bg="primary" variant="dark" >  
+    {/* {fixed="top"} */}
       <Container>
         <Navbar.Brand href="/timeline">Alumni</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/timeline">Timeline</Nav.Link>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+          <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="/">
+                Log out
+              </NavDropdown.Item>
+            </NavDropdown>
         </Nav>
         <Form className="d-flex">
           <Form.Control
             type="search"
-            placeholder="Search"
+            placeholder="Search on Alumni"
             className="me-2"
             aria-label="Search"
           />

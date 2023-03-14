@@ -1,19 +1,29 @@
-import React from "react";
-import { Container,Col, Nav } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Nav } from 'react-bootstrap';
 
-const SidebarT = () => {
+function SidebarT() {
   return (
-    <Container fluid className="mt-5">
-        <Col xs={2} className="bg-light sidebar">
+    <Container fluid>
+      <Row>
+        <Col md={2} className="sidebar">
           <Nav className="flex-column">
-            <Nav.Link href="/timeline">Timeline</Nav.Link>
-            <Nav.Link href="/placeholder">Groups</Nav.Link>
-            <Nav.Link href="/placeholder">Topics</Nav.Link>
-            <Nav.Link href="/placeholder">Events</Nav.Link>
+            <Nav.Item>
+              <Nav.Link href="#">Link 1</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#">Link 2</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#">Link 3</Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
+        <Col md={10} className="main-content">
+          <h1>Main Content</h1>
+        </Col>
+      </Row>
     </Container>
   );
-};
+}
 
 export default SidebarT;

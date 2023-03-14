@@ -1,18 +1,18 @@
 import Navbar1 from "../components/Navbar/Navbar1";
-import NavbarT from "../components/Testing/NavbarT";
-import SidebarT from "../components/Testing/SidebarT";
-import Card from 'react-bootstrap/Card';
-import FacebookThread from "../components/Testing/Thread";
-import Thread from "../components/Testing/Thread";
+import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
+import TwitterThread from "../components/Testing/TwitterThread";
+
+
+
 
 
 const Timeline = () => {
     return(
         
         <>
-        <NavbarT/>
-        <SidebarT/>
-        
+        <Navbar1/>
+        <CalendarSidebar/>
+        <TwitterThread/>
 
         
         {/* <Card style={{width: '50rem',height: '50rem'}} className="mx-auto" >
