@@ -1,12 +1,14 @@
 import Carousel from 'react-bootstrap/Carousel';
+import Container  from 'react-bootstrap/Container';
 
 function Carousel1() {
   return (
+    <Container className='container-test mt-5'>
     <Carousel>
-      <Carousel.Item>
+      <Carousel.Item interval={null}>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=First slide&bg=373940"
+          className="d-block  carousel-images"
+          src="Images/trekkspill.png"
           alt="First slide"
         />
         <Carousel.Caption>
@@ -14,10 +16,10 @@ function Carousel1() {
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={null}>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
+          className="d-block  carousel-images"
+          src="Images/chess.png"
           alt="Second slide"
         />
 
@@ -26,10 +28,10 @@ function Carousel1() {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </Carousel.Caption>
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={null}>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
+          className="d-block carousel-images"
+          src="Images/soccer.png"
           alt="Third slide"
         />
 
@@ -41,6 +43,7 @@ function Carousel1() {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    </Container>
   );
 }
 

@@ -18,6 +18,15 @@
   text-align: center;
 }
 
+.carousel-images {
+  width: 200px;
+  height: 200px;
+}
+
+.container-test{
+  background-color: grey;
+}
+
 .sidebar {
   height: 100vh;
   position: fixed;
