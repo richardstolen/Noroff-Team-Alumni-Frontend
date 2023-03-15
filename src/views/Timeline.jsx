@@ -1,5 +1,6 @@
 import Navbar1 from "../components/Navbar/Navbar1";
 import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
+import SidebarT from "../components/Testing/SidebarT";
 import TwitterThread from "../components/Testing/TwitterThread";
 
 
@@ -12,19 +13,12 @@ const Timeline = () => {
         <>
         <Navbar1/>
         <CalendarSidebar/>
+        <SidebarT/>
         <TwitterThread/>
-
         
-        {/* <Card style={{width: '50rem',height: '50rem'}} className="mx-auto" >
-        <Card.Body>
-        <Card.Title>
-            Sogn Trekkspellag    
-        </Card.Title>
-        <Card.Text>
-            Hei, trekkspellet mitt er øydelagt, kan ikkje komme på øving.
-        </Card.Text>
-        </Card.Body>
-        </Card> */}
+        
+
+
         
         
 

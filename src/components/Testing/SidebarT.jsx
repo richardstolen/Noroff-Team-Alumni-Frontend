@@ -1,29 +1,29 @@
 import React from 'react';
-import { Container, Row, Col, Nav } from 'react-bootstrap';
+import { Container, Nav,Row, Col } from 'react-bootstrap';
 
-function SidebarT() {
+
+const SidebarT = () => {
   return (
-    <Container fluid>
+    <Container>
       <Row>
-        <Col md={2} className="sidebar">
-          <Nav className="flex-column">
-            <Nav.Item>
-              <Nav.Link href="#">Link 1</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="#">Link 2</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="#">Link 3</Nav.Link>
-            </Nav.Item>
+        <Col md={3}>
+          <div className="sidebar"  style={{backgroundColor: '#ADD8E6'}}>
+            <Nav className="me-auto">
+            <Nav.Link href="/Timeline">Timeline</Nav.Link> 
+            <Nav.Link href="#Groups">Groups</Nav.Link>
+            <Nav.Link href="#Topics">Topics</Nav.Link>
+            <Nav.Link href="#Events">Events</Nav.Link>
           </Nav>
+          </div>
         </Col>
-        <Col md={10} className="main-content">
-          <h1>Main Content</h1>
+        <Col md={9}>
+          <div className="main-content">
+             John doe.
+          </div>
         </Col>
       </Row>
     </Container>
   );
-}
+};
 
 export default SidebarT;
