@@ -1,6 +1,6 @@
 import Navbar1 from "../components/Navbar/Navbar1";
 import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
-import SidebarT from "../components/Testing/SidebarT";
+import Sidebar from "../components/Sidebar/Sidebar";
 import TwitterThread from "../components/Testing/TwitterThread";
 
 
@@ -13,7 +13,7 @@ const Timeline = () => {
         <>
         <Navbar1/>
         <CalendarSidebar/>
-        <SidebarT/>
+        <Sidebar/>
         <TwitterThread/>
         
         

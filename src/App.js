@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import Timeline from './views/Timeline';
 import Dashboard from './views/Dashboard';
+import GroupList from './views/GroupList';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Login/>}/>
           <Route path="/timeline" element={<Timeline/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/group-list"  element = {<GroupList/>}/>
         </Routes>
       
       
