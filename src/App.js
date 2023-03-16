@@ -11,7 +11,7 @@ import Storage from "./storage/storage";
 import { PulseLoader } from "react-spinners";
 import GroupList from "./views/GroupList";
 import TopicList from "./views/TopicList";
-
+import Navbar1 from "./components/Navbar/Navbar1";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -39,19 +39,18 @@ function App() {
     <>
       {loading ? (
         <div>
+          <Navbar1></Navbar1>
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
       ) : (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Timeline />} />
-            <Route path="/timeline" element={<Timeline />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/group-list" element={<GroupList />} />
-         <Route path="/topic-list" element={<TopicList />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Timeline />} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/group-list" element={<GroupList />} />
+          <Route path="/topic-list" element={<TopicList />} />
+        </Routes>
       )}
     </>
   );
