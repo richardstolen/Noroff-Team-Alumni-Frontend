@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Container  from 'react-bootstrap/Container';
 
-function Carousel1() {
+function CarouselT() {
   return (
     <Container className='container-test mt-5'>
     <Carousel>
@@ -47,4 +47,4 @@ function Carousel1() {
   );
 }
 
-export default Carousel1;
+export default CarouselT;

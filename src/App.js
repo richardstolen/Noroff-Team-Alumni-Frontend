@@ -5,6 +5,8 @@ import Timeline from "./views/Timeline";
 import Dashboard from "./views/Dashboard";
 import KeyCloakService from "./security/KeyCloakService.ts";
 import GroupList from "./views/GroupList";
+import TopicList from "./views/TopicList";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Route path="/timeline" element={<Timeline />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/group-list" element={<GroupList />} />
+        <Route path="/topic-list" element={<TopicList />} />
       </Routes>
     </BrowserRouter>
   );
