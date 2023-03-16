@@ -2,7 +2,8 @@ import NavBar1 from "../components/Navbar/Navbar1";
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Card, Container, Offcanvas } from 'react-bootstrap';
-import { getUsers, getUser, getUserByUsername } from "../components/User/apiHandler";
+import { getUsers, getUser, getUserByUsername } from "../api/apiHandler";
+import KeyCloakService from "../security/KeyCloakService.ts";
 //import {Icon} from "react-materialize";
 
 
@@ -12,8 +13,7 @@ import { getUsers, getUser, getUserByUsername } from "../components/User/apiHand
     useEffect(() => {
       async function fetchUser() {
         // fetch user data by user_id from the API
-        const user = await getUser(user_id);
-        //const user = {"userId":"ee1b03f4-ac5f-42d8-9562-4fc82e55197b","userName":"Richardinho","image":"https://upload.wikimedia.org/wikipedia/commons/a/a5/Ricardinho_on_Benfica_%28cropped%29.jpg","status":"Attending Experis Academy courses at Noroff","bio":"Love Futsal and footbal","funFact":"never watched a whole footballmatch","posts":null,"groups":null,"events":null,"topics":null}
+        const user = await getUser(KeyCloakService.GetId());
         setUser(user);
       }
       fetchUser();
@@ -38,34 +38,6 @@ import { getUsers, getUser, getUserByUsername } from "../components/User/apiHand
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
   // function EditUserDetail (userid)
 
