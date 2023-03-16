@@ -1,5 +1,6 @@
 const storage = sessionStorage;
 const USER_KEY = "user";
+const SEARCHED_USER_KEY = "searched-user";
 const GROUPS_KEY = "groups";
 const TOPICS_KEY = "topics";
 const POSTS_KEY = "posts";
@@ -28,6 +29,18 @@ function setPosts(posts) {
   storage.setItem(POSTS_KEY, JSON.stringify(posts));
 }
 
+function setSearchedUser(user) {
+  storage.setItem(SEARCHED_USER_KEY, JSON.stringify(user));
+}
+
+function getSearchedUser() {
+  return JSON.parse(storage.getItem(SEARCHED_USER_KEY));
+}
+
+function clearSearchedUser() {
+  storage.removeItem(SEARCHED_USER_KEY);
+}
+
 function clearStorage() {
   storage.clear();
 }
@@ -39,6 +52,9 @@ const Storage = {
   setGroups,
   getPosts,
   setPosts,
+  setSearchedUser,
+  getSearchedUser,
+  clearSearchedUser,
   clearStorage,
 };
 

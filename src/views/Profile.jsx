@@ -17,6 +17,13 @@ function Profile({ user_id }) {
 
   useEffect(() => {
     async function fetchUser() {
+      // If user has searched for user
+      let searchedUser = Storage.getSearchedUser();
+
+      if (searchedUser) {
+        setUser(searchedUser);
+        return;
+      }
       // Get user from storage
       let user = Storage.getUser();
       if (!user) {
