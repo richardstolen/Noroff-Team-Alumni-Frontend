@@ -104,10 +104,14 @@ export async function getUserByUsername(username) {
 
 export async function getGroups() {
   console.log("GET GROUPS");
-  const response = await fetch(`${apiURL}/groups`);
+  const response = await fetch(`${apiURL}/groups`,{
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  })
   if (response.ok) {
     const groups = await response.json();
-    return groups[0];
+    return groups;
   }
 }
 

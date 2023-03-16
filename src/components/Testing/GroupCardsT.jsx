@@ -13,8 +13,8 @@ function GroupCardsT() {
       {groups.map((group, index) => (
         <Card key={index} style={{ width: "18rem",margin: '1rem'}}>
           <Card.Body>
-            <Card.Title>{group.name}</Card.Title>
-            <Card.Text>{group.description}</Card.Text>
+            <Card.Title>{group.Name}</Card.Title>
+            <Card.Text>{group.Description}</Card.Text>
             <Button variant="primary">Join Group</Button>
           </Card.Body>
         </Card>
