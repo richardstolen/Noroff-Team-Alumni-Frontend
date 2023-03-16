@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 
+
 function Navbar1() {
   return (
     <Navbar bg="primary" variant="dark" >  
@@ -17,8 +18,10 @@ function Navbar1() {
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="/">
+              <NavDropdown.Item >
                 Log out
+
+                
               </NavDropdown.Item>
             </NavDropdown>
         </Nav>

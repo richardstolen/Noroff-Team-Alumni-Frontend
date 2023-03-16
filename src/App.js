@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <button onClick={KeyCloakService.CallLogout()}>Logout</button>
-      <p>Hello {KeyCloakService.GetUserName()}</p>
+      {/* <p>Hello {KeyCloakService.GetUserName()}</p> */}
       <Routes>
         <Route path="/" element={<Timeline />} />
         <Route path="/timeline" element={<Timeline />} />
