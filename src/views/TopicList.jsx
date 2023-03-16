@@ -1,17 +1,18 @@
 import Navbar1 from '../components/Navbar/Navbar1';
-import GroupCardsT from '../components/Testing/GroupCardsT';
+import TopicCardsT from '../components/Testing/TopicCardsT';
 import Sidebar from '../components/Sidebar/Sidebar';
 
 
-const GroupList = () => {
+
+const TopicList = () => {
   return (
     <>
     <Navbar1/>
     <Sidebar/>
-    <GroupCardsT/>
+    <TopicCardsT/>
   
     </>
   );
 }
 
-export default GroupList;
+export default TopicList;

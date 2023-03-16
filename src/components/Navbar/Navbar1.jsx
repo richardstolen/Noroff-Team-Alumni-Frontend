@@ -6,6 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 
+
+
 function Navbar1() {
   return (
     <Navbar bg="primary" variant="dark">

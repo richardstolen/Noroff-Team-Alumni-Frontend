@@ -1,6 +1,5 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./views/Login.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Timeline from "./views/Timeline";
 import Dashboard from "./views/Dashboard";
@@ -10,6 +9,9 @@ import { useEffect, useState } from "react";
 import { getUser, createUser, getPosts } from "./api/apiHandler";
 import Storage from "./storage/storage";
 import { PulseLoader } from "react-spinners";
+import GroupList from "./views/GroupList";
+import TopicList from "./views/TopicList";
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -46,6 +48,8 @@ function App() {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/group-list" element={<GroupList />} />
+         <Route path="/topic-list" element={<TopicList />} />
           </Routes>
         </BrowserRouter>
       )}
