@@ -12,6 +12,7 @@ function NavBar1() {
           <Nav className="me-auto">
             <Nav.Link href="/timeline">Timeline</Nav.Link>
             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link> 
           </Nav>
         </Container>
       </Navbar>

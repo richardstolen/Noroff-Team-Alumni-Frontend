@@ -1,6 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './views/Login.jsx';
+import Profile from './views/Profile';
 import {
   BrowserRouter,
   Routes,
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Login/>}/>
           <Route path="/timeline" element={<Timeline/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       
       
