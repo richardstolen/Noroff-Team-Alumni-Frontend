@@ -1,12 +1,58 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card, Image, Button } from "react-bootstrap";
+import Storage from "../../storage/storage";
 
 const TwitterThread = () => {
   const [showReplies, setShowReplies] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    function fetchData() {
+      setPosts(Storage.getPosts());
+    }
+    fetchData();
+  }, []);
 
   const toggleReplies = () => {
     setShowReplies(!showReplies);
   };
+  let postlist = [];
+  if (posts) {
+    postlist = posts.map((post, i) => {
+      return (
+        <Container key={i}>
+          <Row>
+            <Col>
+              <Card>
+                <Card.Header>
+                  <h4>{post.title}</h4>
+                  <br />
+                  <small>Intended audience: </small>
+                  <br />
+                  <small>Last updated: {post.lastUpdate}</small>
+                  <br />
+                  <small>Created by: {post.userId}</small>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Text>{post.body}</Card.Text>
+                  <Image src="coffee.jpg" fluid />
+                  <Button
+                    variant="link"
+                    className="mt-2"
+                    onClick={toggleReplies}
+                  >
+                    {showReplies ? "Hide replies" : "Show replies"}
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          {showReplies && replies}
+        </Container>
+      );
+    });
+  }
 
   const replies = (
     <>
@@ -39,40 +85,9 @@ const TwitterThread = () => {
   );
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Card>
-            <Card.Header>
-            <h4>This Capuccino, holy moly...</h4>
-            <br />
-            <small>Intended audience: coffee lovers</small>
-            <br />
-            <small>Created by: John Doe</small>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-              In mattis, sem et ullamcorper posuere, justo tellus ullamcorper tellus, 
-              eget aliquet magna velit non elit. Donec mi felis, pretium eget 
-              sagittis molestie, vestibulum ut urna. Aenean congue justo at nulla 
-              convallis ultrices. Praesent cursus justo non tortor congue pellentesque. 
-              Donec pulvinar ipsum risus, sit amet commodo velit posuere quis. 
-              Tor sapien. Integer volutpat velit lacus, id auctor eros euismod in.
-              </Card.Text>
-              <Image src="coffee.jpg" fluid />
-              <Button
-                variant="link"
-                className="mt-2"
-                onClick={toggleReplies}
-              >
-                {showReplies ? 'Hide replies' : 'Show replies'}
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      {showReplies && replies}
-    </Container>
+    <>
+      <div>{postlist ? postlist : "Loading"}</div>
+    </>
   );
 };
 

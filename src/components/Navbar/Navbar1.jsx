@@ -4,22 +4,23 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import KeyCloakService from "../../security/KeyCloakService.ts";
 
 function Navbar1() {
   return (
-    <Navbar bg="primary" variant="dark" >  
-    {/* {fixed="top"} */}
+    <Navbar bg="primary" variant="dark">
+      {/* {fixed="top"} */}
       <Container>
         <Navbar.Brand href="/timeline">Alumni</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/timeline">Timeline</Nav.Link>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <NavDropdown title="Profile" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="/">
-                Log out
-              </NavDropdown.Item>
-            </NavDropdown>
+            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
+              Log out
+            </NavDropdown.Item>
+          </NavDropdown>
         </Nav>
         <Form className="d-flex">
           <Form.Control

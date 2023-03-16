@@ -25,3 +25,11 @@
   width: 250px;
   top: 56px;
 }
+
+.spinning-wheel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

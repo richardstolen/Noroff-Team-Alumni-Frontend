@@ -1,6 +1,7 @@
 import React from "react";
 import Keycloak from "keycloak-js";
 import { KeycloakInitOptions } from "keycloak-js";
+import Storage from "../storage/storage";
 
 const keycloak = new Keycloak({
   // TODO MUST HIDE IN ENV VARIABLES
@@ -28,7 +29,10 @@ const Login = (onAuthenticatedCallback: Function) => {
 };
 
 const UserName = () => keycloak.tokenParsed?.preferred_username;
-const Logout = () => keycloak.logout;
+function Logout() {
+  Storage.clearStorage();
+  keycloak.logout();
+}
 const AccessToken = () => keycloak.token;
 const Id = () => keycloak.tokenParsed?.sub;
 
