@@ -23,7 +23,7 @@
   height: 200px;
 }
 
-.container-test{
+.container-test {
   background-color: grey;
 }
 
@@ -41,4 +41,9 @@
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.groupList {
+  text-align: center;
+  justify-content: center;
 }

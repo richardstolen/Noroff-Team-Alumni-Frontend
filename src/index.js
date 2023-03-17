@@ -10,11 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const renderApp = () =>
   root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   );
 
 KeyCloakService.CallLogin(renderApp);

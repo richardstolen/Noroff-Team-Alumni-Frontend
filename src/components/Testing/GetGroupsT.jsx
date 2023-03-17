@@ -1,47 +1,41 @@
-import { useEffect, useState } from 'react';
-import { PulseLoader } from 'react-spinners';
-import  {getGroups}  from '../../api/apiHandler';
-import KeyCloakService from '../../security/KeyCloakService.ts';
+import { useEffect, useState } from "react";
+import { PulseLoader } from "react-spinners";
+import { getGroups } from "../../api/apiHandler";
+import KeyCloakService from "../../security/KeyCloakService.ts";
+import GroupCardsT from "./GroupCardsT";
+
+const fetchData = async () => {
+  const data = await getGroups();
+  return data;
+};
 
 function GetGroupsT() {
-  const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [grouplist, setGroupList] = useState([]);
 
   useEffect(() => {
-    async function fetchGroups() {
-      try {
-        const data = await getGroups()
-        setLoading(false);
-        console.log(data);
-        setGroups(data.groups);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchGroups();
+    fetchData().then((groups) => {
+      setGroupList(
+        groups.map((group, i) => {
+          return <GroupCardsT prop={group} key={i}></GroupCardsT>;
+        })
+      );
+      setLoading(false);
+    });
   }, []);
 
   return (
     <div>
-        {loading ? (
+      {loading ? (
         <div>
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
-      ):(
-      <ul>
-        {groups.map(group => {
-        return(  <li key={group.groupId}>
-            <p>{group.name}</p>
-            <p>{group.description}</p>
-          </li> )}
-        )}
-      </ul>
+      ) : (
+        <div className="groupList">{grouplist}</div>
       )}
     </div>
   );
 }
 export default GetGroupsT;
-
 
 // user = await getUser(KeyCloakService.GetId());
