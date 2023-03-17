@@ -14,13 +14,21 @@
   z-index: 5;
 }
 
-.center-h1 {
-  text-align: center;
-}
-
 .carousel-images {
   width: 200px;
   height: 200px;
+}
+
+.create-group-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: '100vh'; */
+  
+}
+
+.center-h1 {
+  text-align: center;
 }
 
 .container-test {
@@ -47,3 +55,13 @@
   text-align: center;
   justify-content: center;
 }
+
+
+
+/* .sticky-nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+} */
+
