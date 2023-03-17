@@ -4,6 +4,7 @@ import { getGroups } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import GroupCardsT from "./GroupCardsT";
 
+
 const fetchData = async () => {
   const data = await getGroups();
   return data;
@@ -17,12 +18,18 @@ function GetGroupsT() {
     fetchData().then((groups) => {
       setGroupList(
         groups.map((group, i) => {
-          return <GroupCardsT prop={group} key={i}></GroupCardsT>;
+          return <GroupCardsT 
+          prop={group} 
+          key={i}>
+
+          </GroupCardsT>;
         })
       );
       setLoading(false);
     });
   }, []);
+
+  
 
   return (
     <div>
