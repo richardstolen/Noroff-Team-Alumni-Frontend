@@ -8,13 +8,15 @@ function GroupButton() {
   const [showModal, setShowModal] = useState(false);
   const [groupName, setGroupName] = useState('');
   const [groupDesc, setGroupDesc] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
   const [group, setGroup] = useState(null);
 
   const handleClick = async () => {
     try {
-      const newGroup = await createGroup(groupName, groupDesc);
+      const newGroup = await createGroup(groupName, groupDesc, isPrivate);
       setGroup(newGroup);
-      setShowModal(true);
+      setShowModal(false);  
+    //   window.location.reload();
     } catch (error) {
       console.error('Failed to create group:', error);
       // Handle error
@@ -30,6 +32,10 @@ function GroupButton() {
   const handleDescInputChange = (event) => {
     setGroupDesc(event.target.value);
   };
+
+  const handleCheckboxChange = (event) => {
+    setIsPrivate(event.target.checked);
+  }
 
   return (
     <div className='create-group-button'>
@@ -59,6 +65,15 @@ function GroupButton() {
               onChange={handleDescInputChange}
             />
           </Form.Group>
+          <Form.Group controlId='formBasicCheckbox'>
+            <Form.Check
+                type='checkbox'
+                label= 'Private group'
+                checked= {isPrivate}
+                onChange= {handleCheckboxChange}
+            
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
@@ -78,7 +93,7 @@ function GroupButton() {
             <p>Group ID: {group.groupId}</p>
             <p>Group name: {group.name}</p>
             <p>Group description: {group.description}</p>
-            {/* Add more information about the group as needed */}
+            <p>Private group: {group.isPrivate ? 'Yes': 'No'}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary' onClick={handleClose}>

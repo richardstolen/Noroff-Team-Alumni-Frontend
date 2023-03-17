@@ -134,7 +134,7 @@ export async function createUser() {
   }
 }
 
-export async function createGroup( name, description) {
+export async function createGroup( name, description, isPrivate) {
   console.log("CREATE GROUP");
   const response = await fetch(`${apiURL}/group`, {
     method: "POST",
@@ -147,6 +147,7 @@ export async function createGroup( name, description) {
       CreatedBy: KeyCloakService.GetId(),
       Name: name,
       Description: description,
+      IsPrivate: isPrivate,
     }),
   });
 
