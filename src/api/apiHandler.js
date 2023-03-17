@@ -115,6 +115,8 @@ export async function getGroups() {
   }
 }
 
+
+
 export async function createUser() {
   console.log("CREATE USER");
   const response = await fetch(`${apiURL}/user`, {
