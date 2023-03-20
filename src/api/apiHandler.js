@@ -116,6 +116,8 @@ export async function getGroups() {
   }
 }
 
+
+
 export async function createUser() {
   console.log("CREATE USER");
   const response = await fetch(`${apiURL}/user`, {
@@ -134,6 +136,49 @@ export async function createUser() {
     return user;
   }
 }
+
+export async function createGroup( name, description, isPrivate) {
+  console.log("CREATE GROUP");
+  const response = await fetch(`${apiURL}/group`, {
+    method: "POST",
+      headers: new Headers({
+        Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+        "Content-Type": "application/json",
+
+      }),
+    body: JSON.stringify({
+      CreatedBy: KeyCloakService.GetId(),
+      Name: name,
+      Description: description,
+      IsPrivate: isPrivate,
+    }),
+  });
+
+  if (response.ok) {
+    const group = await response.json();
+    return group;
+  }
+}
+
+export async function joinGroup(group_id) {
+  console.log("JOIN GROUP");
+  const response = await fetch(`${apiURL}/group/${group_id}/join`, {
+    method: "POST",
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify({
+      UserId: KeyCloakService.GetId(),
+    }),
+  });
+
+  if (response.ok) {
+    const group = await response.json();
+    return group;
+  }
+}
+
 
 export async function sendMessage(title, body, targetUser) {
   console.log("SEND MESSAGE");
