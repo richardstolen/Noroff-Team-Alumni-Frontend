@@ -24,12 +24,6 @@ const fetchData = async () => {
   return data;
 };
 
-const convertDate = (posts) => {
-  posts.map((post) => {
-    console.log(post);
-  });
-};
-
 const TwitterThread = () => {
   const [showReplies, setShowReplies] = useState(-1);
   const [posts, setPosts] = useState([]);
@@ -57,38 +51,23 @@ const TwitterThread = () => {
   /**
    * Function for handling edit post
    */
-  async function handlePost(e) {
-    e.preventDefault();
-    if (!editMode) {
-      console.log("comment");
-      // IF not edit mode => comment
-      commentPost(postEdit);
-    } else {
+  async function handlePost(action) {
+    document.body.style.cursor = "wait";
+    if (action === "delete") {
+      deletePost(postEdit);
+    } else if (editMode) {
       // Calling edit post in API with the changed post object
       editPost(postEdit);
+    } else {
+      // IF not edit mode => comment
+      commentPost(postEdit);
     }
 
     // Calling get posts to refresh page
     fetchData().then((posts) => {
       setPosts(mapPost(posts));
       Storage.setPosts(posts);
-    });
-    // Closing the modal
-    handleCloseModal();
-  }
-
-  /**
-   * Function for handling delete post
-   * @param {*} id
-   */
-  async function handleDeletePost(id) {
-    // Delete post
-    deletePost(id);
-
-    // Calling get posts to refresh page
-    fetchData().then((posts) => {
-      setPosts(mapPost(posts));
-      Storage.setPosts(posts);
+      document.body.style.cursor = "default";
     });
 
     // Closing the modal
@@ -204,7 +183,6 @@ const TwitterThread = () => {
                             onClick={() => {
                               setEditMode(true);
                               setEditCommentMode(true);
-                              console.log(editCommentMode);
                               setPostEdit(post);
                               return handleShowModal();
                             }}
@@ -283,7 +261,9 @@ const TwitterThread = () => {
                 <Button
                   variant="primary"
                   style={{ backgroundColor: "red" }}
-                  onClick={() => handleDeletePost(postEdit.postId)}
+                  onClick={() => {
+                    handlePost("delete");
+                  }}
                 >
                   Delete post
                 </Button>

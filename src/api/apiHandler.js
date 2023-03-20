@@ -24,12 +24,10 @@ export async function getUser(id) {
   const response = await fetch(`${apiURL}/user/${id}`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
-      "access-control-allow-origin": "*",
     }),
   });
   if (response.ok) {
     const user = await response.json();
-    console.log(user);
     return user;
   }
 }
@@ -243,9 +241,9 @@ export async function editPost(post) {
   }
 }
 
-export async function deletePost(postId) {
+export async function deletePost(post) {
   console.log("DELETE POST");
-  const response = await fetch(`${apiURL}/post/${postId}`, {
+  const response = await fetch(`${apiURL}/post/${post.postId}`, {
     method: "DELETE",
     headers: new Headers({
       user_id: KeyCloakService.GetId(),
@@ -260,7 +258,6 @@ export async function deletePost(postId) {
 
 export async function commentPost(post) {
   console.log("COMMENT ON POST");
-  console.log(post);
   const response = await fetch(`${apiURL}/post`, {
     method: "POST",
     headers: {

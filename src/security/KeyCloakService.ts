@@ -14,7 +14,6 @@ const Login = (onAuthenticatedCallback: Function) => {
   const initoptions: KeycloakInitOptions = {
     onLoad: "login-required",
     pkceMethod: "S256",
-
     checkLoginIframe: false,
   };
   keycloak
