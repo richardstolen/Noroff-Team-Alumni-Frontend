@@ -7,11 +7,13 @@ import { joinGroup } from "../../api/apiHandler";
 
 function GroupCardsT(group) {
   console.log(group.prop);
-  const handleJoinGroup = () => {
-    joinGroup(group.prop.id).then(()=>{
-      //do something
-      console.log("Congratulations, you are now a member.");
-    });
+  const handleJoinGroup = async () => {
+    try {
+      const result = await joinGroup(group.prop.id);
+      console.log("success", result);
+    } catch (error) {
+      console.log("error", error)
+    }
   }
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
