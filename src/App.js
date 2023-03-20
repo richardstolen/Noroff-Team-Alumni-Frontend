@@ -22,7 +22,7 @@ function App() {
         setLoading(false);
       }
       if (!storageUser) {
-        const user = await getUser(KeyCloakService.GetId());
+        let user = await getUser(KeyCloakService.GetId());
         if (user == null) {
           user = await createUser();
         }

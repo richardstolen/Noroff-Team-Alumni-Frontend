@@ -37,6 +37,8 @@ function Profile({ user_id }) {
         Storage.setUser(user);
       }
       setUser(user);
+
+      console.log(user.groups);
     }
     fetchUser();
   }, [user_id]);

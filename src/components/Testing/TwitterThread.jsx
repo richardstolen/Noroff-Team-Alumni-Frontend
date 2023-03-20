@@ -9,7 +9,12 @@ import {
   Modal,
   Form,
 } from "react-bootstrap";
-import { deletePost, editPost, getPosts } from "../../api/apiHandler";
+import {
+  commentPost,
+  deletePost,
+  editPost,
+  getPosts,
+} from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
@@ -28,12 +33,14 @@ const convertDate = (posts) => {
 const TwitterThread = () => {
   const [showReplies, setShowReplies] = useState(-1);
   const [posts, setPosts] = useState([]);
+  const [editMode, setEditMode] = useState(true);
+  const [editCommentMode, setEditCommentMode] = useState(false);
 
   /* Edit Modal */
   const [postEdit, setPostEdit] = useState({});
-  const [showEditModal, setShowEditModal] = useState(false);
-  const handleCloseEditModal = () => setShowEditModal(false);
-  const handleShowEditModal = () => setShowEditModal(true);
+  const [showEditModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
     let postsFromStorage = Storage.getPosts();
@@ -50,20 +57,30 @@ const TwitterThread = () => {
   /**
    * Function for handling edit post
    */
-  async function handleEditPost() {
-    // Calling edit post in API with the changed post object
-    editPost(postEdit);
+  async function handlePost(e) {
+    e.preventDefault();
+    if (!editMode) {
+      console.log("comment");
+      // IF not edit mode => comment
+      commentPost(postEdit);
+    } else {
+      // Calling edit post in API with the changed post object
+      editPost(postEdit);
+    }
 
     // Calling get posts to refresh page
     fetchData().then((posts) => {
       setPosts(mapPost(posts));
       Storage.setPosts(posts);
     });
-
     // Closing the modal
-    handleCloseEditModal();
+    handleCloseModal();
   }
 
+  /**
+   * Function for handling delete post
+   * @param {*} id
+   */
   async function handleDeletePost(id) {
     // Delete post
     deletePost(id);
@@ -75,7 +92,7 @@ const TwitterThread = () => {
     });
 
     // Closing the modal
-    handleCloseEditModal();
+    handleCloseModal();
   }
 
   const mapPost = (posts) => {
@@ -99,7 +116,6 @@ const TwitterThread = () => {
                 </Card.Header>
                 <Card.Body>
                   <Card.Text>{post.body}</Card.Text>
-
                   <span>
                     <Image
                       src="Images/comment.png"
@@ -131,12 +147,32 @@ const TwitterThread = () => {
                     )}
                   </Button>
 
+                  {/**
+                   * Comment Button
+                   */}
+                  <Button
+                    style={{ marginLeft: "500px" }}
+                    onClick={() => {
+                      setEditMode(false);
+                      setEditCommentMode(true);
+                      setPostEdit(post);
+                      return handleShowModal();
+                    }}
+                  >
+                    Comment
+                  </Button>
+
+                  {/**
+                   * Edit button
+                   */}
                   {KeyCloakService.GetUserName() === post.createdBy ? (
                     <Button
                       style={{ marginLeft: "1050px" }}
                       onClick={() => {
+                        setEditMode(true);
                         setPostEdit(post);
-                        return handleShowEditModal();
+                        setEditCommentMode(false);
+                        return handleShowModal();
                       }}
                     >
                       Edit
@@ -159,6 +195,25 @@ const TwitterThread = () => {
                       <Card.Header>{post.userId}</Card.Header>
                       <Card.Body>
                         <Card.Text>{post.body}</Card.Text>
+                        {/**
+                         * Edit button
+                         */}
+                        {KeyCloakService.GetId() === post.userId ? (
+                          <Button
+                            style={{ marginLeft: "1050px" }}
+                            onClick={() => {
+                              setEditMode(true);
+                              setEditCommentMode(true);
+                              console.log(editCommentMode);
+                              setPostEdit(post);
+                              return handleShowModal();
+                            }}
+                          >
+                            Edit
+                          </Button>
+                        ) : (
+                          <></>
+                        )}
                       </Card.Body>
                     </Card>
                   </Col>
@@ -179,28 +234,41 @@ const TwitterThread = () => {
         ) : (
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         )}
-        <Modal show={showEditModal} onHide={handleCloseEditModal}>
+        <Modal show={showEditModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit post</Modal.Title>
+            <Modal.Title>
+              {editMode ? <span>Edit post</span> : <span>Comment</span>}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onClick={(e) => {}}>
-              <Form.Group>
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={postEdit.title}
-                  onChange={(e) => {
-                    postEdit.title = e.target.value;
-                    setPostEdit(postEdit);
-                  }}
-                />
-              </Form.Group>
+              {editMode ? (
+                editCommentMode === false ? (
+                  <Form.Group>
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder={postEdit.title}
+                      onChange={(e) => {
+                        postEdit.title = e.target.value;
+                        setPostEdit(postEdit);
+                      }}
+                    />
+                  </Form.Group>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <></>
+              )}
+
               <Form.Group>
                 <Form.Label>Post Content</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder={postEdit.body}
+                  placeholder={
+                    editCommentMode === false ? postEdit.body : "Comment"
+                  }
                   onChange={(e) => {
                     postEdit.body = e.target.value;
                     setPostEdit(postEdit);
@@ -210,16 +278,26 @@ const TwitterThread = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant="primary"
-              style={{ backgroundColor: "red" }}
-              onClick={() => handleDeletePost(postEdit.postId)}
-            >
-              Delete post
-            </Button>
-            <Button variant="primary" onClick={handleEditPost}>
-              Save Changes
-            </Button>
+            {editMode ? (
+              <>
+                <Button
+                  variant="primary"
+                  style={{ backgroundColor: "red" }}
+                  onClick={() => handleDeletePost(postEdit.postId)}
+                >
+                  Delete post
+                </Button>
+                <Button variant="primary" onClick={handlePost}>
+                  Save Changes
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="primary" onClick={(e) => handlePost(e)}>
+                  Comment
+                </Button>
+              </>
+            )}
           </Modal.Footer>
         </Modal>
       </div>
