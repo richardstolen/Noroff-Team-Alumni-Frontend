@@ -2,7 +2,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 function GroupCardsT(group) {
-  console.log(group.prop);
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
       <Card style={{ width: "18rem", margin: "1rem" }}>

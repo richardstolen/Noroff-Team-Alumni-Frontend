@@ -23,12 +23,10 @@ function App() {
       }
       if (!storageUser) {
         const user = await getUser(KeyCloakService.GetId());
-        const posts = await getPosts();
         if (user == null) {
           user = await createUser();
         }
         Storage.setUser(user);
-        Storage.setPosts(posts);
         setLoading(false);
       }
     }
@@ -43,14 +41,16 @@ function App() {
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
       ) : (
-        <Routes>
-          <Route path="/" element={<Timeline />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/group-list" element={<GroupList />} />
-          <Route path="/topic-list" element={<TopicList />} />
-        </Routes>
+        <>
+          <Routes>
+            <Route path="/" element={<Timeline />} />
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/group-list" element={<GroupList />} />
+            <Route path="/topic-list" element={<TopicList />} />
+          </Routes>
+        </>
       )}
     </>
   );
