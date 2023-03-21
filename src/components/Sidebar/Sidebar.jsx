@@ -12,7 +12,7 @@ const Sidebar = () => {
             <Nav.Link href="/Timeline">Timeline</Nav.Link>
             <Nav.Link href="/group-list">Groups</Nav.Link> 
             <Nav.Link href="/topic-list">Topics</Nav.Link>
-            <Nav.Link href="#Events">Events</Nav.Link>
+            <Nav.Link href="/event-list">Events</Nav.Link>
           </Nav>
           </div>
         </Col>
