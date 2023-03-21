@@ -2,16 +2,7 @@ import NavBar1 from "../components/Navbar/Navbar1";
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Card, Container, Offcanvas, button, modal, form } from 'react-bootstrap';
-import { getUsers, getUser, getUserByUsername, editUsername, editUserBio, editUserStatus, editUserFunFact} from "../api/apiHandler";
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { Card, Container, Offcanvas } from "react-bootstrap";
-import {
-  getUsers,
-  getUser,
-  getUserByUsername,
-  createUser,
-} from "../api/apiHandler";
+import { getUsers, getUser, getUserByUsername, createUser, editUsername, editUserBio, editUserStatus, editUserFunFact} from "../api/apiHandler";
 import KeyCloakService from "../security/KeyCloakService.ts";
 // import { PulseLoader } from "react-spinners";
 
