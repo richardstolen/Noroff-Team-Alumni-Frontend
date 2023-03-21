@@ -12,6 +12,7 @@ import { PulseLoader } from "react-spinners";
 import GroupList from "./views/GroupList";
 import TopicList from "./views/TopicList";
 import Navbar1 from "./components/Navbar/Navbar1";
+import EventList from "./views/Event";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -49,6 +50,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/group-list" element={<GroupList />} />
             <Route path="/topic-list" element={<TopicList />} />
+            <Route path="/event-list" element={<EventList />} />
           </Routes>
         </>
       )}
