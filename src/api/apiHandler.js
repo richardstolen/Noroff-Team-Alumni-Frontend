@@ -32,6 +32,25 @@ export async function getUser(id) {
   }
 }
 
+
+export async function editUsername(username) {
+  console.log(username);
+  const response = await fetch(`${apiURL}/user/${KeyCloakService.GetId()}`, {
+    method: "PATCH",
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      "content-type": "application/json",
+    }),
+    body: JSON.stringify({
+      UserId: KeyCloakService.GetId(),
+      funFact: username,
+    }),
+  });
+  if (response.ok) {
+    return response.ok;
+  }
+}
+
 export async function editUserBio(bio) {
   console.log("EDIT USER BIO");
   console.log(bio);
