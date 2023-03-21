@@ -13,7 +13,7 @@ import {
 } from "../api/apiHandler";
 import KeyCloakService from "../security/KeyCloakService.ts";
 import Storage from "../storage/storage";
-// import { PulseLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 
 function Profile({ user_id }) {
   const [user, setUser] = useState(null);
@@ -32,6 +32,14 @@ function Profile({ user_id }) {
       setUser({ ...user, status: newStatus });
     }
   };
+
+  // const handleProfilePictureEdit = () => {
+  //   const newProfilePicture = prompt("Enter new profile picture URL:");
+  //   if (newProfilePicture !== null) {
+  //     editUserProfilePicture(newProfilePicture);
+  //     setUser({ ...user, image: newProfilePicture });
+  //   }
+  // };
 
   const handleBioEdit = () => {
     const newBio = prompt("Enter new bio:");
@@ -79,15 +87,12 @@ function Profile({ user_id }) {
 
   if (!user) {
     return (
-      <div className="text-center">
-        <NavBar1 />
-        Loading...
-      </div>
+      <>
+      <PulseLoader className="spinning-wheel" color="#0d6efd" />
+      <NavBar1 />
+      </>
     );
-    //   <div>
-    //   <PulseLoader className="spinning-wheel" color="#0d6efd" />
-    //   </div>
-    // </div>)
+
   } else {
     if (!KeyCloakService.GetId()) {
       //=== searchedUser.userId legge til dette
@@ -98,9 +103,10 @@ function Profile({ user_id }) {
             <img
               src={user.image}
               alt="Profile"
-              className="rounded-circle mb-4"
+              className="rounded-circle mb-4 mt-5"
               style={{ width: "200px", height: "200px" }}
             />
+
             <h2
               className="text-dark mb-4"
               style={{ fontSize: "2rem", fontWeight: "bold" }}
@@ -129,11 +135,20 @@ function Profile({ user_id }) {
               rel="stylesheet"
             ></link>
             <img
-              src={user.image}
+              src={user.image} //user.image
               alt="Profile"
-              className="rounded-circle mb-4"
+              className="rounded-circle mb-4 mt-5"
               style={{ width: "200px", height: "200px" }}
             />
+
+            {/* <button 
+              //onClick={handleProfilePictureEdit}
+              className="material-icons text-5xl"
+              style={{ border: "none", background: "none" }}
+            >
+              edit
+            </button>&nbsp; */}
+
             <h2
               className="text-dark mb-4"
               style={{ fontSize: "2rem", fontWeight: "bold" }}
@@ -146,15 +161,16 @@ function Profile({ user_id }) {
               style={{ color: "#666" }}
             >
               <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
-                {user.status}&nbsp;&nbsp;
+                {user.status}&nbsp;&nbsp;&nbsp;
               </h4>
               <div className="d-flex align-items-center">
                 <button
                   onClick={handleStatusEdit}
-                  className="material-icons text-red-600 text-5xl"
+                  className="material-icons text-5xl"
+                  style={{ border: "none", background: "none" }}
                 >
                   edit
-                </button>
+                </button>&nbsp;
                 <div className="ml-2">Edit status</div>
               </div>
             </div>
@@ -164,15 +180,16 @@ function Profile({ user_id }) {
               style={{ color: "#666" }}
             >
               <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
-                {user.bio}&nbsp;&nbsp;
+                {user.bio}&nbsp;&nbsp;&nbsp;
               </h4>
               <div className="d-flex align-items-center">
                 <button
                   onClick={handleBioEdit}
-                  className="material-icons text-red-600 text-5xl"
+                  className="material-icons text-5xl"
+                  style={{ border: "none", background: "none" }}
                 >
                   edit
-                </button>
+                </button>&nbsp;
                 <div className="ml-2">Edit bio</div>
               </div>
             </div>
@@ -182,15 +199,16 @@ function Profile({ user_id }) {
               style={{ color: "#666" }}
             >
               <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
-                {user.funFact}&nbsp;&nbsp;
+                {user.funFact}&nbsp;&nbsp;&nbsp;
               </h4>
               <div className="d-flex align-items-center">
                 <button
                   onClick={handleFunFactEdit}
-                  className="material-icons text-red-600 text-5xl"
+                  className="material-icons text-5xl"
+                  style={{ border: "none", background: "none" }}
                 >
                   edit
-                </button>
+                </button>&nbsp;
                 <div className="ml-2">Edit funfact</div>
               </div>
             </div>
