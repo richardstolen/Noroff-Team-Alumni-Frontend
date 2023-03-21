@@ -12,6 +12,7 @@ import {
   editUserFunFact,
 } from "../api/apiHandler";
 import KeyCloakService from "../security/KeyCloakService.ts";
+import Storage from "../storage/storage";
 // import { PulseLoader } from "react-spinners";
 
 function Profile({ user_id }) {
