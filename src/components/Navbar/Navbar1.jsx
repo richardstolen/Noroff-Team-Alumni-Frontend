@@ -33,7 +33,7 @@ function Navbar1() {
     Storage.clearSearchedUser();
   }
   return (
-    <Navbar bg="primary" variant="dark" className="sticky-nav">
+    <Navbar bg="primary" variant="dark" sticky="top">
       {/* {fixed="top"} */}
       <Container>
         <Navbar.Brand href="/timeline">Alumni</Navbar.Brand>
