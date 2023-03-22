@@ -5,7 +5,6 @@ import EventThread from '../components/Event/EventForm';
 import CreateEventButton from '../components/Event/EventButton';
 
 
-
 const EventList = () => {
   return (
     <>
