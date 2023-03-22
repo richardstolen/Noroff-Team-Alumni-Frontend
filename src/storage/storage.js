@@ -4,6 +4,7 @@ const SEARCHED_USER_KEY = "searched-user";
 const GROUPS_KEY = "groups";
 const TOPICS_KEY = "topics";
 const POSTS_KEY = "posts";
+const EVENT_KEY = "event";
 
 function getUser() {
   return JSON.parse(storage.getItem(USER_KEY));
@@ -29,6 +30,18 @@ function setPosts(posts) {
   storage.setItem(POSTS_KEY, JSON.stringify(posts));
 }
 
+function getEventByUser(){
+  return JSON.parse(storage.getItem(EVENT_KEY));
+}
+
+function setEvent(event){
+  storage.setItem(EVENT_KEY, JSON.stringify(event))
+}
+
+function getEventById(id) {
+  return JSON.parse(storage.getItem(EVENT_KEY));
+} 
+
 function setSearchedUser(user) {
   storage.setItem(SEARCHED_USER_KEY, JSON.stringify(user));
 }
@@ -52,6 +65,9 @@ const Storage = {
   setGroups,
   getPosts,
   setPosts,
+  getEventByUser,
+  getEventById,
+  setEvent,
   setSearchedUser,
   getSearchedUser,
   clearSearchedUser,
