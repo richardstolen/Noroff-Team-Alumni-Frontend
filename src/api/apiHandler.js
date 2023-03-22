@@ -32,6 +32,26 @@ export async function getUser(userId) {
   }
 }
 
+
+export async function editUserProfilePicture(image) {
+  console.log(image);
+  const response = await fetch(`${apiURL}/user/${KeyCloakService.GetId()}`, {
+    method: "PATCH",
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      "content-type": "application/json",
+    }),
+    body: JSON.stringify({
+      UserId: KeyCloakService.GetId(),
+      image: image,
+    }),
+  });
+  if (response.ok) {
+    return response.ok;
+  }
+}
+
+
 export async function editUsername(username) {
   console.log(username);
   const response = await fetch(`${apiURL}/user/${KeyCloakService.GetId()}`, {
@@ -42,7 +62,7 @@ export async function editUsername(username) {
     }),
     body: JSON.stringify({
       UserId: KeyCloakService.GetId(),
-      funFact: username,
+      username: username,
     }),
   });
   if (response.ok) {

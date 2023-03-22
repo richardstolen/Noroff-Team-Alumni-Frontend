@@ -1,11 +1,15 @@
 import NavBar1 from "../components/Navbar/Navbar1";
 import React, { useState, useEffect } from "react";
+import Avatar from 'react-avatar';
+import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 import {
   getUsers,
   getUser,
   getUserByUsername,
   createUser,
+  editUserProfilePicture,
   editUsername,
   editUserBio,
   editUserStatus,
@@ -18,6 +22,7 @@ import { PulseLoader } from "react-spinners";
 function Profile({ user_id }) {
   const searchedUser = Storage.getSearchedUser();
   const [user, setUser] = useState(null);
+  const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(false);
   const [newBio, setNewBio] = useState("");
   const [newStatus, setNewStatus] = useState("");
@@ -26,35 +31,40 @@ function Profile({ user_id }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleStatusEdit = () => {
+  const handleStatusEdit = async () => {
     const newStatus = prompt("Enter new status:");
     if (newStatus !== null) {
-      editUserStatus(newStatus);
-      setUser({ ...user, status: newStatus });
+      document.body.style.cursor = "wait";
+      await editUserStatus(newStatus);
+      setEditMode(true);
     }
   };
 
-  // const handleProfilePictureEdit = () => {
-  //   const newProfilePicture = prompt("Enter new profile picture URL:");
-  //   if (newProfilePicture !== null) {
-  //     editUserProfilePicture(newProfilePicture);
-  //     setUser({ ...user, image: newProfilePicture });
-  //   }
-  // };
+  const handleProfilePictureEdit = async () => {
+    const newProfilePicture = prompt("Enter new profile picture URL:");
+    if (newProfilePicture !== null) {
+      document.body.style.cursor = "wait";
+      await editUserProfilePicture(newProfilePicture);
+      setEditMode(true);
+    }
+  };
 
-  const handleBioEdit = () => {
+  const handleBioEdit = async () => {
     const newBio = prompt("Enter new bio:");
     if (newBio !== null) {
-      editUserBio(newBio);
-      setUser({ ...user, bio: newBio });
+      document.body.style.cursor = "wait";
+      await editUserBio(newBio);
+      setEditMode(true);
+
     }
   };
 
-  const handleFunFactEdit = () => {
+  const handleFunFactEdit = async () => {
     const newFunFact = prompt("Enter new fun fact:");
     if (newFunFact !== null) {
-      editUserFunFact(newFunFact);
-      setUser({ ...user, funFact: newFunFact });
+      document.body.style.cursor = "wait";
+      await editUserFunFact(newFunFact);
+      setEditMode(true);
     }
   };
 
@@ -73,18 +83,26 @@ function Profile({ user_id }) {
         // IF no user in storage
         // fetch user data by user_id from the API
         user = await getUser(KeyCloakService.GetId());
-        if (user == null) {
-          // If no user exists because of registration, create new user in DB
-          user = await createUser();
-        }
+        console.log(user);
         Storage.setUser(user);
       }
-      setUser(user);
+
+      if (editMode) {
+        console.log("edit mode", editMode);
+        await getUser(KeyCloakService.GetId()).then(user => {
+          setUser(user);
+          Storage.setUser(user);
+          setEditMode(false);
+          document.body.style.cursor = "default";
+        })
+      } else {
+        setUser(user);
+      }
 
       console.log(user.groups);
     }
     fetchUser();
-  }, [user_id]);
+  }, [setUser, user_id, editMode, setEditMode]);
 
   if (!user) {
     return (
@@ -99,13 +117,14 @@ function Profile({ user_id }) {
         <div className="text-center text-muted mb-4">
           <>
             <NavBar1 />
+            <Sidebar/>
+            <CalendarSidebar/>
             <img
               src={user.image}
               alt="Profile"
               className="rounded-circle mb-4 mt-5"
               style={{ width: "200px", height: "200px" }}
             />
-
             <h2
               className="text-dark mb-4"
               style={{ fontSize: "2rem", fontWeight: "bold" }}
@@ -129,24 +148,43 @@ function Profile({ user_id }) {
         <div className="text-center text-muted mb-4">
           <>
             <NavBar1 />
+            <Sidebar/>
+            <CalendarSidebar/>
             <link
               href="https://fonts.googleapis.com/icon?family=Material+Icons"
               rel="stylesheet"
             ></link>
-            <img
-              src={user.image}
-              alt="Profile"
-              className="rounded-circle mb-4 mt-5"
-              style={{ width: "200px", height: "200px" }}
-            />
 
-            {/* <button 
-              //onClick={handleProfilePictureEdit}
-              className="material-icons text-5xl"
-              style={{ border: "none", background: "none" }}
-            >
-              edit
-            </button>&nbsp; */}
+            <div className="d-flex justify-content-center align-items-center mb-4">
+              <div className="d-flex flex-column align-items-center">
+                {user.image ? (
+                  <img
+                    src={user.image}
+                    alt="Profile"
+                    className="rounded-circle mb-4 mt-5"
+                    style={{ width: "200px", height: "200px" }}
+                  />
+                ) : (
+                  <Avatar
+                    name={user.userName} //Er ikke ferdig her! 
+                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1679478862~exp=1679479462~hmac=d521cabb939009438282af6efab35797ed4dbc2b1dec8abd9a96e47416df520c"
+                    className="rounded-circle mb-4 mt-5"
+                    style={{ width: "200px", height: "200px" }}
+                  />
+                )}
+                <div className="d-flex align-items-center">
+                  <button
+                    onClick={handleProfilePictureEdit}
+                    className="material-icons text-5xl"
+                    style={{ border: "none", background: "none", marginTop: "-10px" }}
+                  >
+                    edit
+                  </button>
+                  &nbsp;
+                  <div>Edit profile picture</div>
+                </div>
+              </div>
+            </div>
 
             <h2
               className="text-dark mb-4"
