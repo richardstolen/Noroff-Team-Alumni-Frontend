@@ -15,6 +15,8 @@ const Login = (onAuthenticatedCallback: Function) => {
     onLoad: "login-required",
     pkceMethod: "S256",
     checkLoginIframe: false,
+    refreshToken: RefreshToken(),
+    token: AccessToken(),
   };
   keycloak
     .init(initoptions)
@@ -33,12 +35,14 @@ function Logout() {
   keycloak.logout();
 }
 const AccessToken = () => keycloak.token;
+const RefreshToken = () => keycloak.refreshToken;
 const Id = () => keycloak.tokenParsed?.sub;
 
 const KeyCloakService = {
   CallLogin: Login,
   GetUserName: UserName,
   GetAccesstoken: AccessToken,
+  GetRefreshToken: RefreshToken,
   GetId: Id,
   CallLogout: Logout,
 };
