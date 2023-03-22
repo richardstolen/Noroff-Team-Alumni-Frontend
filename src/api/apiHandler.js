@@ -193,10 +193,11 @@ export async function joinGroup(group_id) {
 export async function sendMessage(title, body, targetUser) {
   console.log("SEND MESSAGE");
   const target_user = await getUserByUsername(targetUser);
-  const response = await fetch(`${apiURL}/Posts`, {
+  const response = await fetch(`${apiURL}/post`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
     },
     body: JSON.stringify({
       userId: KeyCloakService.GetId(),
@@ -209,6 +210,20 @@ export async function sendMessage(title, body, targetUser) {
   if (response.ok) {
     const user = await response.json();
     return user;
+  }
+}
+
+export async function getMessages() {
+  console.log("GET MESSAGES");
+  const response = await fetch(`${apiURL}/post/user`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      user_id: KeyCloakService.GetId(),
+    }),
+  });
+  if (response.ok) {
+    const messages = await response.json();
+    return messages;
   }
 }
 

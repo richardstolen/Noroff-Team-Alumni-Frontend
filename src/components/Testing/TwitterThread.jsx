@@ -14,6 +14,7 @@ import {
   deletePost,
   editPost,
   getPosts,
+  sendMessage,
 } from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
@@ -75,6 +76,7 @@ const TwitterThread = () => {
   }
 
   async function refreshPage() {
+    await sendMessage("test", "test", "jacob");
     document.body.style.cursor = "wait";
     // Calling get posts to refresh page
     fetchData().then((posts) => {
