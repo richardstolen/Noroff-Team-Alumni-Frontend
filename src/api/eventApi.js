@@ -53,7 +53,7 @@ export async function joinEvent(event_id) {
 
 
 
-export async function createEvent(name, description, accepted) {
+export async function createEvent(description, date) {  
     console.log("CREATE EVENT");
     const response = await fetch(`${apiURL}/event`, {
         method: "POST",
@@ -63,9 +63,9 @@ export async function createEvent(name, description, accepted) {
         }),
         body: JSON.stringify({
             CreatedBy: KeyCloakService.GetId(),
-            Name: name,
             Description: description,
-            Accepted: accepted,
+            Date: date,
+            
         }),
     });
 
