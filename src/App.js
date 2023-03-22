@@ -13,6 +13,7 @@ import GroupList from "./views/GroupList";
 import TopicList from "./views/TopicList";
 import Navbar1 from "./components/Navbar/Navbar1";
 import EventList from "./views/Event";
+import GroupDetail from "./views/GroupDetail";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -49,6 +50,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/group-list" element={<GroupList />} />
+            <Route path="/group-detail" element={<GroupDetail />} />
             <Route path="/topic-list" element={<TopicList />} />
             <Route path="/event-list" element={<EventList />} />
           </Routes>
