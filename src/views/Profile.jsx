@@ -35,7 +35,7 @@ function Profile({ user_id }) {
 
   // const handleProfilePictureEdit = () => {
   //   const newProfilePicture = prompt("Enter new profile picture URL:");
-  //   if (newProfilePicture !== null) {
+  //   if (newProfilePicture !== null) { 
   //     editUserProfilePicture(newProfilePicture);
   //     setUser({ ...user, image: newProfilePicture });
   //   }
@@ -135,7 +135,7 @@ function Profile({ user_id }) {
               rel="stylesheet"
             ></link>
             <img
-              src={user.image} //user.image
+              src={user.image}
               alt="Profile"
               className="rounded-circle mb-4 mt-5"
               style={{ width: "200px", height: "200px" }}
