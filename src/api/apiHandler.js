@@ -19,9 +19,9 @@ export async function getUsers() {
   }
 }
 
-export async function getUser(id) {
+export async function getUser(userId) {
   console.log("GET USER(ID)");
-  const response = await fetch(`${apiURL}/user/${id}`, {
+  const response = await fetch(`${apiURL}/user/${userId}`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
     }),
