@@ -180,14 +180,22 @@ const TwitterThread = () => {
               return (
                 <Row key={i}>
                   <Col>
-                    <Card>
-                      <Card.Header>{post.userId}</Card.Header>
+                    <Card style={{ width: "1196px", marginLeft: "100px" }}>
+                      <Card.Header>
+                        <h6>{post.title}</h6>
+                        <small>
+                          Last updated:
+                          {post.lastUpdate}
+                        </small>
+                        <br />
+                        <small>Created by: {post.createdBy}</small>
+                      </Card.Header>
                       <Card.Body>
                         <Card.Text>{post.body}</Card.Text>
                         {/**
                          * Edit button
                          */}
-                        {KeyCloakService.GetId() === post.userId ? (
+                        {KeyCloakService.GetUserName() === post.createdBy ? (
                           <Button
                             style={{ marginLeft: "1050px" }}
                             onClick={() => {

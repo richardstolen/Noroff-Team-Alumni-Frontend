@@ -224,6 +224,12 @@ export async function getPosts() {
   if (response.ok) {
     const posts = await response.json();
     posts.map((post) => {
+      post.comments.map((comment) => {
+        const date = new Date(comment.lastUpdate);
+        const month = date.toLocaleString("default", { month: "long" });
+        const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
+        comment.lastUpdate = dateString;
+      });
       const date = new Date(post.lastUpdate);
       const month = date.toLocaleString("default", { month: "long" });
       const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
