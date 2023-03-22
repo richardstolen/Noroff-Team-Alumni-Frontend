@@ -74,6 +74,16 @@ const TwitterThread = () => {
     handleCloseModal();
   }
 
+  async function refreshPage() {
+    document.body.style.cursor = "wait";
+    // Calling get posts to refresh page
+    fetchData().then((posts) => {
+      setPosts(mapPost(posts));
+      Storage.setPosts(posts);
+      document.body.style.cursor = "default";
+    });
+  }
+
   const mapPost = (posts) => {
     return posts.map((post, i) => {
       return (
@@ -206,6 +216,14 @@ const TwitterThread = () => {
 
   return (
     <>
+      <Button
+        style={{
+          marginLeft: "400px",
+        }}
+        onClick={refreshPage}
+      >
+        Refresh Timeline
+      </Button>
       <div>
         {posts ? (
           posts

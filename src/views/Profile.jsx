@@ -13,9 +13,11 @@ import {
 } from "../api/apiHandler";
 import KeyCloakService from "../security/KeyCloakService.ts";
 import Storage from "../storage/storage";
+import { PulseLoader } from "react-spinners";
 // import { PulseLoader } from "react-spinners";
 
 function Profile({ user_id }) {
+  const searchedUser = Storage.getSearchedUser();
   const [user, setUser] = useState(null);
   const [show, setShow] = useState(false);
   const [newBio, setNewBio] = useState("");
@@ -81,16 +83,11 @@ function Profile({ user_id }) {
     return (
       <div className="text-center">
         <NavBar1 />
-        Loading...
+        <PulseLoader className="spinning-wheel" color="#0d6efd" />
       </div>
     );
-    //   <div>
-    //   <PulseLoader className="spinning-wheel" color="#0d6efd" />
-    //   </div>
-    // </div>)
   } else {
-    if (!KeyCloakService.GetId()) {
-      //=== searchedUser.userId legge til dette
+    if (searchedUser != null) {
       return (
         <div className="text-center text-muted mb-4">
           <>

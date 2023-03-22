@@ -32,7 +32,6 @@ export async function getUser(id) {
   }
 }
 
-
 export async function editUsername(username) {
   console.log(username);
   const response = await fetch(`${apiURL}/user/${KeyCloakService.GetId()}`, {
