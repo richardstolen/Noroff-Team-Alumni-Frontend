@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
 import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
@@ -15,12 +16,11 @@ const EventThread = () => {
 
   useEffect(() => {
     let eventFromStorage = Storage.getEventByUser();
-    console.log(eventFromStorage)
     if (eventFromStorage == null) {
-      fetchData().then(event=> {
+      fetchData().then(event => {
         setEvent(mapEvents(event));
         Storage.setEvent(event);
-        
+
       });
       console.log(event)
     } else {
@@ -31,10 +31,12 @@ const EventThread = () => {
 
   const mapEvents = (events) => {
     return events.map((event, i) => {
-      return <EventCards  prop={event} key={i} style={{textAlign: "center"}}>{event.description}</EventCards>})
-  }
+      return <EventCards prop={event} key={i} style={{ textAlign: "center" }}>{event.description}</EventCards>})
+    }
+    
+  {/* <Button style ={{ textAlign: "center"}} variant="primary" onClick={createEvent}>Create new event</Button> */}
 
-
+  
   // event.map((event, i) => {
   //   return ( <p
   //     prop={event}
@@ -47,11 +49,14 @@ const EventThread = () => {
   //     }}>
   //       {event.description}
   //   </p> )
-  
+
 
   return (
     <>{event ? event : <PulseLoader className="spinning-wheel" color="#0d6efd" />}</>
+
   )
 }
 
 export default EventThread;
+
+

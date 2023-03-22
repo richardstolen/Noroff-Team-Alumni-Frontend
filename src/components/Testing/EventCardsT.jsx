@@ -16,6 +16,7 @@ function EventCards(event) {
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
       <Card style={{ width: "18rem", margin: "1rem" }}>
         <Card.Body>
+          {/* <Card.Text>{event.prop.title}</Card.Text> */}
           <Card.Text>{event.prop.description}</Card.Text>
           <Button variant="primary" onClick={() => handleJoinEvent(event.prop.description)}>
             Leave event
