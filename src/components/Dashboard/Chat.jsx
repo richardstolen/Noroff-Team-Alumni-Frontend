@@ -185,34 +185,43 @@ function Chat() {
           </MDBCol>
 
           <MDBCol md="6" lg="7" xl="8">
-            <MDBTypography
-              listUnStyled
-              className="scroll"
-              style={{
-                display: "flex",
-                flexDirection: "column-reverse",
-                maxHeight: "500px",
-                overflowY: "scroll",
-              }}
-            >
-              {dmChat}
-            </MDBTypography>
-            <MDBTextArea
-              className="bg-white mb-3"
-              id="textArea"
-              rows={4}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-            />
-            <MDBBtn
-              color="info"
-              rounded
-              className="float-end"
-              onClick={handleSendMessage}
-            >
-              Send
-            </MDBBtn>
+            <MDBRow>
+              <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
+                <h5 className="font-weight-bold mb-3 text-center text-lg-start">
+                  {current}
+                </h5>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBTypography
+                listUnStyled
+                className="scroll"
+                style={{
+                  display: "flex",
+                  flexDirection: "column-reverse",
+                  maxHeight: "500px",
+                  overflowY: "scroll",
+                }}
+              >
+                {dmChat}
+              </MDBTypography>
+              <MDBTextArea
+                className="bg-white mb-3"
+                id="textArea"
+                rows={4}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+              />
+              <MDBBtn
+                color="info"
+                rounded
+                className="float-end"
+                onClick={handleSendMessage}
+              >
+                Send
+              </MDBBtn>
+            </MDBRow>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
