@@ -197,7 +197,7 @@ function Profile({ user_id }) {
               className="d-flex justify-content-center align-items-center mb-4"
               style={{ color: "#666" }}
             >
-              <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
+              <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5", fontStyle: "italic" }}>
                 {user.status}&nbsp;&nbsp;&nbsp;
               </h4>
               <div className="d-flex align-items-center">

@@ -8,13 +8,14 @@ import DateObject from "react-date-object";
 function CreateEventButton() {
     const [showModal, setShowModal] = useState(false);
     const [eventDescription, setEventDescription] = useState('');
-    const [eventDate, setEventDate]= useState(Date)
+    const [eventDate, setEventDate]= useState('')
     const [event, setEvent] = useState(null);
 
 
     const handleClick = async () => {
         try {
-            const newEvent = await createEvent(eventDescription, eventDate);
+            const formattedDate = new Date(eventDate).toLocaleDateString()
+            const newEvent = await createEvent(eventDescription, formattedDate); 
             setEvent(newEvent);
             setShowModal(false);
 
@@ -28,12 +29,12 @@ function CreateEventButton() {
     const handleDescriptionInputChange = (event) => {
         setEventDescription(event.target.value);
     }
-    const handleEventInputChange = (event) => {
+    const handleDateInputChange = (event) => {
         setEventDate(event.target.value);
       };
 
     return (
-        <div className='create-group-button'>
+        <div className='create-button'>
             <Button className='mt-5' onClick={() => setShowModal(true)}>
                 Create Event
             </Button>
@@ -42,7 +43,7 @@ function CreateEventButton() {
                     <Modal.Title>Create a New Event</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Event>
+                    <Form.Group>
                         <Form.Label>Event Description</Form.Label>
                         <Form.Control
                             type='text'
@@ -50,7 +51,16 @@ function CreateEventButton() {
                             value={eventDescription}
                             onChange={handleDescriptionInputChange}
                         />
-                    </Form.Event>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Event Date</Form.Label>
+                        <Form.Control
+                            type='date' 
+                            placeholder='Enter event date'
+                            value={eventDate}
+                            onChange={handleDateInputChange}
+                        />
+                    </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleClose}>

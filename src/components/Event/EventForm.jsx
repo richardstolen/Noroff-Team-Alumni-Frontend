@@ -33,9 +33,6 @@ const EventThread = () => {
     return events.map((event, i) => {
       return <EventCards prop={event} key={i} style={{ textAlign: "center" }}>{event.description}</EventCards>})
     }
-    
-  {/* <Button style ={{ textAlign: "center"}} variant="primary" onClick={createEvent}>Create new event</Button> */}
-
   
   // event.map((event, i) => {
   //   return ( <p
