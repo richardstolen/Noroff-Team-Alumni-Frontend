@@ -1,7 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 
-//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-const apiURL = "https://localhost:7288";
+const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+//const apiURL = "https://localhost:7288";
 
 //export const user_id = "BF47A31B-1EFC-4E11-8765-D530577FDCB3";
 
@@ -32,7 +32,6 @@ export async function getUser(userId) {
   }
 }
 
-
 export async function editUserProfilePicture(image) {
   console.log(image);
   const response = await fetch(`${apiURL}/user/${KeyCloakService.GetId()}`, {
@@ -50,7 +49,6 @@ export async function editUserProfilePicture(image) {
     return response.ok;
   }
 }
-
 
 export async function editUsername(username) {
   console.log(username);
