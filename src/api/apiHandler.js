@@ -153,6 +153,24 @@ export async function getGroups() {
   }
 }
 
+export async function getGroup(groupId) {
+  console.log("GET GROUP(ID)");
+  const response = await fetch(`${apiURL}/group/${groupId}`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const group = await response.json();
+    console.log(group);
+    return group;
+  } 
+  // else{
+  //   console.log("Error fetching the group data:", response);
+  // }
+}
+
+
 export async function createUser() {
   console.log("CREATE USER");
   const response = await fetch(`${apiURL}/user`, {
@@ -258,6 +276,8 @@ export async function getPosts() {
     return posts;
   }
 }
+
+//getGroupPost 
 
 export async function editPost(post) {
   console.log("EDIT POST");

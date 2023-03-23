@@ -30,6 +30,13 @@
   text-align: center;
 }
 
+.centralize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: '100vh'; */
+}
+
 .container-test {
   background-color: grey;
 }
@@ -61,3 +68,4 @@
   top: 0;
   z-index: 100;
 } */
+
