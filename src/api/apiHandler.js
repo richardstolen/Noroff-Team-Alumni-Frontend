@@ -190,7 +190,7 @@ export async function joinGroup(group_id) {
   }
 }
 
-export async function sendMessage(title, body, targetUser) {
+export async function sendMessage(body, targetUser) {
   console.log("SEND MESSAGE");
   const target_user = await getUserByUsername(targetUser);
   const response = await fetch(`${apiURL}/post`, {
@@ -201,7 +201,6 @@ export async function sendMessage(title, body, targetUser) {
     },
     body: JSON.stringify({
       userId: KeyCloakService.GetId(),
-      title: title,
       body: body,
       targetUser: target_user.userId,
     }),
@@ -223,6 +222,20 @@ export async function getMessages() {
   });
   if (response.ok) {
     const messages = await response.json();
+    messages.map((messageList) => {
+      return messageList.messages.map((message) => {
+        const now = new Date();
+        var FIVE_MIN = 5 * 60 * 1000;
+        const date = new Date(message.lastUpdate);
+        if (now - date > FIVE_MIN) {
+          const month = date.toLocaleString("default", { month: "long" });
+          const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
+          message.lastUpdate = dateString;
+        } else {
+          message.lastUpdate = "Just now";
+        }
+      });
+    });
     return messages;
   }
 }
