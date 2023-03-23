@@ -302,16 +302,18 @@ export async function getPosts() {
 }
 
 
-export async function getGroupPost(groupId) {
+export async function getGroupPost(id) {
   console.log("GET groupPost(ID)");
-  const response = await fetch(`${apiURL}/post/group/${groupId}`, {
+  const response = await fetch(`${apiURL}/post/group/group_id`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      targetGroup: id
+      // "content-type": "application/json",
     }),
   });
   if (response.ok) {
     const post = await response.json();
-    // console.log(post);
+    console.log(post);
     return post;
   } 
 }
