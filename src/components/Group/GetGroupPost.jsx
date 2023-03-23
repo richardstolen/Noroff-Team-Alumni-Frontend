@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { getGroupPost } from "../../api/apiHandler";
 import Card  from "react-bootstrap/Card";
+import { id } from "date-fns/locale";
+import { useParams } from "react-router-dom";
 
 const GetGroupPost = () => {
 

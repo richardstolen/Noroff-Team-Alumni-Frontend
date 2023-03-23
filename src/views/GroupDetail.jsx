@@ -29,6 +29,7 @@ const GroupDetail = () => {
     <>
       <NavBar1 />
       <Sidebar/>
+      <CalendarSidebar/> 
       <div className="centralize">
       
         {group ? (
@@ -48,7 +49,7 @@ const GroupDetail = () => {
       <GetGroupPost/>
 
       
-      <CalendarSidebar/>    
+         
     </>
   );
 };
