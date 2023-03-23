@@ -151,6 +151,21 @@ export async function getGroups() {
   }
 }
 
+export async function getGroup(groupId) {
+  console.log("GET GROUP(ID)");
+  const response = await fetch(`${apiURL}/group/${groupId}`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const group = await response.json();
+    console.log(group);
+    return group;
+  } 
+}
+
+
 export async function createUser() {
   console.log("CREATE USER");
   const response = await fetch(`${apiURL}/user`, {
@@ -284,6 +299,21 @@ export async function getPosts() {
     });
     return posts;
   }
+}
+
+
+export async function getGroupPost(groupId) {
+  console.log("GET groupPost(ID)");
+  const response = await fetch(`${apiURL}/post/group/${groupId}`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const post = await response.json();
+    // console.log(post);
+    return post;
+  } 
 }
 
 export async function editPost(post) {

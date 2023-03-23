@@ -30,6 +30,13 @@
   text-align: center;
 }
 
+.centralize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: '100vh'; */
+}
+
 .container-test {
   background-color: grey;
 }
@@ -69,3 +76,4 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+

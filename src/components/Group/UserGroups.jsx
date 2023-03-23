@@ -6,7 +6,7 @@ import NavDropdown  from "react-bootstrap/NavDropdown";
 const UserGroups = ({ groups }) => {
   
   const groupLinks = groups.map((group) => (
-    <NavDropdown.Item key={group.groupId} href={"/group-detail"}>
+    <NavDropdown.Item key={group.groupId} href={`/group-detail/${group.groupId}`}>
       {group.name}
     </NavDropdown.Item>
   

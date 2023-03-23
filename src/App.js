@@ -50,7 +50,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/group-list" element={<GroupList />} />
-            <Route path="/group-detail" element={<GroupDetail />} />
+            <Route path="/group-detail/:id" element={<GroupDetail />} />
             <Route path="/topic-list" element={<TopicList />} />
             <Route path="/event-list" element={<EventList />} />
           </Routes>
