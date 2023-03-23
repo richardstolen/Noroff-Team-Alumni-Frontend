@@ -165,9 +165,6 @@ export async function getGroup(groupId) {
     console.log(group);
     return group;
   } 
-  // else{
-  //   console.log("Error fetching the group data:", response);
-  // }
 }
 
 
@@ -277,7 +274,20 @@ export async function getPosts() {
   }
 }
 
-//getGroupPost 
+
+export async function getGroupPost(groupId) {
+  console.log("GET groupPost(ID)");
+  const response = await fetch(`${apiURL}/post/group/${groupId}`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const post = await response.json();
+    // console.log(post);
+    return post;
+  } 
+}
 
 export async function editPost(post) {
   console.log("EDIT POST");

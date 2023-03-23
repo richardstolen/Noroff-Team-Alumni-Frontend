@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGroup } from "../api/apiHandler";
 import Card  from "react-bootstrap/Card";
+import GetGroupPost from "../components/Group/GetGroupPost";
 
 const GroupDetail = () => {
 
@@ -43,6 +44,10 @@ const GroupDetail = () => {
         )}
       
       </div>
+
+      <GetGroupPost/>
+
+      
       <CalendarSidebar/>    
     </>
   );
