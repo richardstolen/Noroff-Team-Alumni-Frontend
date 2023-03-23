@@ -14,6 +14,7 @@ import {
   deletePost,
   editPost,
   getPosts,
+  sendMessage,
 } from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
@@ -54,13 +55,13 @@ const TwitterThread = () => {
   async function handlePost(action) {
     document.body.style.cursor = "wait";
     if (action === "delete") {
-      deletePost(postEdit);
+      await deletePost(postEdit);
     } else if (editMode) {
       // Calling edit post in API with the changed post object
-      editPost(postEdit);
+      await editPost(postEdit);
     } else {
       // IF not edit mode => comment
-      commentPost(postEdit);
+      await commentPost(postEdit);
     }
 
     // Calling get posts to refresh page
@@ -180,14 +181,22 @@ const TwitterThread = () => {
               return (
                 <Row key={i}>
                   <Col>
-                    <Card>
-                      <Card.Header>{post.userId}</Card.Header>
+                    <Card style={{ width: "1196px", marginLeft: "100px" }}>
+                      <Card.Header>
+                        <h6>{post.title}</h6>
+                        <small>
+                          Last updated:
+                          {post.lastUpdate}
+                        </small>
+                        <br />
+                        <small>Created by: {post.createdBy}</small>
+                      </Card.Header>
                       <Card.Body>
                         <Card.Text>{post.body}</Card.Text>
                         {/**
                          * Edit button
                          */}
-                        {KeyCloakService.GetId() === post.userId ? (
+                        {KeyCloakService.GetUserName() === post.createdBy ? (
                           <Button
                             style={{ marginLeft: "1050px" }}
                             onClick={() => {

@@ -1,7 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 
-const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-//const apiURL = "https://localhost:7288";
+//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+const apiURL = "https://localhost:7288";
 
 //export const user_id = "BF47A31B-1EFC-4E11-8765-D530577FDCB3";
 
@@ -204,28 +204,23 @@ export async function joinGroup(group_id) {
       "Content-Type": "application/json",
       user_id: KeyCloakService.GetId(),
     }),
-    // body: JSON.stringify({
-
-    // }),
   });
-
   if (response.ok) {
-    const group = await response.json();
-    return group;
+    return response;
   }
 }
 
-export async function sendMessage(title, body, targetUser) {
+export async function sendMessage(body, targetUser) {
   console.log("SEND MESSAGE");
   const target_user = await getUserByUsername(targetUser);
-  const response = await fetch(`${apiURL}/Posts`, {
+  const response = await fetch(`${apiURL}/post`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
     },
     body: JSON.stringify({
       userId: KeyCloakService.GetId(),
-      title: title,
       body: body,
       targetUser: target_user.userId,
     }),
@@ -234,6 +229,34 @@ export async function sendMessage(title, body, targetUser) {
   if (response.ok) {
     const user = await response.json();
     return user;
+  }
+}
+
+export async function getMessages() {
+  console.log("GET MESSAGES");
+  const response = await fetch(`${apiURL}/post/user`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      user_id: KeyCloakService.GetId(),
+    }),
+  });
+  if (response.ok) {
+    const messages = await response.json();
+    messages.map((messageList) => {
+      return messageList.messages.map((message) => {
+        const now = new Date();
+        var FIVE_MIN = 5 * 60 * 1000;
+        const date = new Date(message.lastUpdate);
+        if (now - date > FIVE_MIN) {
+          const month = date.toLocaleString("default", { month: "long" });
+          const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
+          message.lastUpdate = dateString;
+        } else {
+          message.lastUpdate = "Just now";
+        }
+      });
+    });
+    return messages;
   }
 }
 
@@ -249,6 +272,12 @@ export async function getPosts() {
   if (response.ok) {
     const posts = await response.json();
     posts.map((post) => {
+      post.comments.map((comment) => {
+        const date = new Date(comment.lastUpdate);
+        const month = date.toLocaleString("default", { month: "long" });
+        const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
+        comment.lastUpdate = dateString;
+      });
       const date = new Date(post.lastUpdate);
       const month = date.toLocaleString("default", { month: "long" });
       const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;

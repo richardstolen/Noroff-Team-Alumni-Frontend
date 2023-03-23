@@ -3,31 +3,57 @@ import Button from "react-bootstrap/Button";
 import { getUser, joinGroup } from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { useEffect, useState } from "react";
+import GroupAPI from "../../api/groupApi";
+import KeyCloakService from "../../security/KeyCloakService.ts";
+
+const fetchData = async () => {
+  const data = await getUser(KeyCloakService.GetId());
+  return data;
+};
 
 function GroupCardsT(group) {
   const [user, setUser] = useState(Storage.getUser());
 
   useEffect(() => {
-    console.log("Loading");
-  }, [user, setUser]);
-  const handleJoinGroup = async () => {
-    try {
-      const result = await joinGroup(group.prop.groupId).then(async () => {
-        console.log("async ");
-        setUser(
-          await getUser().then(() => {
-            Storage.setUser(user);
-          })
-        );
+    let userFromStorage = Storage.getUser();
+    if (!userFromStorage) {
+      fetchData().then((user) => {
+        setUser(user);
+        Storage.setUser(user);
       });
-      console.log("success", result);
-    } catch (error) {
-      console.log("error", error);
+    } else {
+      Storage.setUser(userFromStorage);
+    }
+  }, [user, setUser]);
+
+  const handleJoinGroup = async () => {
+    const result = await joinGroup(group.prop.groupId).then(
+      (response) => response
+    );
+
+    if (result.ok) {
+      fetchData().then((user) => {
+        setUser(user);
+        Storage.setUser(user);
+      });
     }
   };
 
   const handleLeaveGroup = async () => {
-    alert("Leave group not implemented");
+    try {
+      const result = await GroupAPI.leaveGroup(group.prop.groupId).then(
+        (response) => response
+      );
+
+      if (result.ok) {
+        fetchData().then((user) => {
+          setUser(user);
+          Storage.setUser(user);
+        });
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">

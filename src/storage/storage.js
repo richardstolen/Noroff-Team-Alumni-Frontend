@@ -5,6 +5,7 @@ const GROUPS_KEY = "groups";
 const TOPICS_KEY = "topics";
 const POSTS_KEY = "posts";
 const EVENT_KEY = "event";
+const DM_KEY = "direct-messages";
 
 function getUser() {
   return JSON.parse(storage.getItem(USER_KEY));
@@ -30,17 +31,17 @@ function setPosts(posts) {
   storage.setItem(POSTS_KEY, JSON.stringify(posts));
 }
 
-function getEventByUser(){
+function getEventByUser() {
   return JSON.parse(storage.getItem(EVENT_KEY));
 }
 
-function setEvent(event){
-  storage.setItem(EVENT_KEY, JSON.stringify(event))
+function setEvent(event) {
+  storage.setItem(EVENT_KEY, JSON.stringify(event));
 }
 
 function getEventById(id) {
   return JSON.parse(storage.getItem(EVENT_KEY));
-} 
+}
 
 function setSearchedUser(user) {
   storage.setItem(SEARCHED_USER_KEY, JSON.stringify(user));
@@ -58,6 +59,14 @@ function clearStorage() {
   storage.clear();
 }
 
+function setDirectMessages(messages) {
+  storage.setItem(DM_KEY, JSON.stringify(messages));
+}
+
+function getDirectMessages() {
+  return JSON.parse(storage.getItem(DM_KEY));
+}
+
 const Storage = {
   getUser,
   setUser,
@@ -72,6 +81,8 @@ const Storage = {
   getSearchedUser,
   clearSearchedUser,
   clearStorage,
+  setDirectMessages,
+  getDirectMessages,
 };
 
 export default Storage;
