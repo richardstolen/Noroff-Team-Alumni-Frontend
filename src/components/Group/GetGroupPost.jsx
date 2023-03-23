@@ -1,43 +1,47 @@
 import { useEffect, useState } from "react";
 import { getGroupPost } from "../../api/apiHandler";
-import Card  from "react-bootstrap/Card";
+import Card from "react-bootstrap/Card";
 import { id } from "date-fns/locale";
 import { useParams } from "react-router-dom";
+import Navbar1 from "../Navbar/Navbar1";
+import CalendarSidebar from "../Sidebar/CalendarSidebar";
+import Sidebar from "../Sidebar/Sidebar";
+import TimelineFeed from "../Shared/TimelineFeed";
+import { PulseLoader } from "react-spinners";
+
+const fetchData = async (id) => {
+  const data = await getGroupPost(id);
+  return data;
+};
 
 const GetGroupPost = () => {
-
-
-  const [post, setPost] = useState(null);
   const { id } = useParams();
+  const [posts, setPosts] = useState();
+  const [value, setState] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getGroupPost(id);   
-        setPost(data);
-      } catch (error) {
-        console.error(error);
-      }
+    if (value) {
+      fetchData(id).then((posts) => {
+        setPosts(posts);
+        document.body.style.cursor = "default";
+        setState(false);
+      });
     }
-    fetchData();
-  }, [id]);
+
+    fetchData(id).then((posts) => {
+      setPosts(posts);
+    });
+  }, [value, setPosts, setState]);
 
   return (
     <>
-      <div className="centralize">
-      
-        {post ? (
-          <div>
-            <h1>{post.title}</h1>
-            <h2>Created by: {post.userId}</h2>
-            <p>{post.body}</p>
-          </div>
-        ): (
-          <p>Loading...</p>
-        
-        )}
-      
-      </div>  
+      <CalendarSidebar />
+      <Sidebar />
+      {!posts ? (
+        <PulseLoader className="spinning-wheel" color="#0d6efd" />
+      ) : (
+        <TimelineFeed onChange={setState} postsFromParent={posts} />
+      )}
     </>
   );
 };
