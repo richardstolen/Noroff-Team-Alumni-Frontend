@@ -14,9 +14,9 @@ function GroupButton() {
   const handleClick = async () => {
     try {
       const newGroup = await createGroup(groupName, groupDesc, isPrivate);
-      setGroup(newGroup);
-      setShowModal(false);  
-    //   window.location.reload();
+      setGroup(newGroup); 
+      handleClose();
+      //   window.location.reload();
     } catch (error) {
       console.error('Failed to create group:', error);
       // Handle error
@@ -38,7 +38,7 @@ function GroupButton() {
   }
 
   return (
-    <div className='create-group-button'>
+    <div className='create-button'>
       <Button className='mt-5' onClick={() => setShowModal(true)}>
         Create Group
       </Button>
