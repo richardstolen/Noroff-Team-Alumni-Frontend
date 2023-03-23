@@ -14,18 +14,11 @@ import {
   deletePost,
   editPost,
   getPosts,
-  sendMessage,
 } from "../../api/apiHandler";
-import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 
-const fetchData = async () => {
-  const data = await getPosts();
-  return data;
-};
-
-const TwitterThread = () => {
+const TimelineFeed = ({ onChange, postsFromParent }) => {
   const [showReplies, setShowReplies] = useState(-1);
   const [posts, setPosts] = useState([]);
   const [editMode, setEditMode] = useState(true);
@@ -38,16 +31,10 @@ const TwitterThread = () => {
   const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
-    let postsFromStorage = Storage.getPosts();
-    if (postsFromStorage === null) {
-      fetchData().then((posts) => {
-        setPosts(mapPost(posts));
-        Storage.setPosts(posts);
-      });
-    } else {
-      setPosts(mapPost(postsFromStorage));
+    if (postsFromParent) {
+      setPosts(mapPost(postsFromParent));
     }
-  }, [showReplies, setShowReplies, postEdit, setPostEdit, setPosts]);
+  }, [showReplies, setShowReplies, postsFromParent]);
 
   /**
    * Function for handling edit post
@@ -64,12 +51,8 @@ const TwitterThread = () => {
       await commentPost(postEdit);
     }
 
-    // Calling get posts to refresh page
-    fetchData().then((posts) => {
-      setPosts(mapPost(posts));
-      Storage.setPosts(posts);
-      document.body.style.cursor = "default";
-    });
+    // Set on change to true, which triggers the parent component
+    onChange(true);
 
     // Closing the modal
     handleCloseModal();
@@ -77,12 +60,7 @@ const TwitterThread = () => {
 
   async function refreshPage() {
     document.body.style.cursor = "wait";
-    // Calling get posts to refresh page
-    fetchData().then((posts) => {
-      setPosts(mapPost(posts));
-      Storage.setPosts(posts);
-      document.body.style.cursor = "default";
-    });
+    onChange(true);
   }
 
   const mapPost = (posts) => {
@@ -312,4 +290,4 @@ const TwitterThread = () => {
   );
 };
 
-export default TwitterThread;
+export default TimelineFeed;
