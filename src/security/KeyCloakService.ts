@@ -32,19 +32,27 @@ const Login = (onAuthenticatedCallback: Function) => {
 const UserName = () => keycloak.tokenParsed?.preferred_username;
 function Logout() {
   Storage.clearStorage();
-  keycloak.logout();
+  return keycloak.logout({ redirectUri: "http://localhost:3000" });
 }
 const AccessToken = () => keycloak.token;
 const RefreshToken = () => keycloak.refreshToken;
 const Id = () => keycloak.tokenParsed?.sub;
+const get = () => {
+  console.log(keycloak);
+  return keycloak;
+};
+const login2 = () => keycloak.login;
+const auth = () => keycloak.authenticated;
 
 const KeyCloakService = {
-  CallLogin: Login,
+  GetKeyCloak: get,
+  CallLogin: login2,
   GetUserName: UserName,
   GetAccesstoken: AccessToken,
   GetRefreshToken: RefreshToken,
   GetId: Id,
   CallLogout: Logout,
+  IsAuth: auth,
 };
 
 export default KeyCloakService;
