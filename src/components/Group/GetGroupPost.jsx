@@ -35,8 +35,7 @@ const GetGroupPost = () => {
 
   return (
     <>
-      <CalendarSidebar />
-      <Sidebar />
+      
       {!posts ? (
         <PulseLoader className="spinning-wheel" color="#0d6efd" />
       ) : (
