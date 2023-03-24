@@ -14,6 +14,7 @@ import TopicList from "./views/TopicList";
 import Navbar1 from "./components/Navbar/Navbar1";
 import EventList from "./views/Event";
 import GroupDetail from "./views/GroupDetail";
+import TopicDetail from "./views/TopicDetail";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -52,6 +53,7 @@ function App() {
             <Route path="/group-list" element={<GroupList />} />
             <Route path="/group-detail/:id" element={<GroupDetail />} />
             <Route path="/topic-list" element={<TopicList />} />
+            <Route path="/topic-detail/:id" element={<TopicDetail />} />
             <Route path="/event-list" element={<EventList />} />
           </Routes>
         </>

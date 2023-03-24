@@ -1,9 +1,10 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { getUser, joinGroup } from "../../api/apiHandler";
+import { getUser} from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { useEffect, useState } from "react";
-import GroupAPI from "../../api/groupApi";
+import {joinTopic }from "../../api/topicApi";
+import TopicAPI from "../../api/topicApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 
 const fetchData = async () => {
@@ -11,7 +12,7 @@ const fetchData = async () => {
   return data;
 };
 
-function GroupCardsT(group) {
+function TopicCards(topic) {
   const [user, setUser] = useState(Storage.getUser());
 
   useEffect(() => {
@@ -26,8 +27,8 @@ function GroupCardsT(group) {
     }
   }, [user, setUser]);
 
-  const handleJoinGroup = async () => {
-    const result = await joinGroup(group.prop.groupId).then(
+  const handleJoinTopic = async () => {
+    const result = await joinTopic(topic.prop.topicId).then(
       (response) => response
     );
 
@@ -39,9 +40,9 @@ function GroupCardsT(group) {
     }
   };
 
-  const handleLeaveGroup = async () => {
+  const handleLeaveTopic = async () => {
     try {
-      const result = await GroupAPI.leaveGroup(group.prop.groupId).then(
+      const result = await TopicAPI.leaveTopic(topic.prop.topicId).then(
         (response) => response
       );
 
@@ -57,28 +58,30 @@ function GroupCardsT(group) {
   };
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
+      {topic?.prop && (
       <Card style={{ width: "18rem", margin: "1rem" }}>
         <Card.Body>
-          <Card.Title>{group.prop.name}</Card.Title>
-          <Card.Text>{group.prop.description}</Card.Text>
-          {!user.groups.some((x) => x.name === group.prop.name) ? (
+          <Card.Title>{topic.prop.name}</Card.Title>
+          <Card.Text>{topic.prop.description}</Card.Text>
+          {!user.topics.some((x) => x.name === topic.prop.name) ? (
             <Button
               variant="primary"
-              onClick={() => handleJoinGroup(group.prop)}
+              onClick={() => handleJoinTopic(topic.prop)}
             >
-              Join Group
+              Join Topic
             </Button>
           ) : (
             <Button
               variant="primary"
-              onClick={() => handleLeaveGroup(group.prop)}
+              onClick={() => handleLeaveTopic(topic.prop)}
             >
-              Leave Group
+              Leave Topic
             </Button>
           )}
         </Card.Body>
       </Card>
+      )}
     </div>
   );
 }
-export default GroupCardsT;
+export default TopicCards;

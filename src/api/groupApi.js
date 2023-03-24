@@ -1,7 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 
-//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-const apiURL = "https://localhost:7288";
+const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+// const apiURL = "https://localhost:7288";
 
 async function leaveGroup(group_id) {
   console.log("LEAVE GROUP");

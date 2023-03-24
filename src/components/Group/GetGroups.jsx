@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { getGroups } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
-import GroupCardsT from "./GroupCardsT";
+import GroupCards from "./GroupCards";
 
 
 const fetchData = async () => {
@@ -10,7 +10,7 @@ const fetchData = async () => {
   return data;
 };
 
-function GetGroupsT() {
+function GetGroups() {
   const [loading, setLoading] = useState(true);
   const [grouplist, setGroupList] = useState([]);
 
@@ -18,11 +18,11 @@ function GetGroupsT() {
     fetchData().then((groups) => {
       setGroupList(
         groups.map((group, i) => {
-          return <GroupCardsT 
+          return <GroupCards 
           prop={group} 
           key={i}>
 
-          </GroupCardsT>;
+          </GroupCards>;
         })
       );
       setLoading(false);
@@ -38,11 +38,11 @@ function GetGroupsT() {
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
       ) : (
-        <div className="groupList">{grouplist}</div>
+        <div className="centralize-2">{grouplist}</div>
       )}
     </div>
   );
 }
-export default GetGroupsT;
+export default GetGroups;
 
 // user = await getUser(KeyCloakService.GetId());
