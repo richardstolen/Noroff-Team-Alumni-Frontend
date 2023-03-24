@@ -1,7 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 
-//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-const apiURL = "https://localhost:7288";
+const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+// const apiURL = "https://localhost:7288";
 
 //export const user_id = "BF47A31B-1EFC-4E11-8765-D530577FDCB3";
 
