@@ -1,6 +1,7 @@
 import Navbar1 from '../components/Navbar/Navbar1';
-import TopicCardsT from '../components/Testing/TopicCardsT';
 import Sidebar from '../components/Sidebar/Sidebar';
+import TopicCards from '../components/Topic/TopicCards';
+import TopicButton from '../components/Topic/TopicButton';
 
 
 
@@ -9,7 +10,8 @@ const TopicList = () => {
     <>
     <Navbar1/>
     <Sidebar/>
-    <TopicCardsT/>
+    <TopicButton/>
+    <TopicCards/>
   
     </>
   );

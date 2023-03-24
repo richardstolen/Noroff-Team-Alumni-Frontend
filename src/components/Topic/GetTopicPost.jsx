@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { getGroupPost } from "../../api/apiHandler";
+import { getTopicPost } from "../../api/topicApi";
 import { id } from "date-fns/locale";
 import { useParams } from "react-router-dom";
 import TimelineFeed from "../Shared/TimelineFeed";
 import { PulseLoader } from "react-spinners";
 
 const fetchData = async (id) => {
-  const data = await getGroupPost(id);
+  const data = await getTopicPost(id);
   return data;
 };
 
-const GetGroupPost = () => {
+const GetTopicPost = () => {
   const { id } = useParams();
   const [posts, setPosts] = useState();
   const [value, setState] = useState(false);
@@ -41,4 +41,4 @@ const GetGroupPost = () => {
   );
 };
 
-export default GetGroupPost;
+export default GetTopicPost;
