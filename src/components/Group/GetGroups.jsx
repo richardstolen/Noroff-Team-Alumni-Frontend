@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { getGroups } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
-import GroupCardsT from "./GroupCardsT";
+import GroupCardsT from "./GroupCards";
 
 
 const fetchData = async () => {
@@ -10,7 +10,7 @@ const fetchData = async () => {
   return data;
 };
 
-function GetGroupsT() {
+function GetGroups() {
   const [loading, setLoading] = useState(true);
   const [grouplist, setGroupList] = useState([]);
 
@@ -43,6 +43,6 @@ function GetGroupsT() {
     </div>
   );
 }
-export default GetGroupsT;
+export default GetGroups;
 
 // user = await getUser(KeyCloakService.GetId());

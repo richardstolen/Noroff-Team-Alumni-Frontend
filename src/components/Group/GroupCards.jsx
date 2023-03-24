@@ -11,7 +11,7 @@ const fetchData = async () => {
   return data;
 };
 
-function GroupCardsT(group) {
+function GroupCards(group) {
   const [user, setUser] = useState(Storage.getUser());
 
   useEffect(() => {
@@ -81,4 +81,4 @@ function GroupCardsT(group) {
     </div>
   );
 }
-export default GroupCardsT;
+export default GroupCards;
