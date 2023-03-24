@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
-import { getGroups } from "../../api/apiHandler";
+import { getTopics } from "../../api/topicApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import TopicCards from "./TopicCards";
 
 
 
 const fetchData = async () => {
-  const data = await getGroups();
+  const data = await getTopics();
   return data;
 };
 
@@ -17,18 +17,22 @@ function GetTopics() {
 
   useEffect(() => {
     fetchData().then((topics) => {
-      setTopicList(
-        topics.map((topic, i) => {
-          return <TopicCards
-          prop={topic} 
-          key={i}>
-
-          </TopicCards>;
-        })
-      );
-      setLoading(false);
+      if (topics) {
+        setTopicList(
+          topics.map((topic, i) => {
+            return (
+              <TopicCards prop={topic} key={i}>
+              </TopicCards>
+            );
+          })
+        );
+        setLoading(false);
+      } else {
+        console.error('Error: topics is undefined');
+      }
     });
   }, []);
+  
 
   
 

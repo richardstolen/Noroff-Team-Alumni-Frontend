@@ -58,6 +58,7 @@ function TopicCards(topic) {
   };
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
+      {topic?.prop && (
       <Card style={{ width: "18rem", margin: "1rem" }}>
         <Card.Body>
           <Card.Title>{topic.prop.name}</Card.Title>
@@ -79,6 +80,7 @@ function TopicCards(topic) {
           )}
         </Card.Body>
       </Card>
+      )}
     </div>
   );
 }

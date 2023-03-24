@@ -68,6 +68,21 @@ export async function getTopic(topic_id) {
   } 
 }
 
+export async function getTopics() {
+  console.log("GET TOPICS");
+  const response = await fetch(`${apiURL}/topic`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const topics = await response.json();
+    return topics;
+  }
+}
+
+
+
 async function leaveTopic(topic_id) {
   console.log("LEAVE TOPIC");
   const response = await fetch(`${apiURL}/topic/${topic_id}/remove`, {
