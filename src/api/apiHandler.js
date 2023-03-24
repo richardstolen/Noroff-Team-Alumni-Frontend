@@ -1,7 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 
-const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-//const apiURL = "https://localhost:7288";
+//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+const apiURL = "https://localhost:7288";
 
 //export const user_id = "BF47A31B-1EFC-4E11-8765-D530577FDCB3";
 
@@ -261,7 +261,7 @@ export async function getMessages() {
         var FIVE_MIN = 5 * 60 * 1000;
         const date = new Date(message.lastUpdate);
         if (now - date > FIVE_MIN) {
-          const month = date.toLocaleString("default", { month: "long" });
+          const month = date.toLocaleString("no-NO", { month: "long" });
           const dateString = ` ${date.getDate()}. ${month} at ${date.getHours()}:${date.getMinutes()}`;
           message.lastUpdate = dateString;
         } else {
@@ -302,16 +302,18 @@ export async function getPosts() {
 }
 
 
-export async function getGroupPost(groupId) {
+export async function getGroupPost(id) {
   console.log("GET groupPost(ID)");
-  const response = await fetch(`${apiURL}/post/group/${groupId}`, {
+  const response = await fetch(`${apiURL}/post/group/group_id`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      targetGroup: id
+      // "content-type": "application/json",
     }),
   });
   if (response.ok) {
     const post = await response.json();
-    // console.log(post);
+    console.log(post);
     return post;
   } 
 }
