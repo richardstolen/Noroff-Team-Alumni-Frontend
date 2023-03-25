@@ -24,6 +24,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   const [editMode, setEditMode] = useState(true);
   const [editCommentMode, setEditCommentMode] = useState(false);
 
+  const [search, setSearch] = useState("");
   /* Edit Modal */
   const [postEdit, setPostEdit] = useState({});
   const [showEditModal, setShowModal] = useState(false);
@@ -34,7 +35,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     if (postsFromParent) {
       setPosts(mapPost(postsFromParent));
     }
-  }, [showReplies, setShowReplies, postsFromParent]);
+  }, [showReplies, setShowReplies, search, postsFromParent]);
 
   /**
    * Function for handling edit post
@@ -64,6 +65,16 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   }
 
   const mapPost = (posts) => {
+    if (search != "") {
+      posts = posts.filter((post) => {
+        return (
+          post.body.toLowerCase().match(search.toLowerCase()) ||
+          post.title.toLowerCase().match(search.toLowerCase()) ||
+          post.createdBy.toLowerCase().match(search.toLowerCase()) ||
+          post.target.toLowerCase().match(search.toLowerCase())
+        );
+      });
+    }
     return posts.map((post, i) => {
       return (
         <Container key={i} className="w-50 p-3">
@@ -71,19 +82,49 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
             <Col>
               <Card>
                 <Card.Header>
-                  <h4>{post.title}</h4>
-                  <br />
-                  <small>Intended audience: {post.target}</small>
-                  <br />
-                  <small>
-                    Last updated:
-                    {post.lastUpdate}
-                  </small>
-                  <br />
-                  <small>Created by: {post.createdBy}</small>
+                  <Row>
+                    <Col xs={2} className="d-flex align-items-center">
+                      <img
+                        src={post.image}
+                        alt="avatar"
+                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                        width="80"
+                      />
+                    </Col>
+                    <Col>
+                      <h5>{post.title}</h5>
+                      <small>Intended audience: {post.target}</small>
+                      <br />
+                      <small>{post.createdBy}</small>
+                      <br />
+                      <small>{post.lastUpdate}</small>
+                    </Col>
+
+                    <Col xs={2} className="d-flex align-items-center">
+                      {/**
+                       * Edit button
+                       */}
+                      {KeyCloakService.GetUserName() === post.createdBy ? (
+                        <Button
+                          className="mt-2"
+                          onClick={() => {
+                            setEditMode(true);
+                            setPostEdit(post);
+                            setEditCommentMode(false);
+                            return handleShowModal();
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      ) : (
+                        <></>
+                      )}
+                    </Col>
+                  </Row>
                 </Card.Header>
                 <Card.Body>
                   <Card.Text>{post.body}</Card.Text>
+
                   <span>
                     <Image
                       src="Images/comment.png"
@@ -93,9 +134,13 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                     />
                     {post.comments.length}
                   </span>
+
+                  {/**
+                   * Hide/show replies
+                   */}
                   <Button
                     variant="link"
-                    className="mt-2"
+                    className="mt-2 me-2"
                     onClick={() => {
                       if (showReplies !== post.postId) {
                         setShowReplies(post.postId);
@@ -129,25 +174,6 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                   >
                     Comment
                   </Button>
-
-                  {/**
-                   * Edit button
-                   */}
-                  {KeyCloakService.GetUserName() === post.createdBy ? (
-                    <Button
-                      className="mt-2"
-                      onClick={() => {
-                        setEditMode(true);
-                        setPostEdit(post);
-                        setEditCommentMode(false);
-                        return handleShowModal();
-                      }}
-                    >
-                      Edit
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -157,38 +183,47 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
           ) : (
             post.comments.map((post, i) => {
               return (
-                <Row key={i}>
-                  <Col>
-                    <Card style={{ width: "1196px", marginLeft: "100px" }}>
+                <Row key={i} className="mt-2">
+                  <Col md={{ span: 10, offset: 2 }}>
+                    <Card>
                       <Card.Header>
-                        <h6>{post.title}</h6>
-                        <small>
-                          Last updated:
-                          {post.lastUpdate}
-                        </small>
-                        <br />
-                        <small>Created by: {post.createdBy}</small>
+                        <Row>
+                          <Col xs={2} className="d-flex align-items-center">
+                            <img
+                              src={post.image}
+                              alt="avatar"
+                              className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                              width="60"
+                            />
+                          </Col>
+                          <Col>
+                            <h5>{post.createdBy}</h5>
+                            <small>{post.lastUpdate}</small>
+                          </Col>
+                          <Col xs={2} className="d-flex align-items-center">
+                            {/**
+                             * Edit button
+                             */}
+                            {KeyCloakService.GetUserName() ===
+                            post.createdBy ? (
+                              <Button
+                                onClick={() => {
+                                  setEditMode(true);
+                                  setEditCommentMode(true);
+                                  setPostEdit(post);
+                                  return handleShowModal();
+                                }}
+                              >
+                                Edit
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
+                          </Col>
+                        </Row>
                       </Card.Header>
                       <Card.Body>
                         <Card.Text>{post.body}</Card.Text>
-                        {/**
-                         * Edit button
-                         */}
-                        {KeyCloakService.GetUserName() === post.createdBy ? (
-                          <Button
-                            style={{ marginLeft: "1050px" }}
-                            onClick={() => {
-                              setEditMode(true);
-                              setEditCommentMode(true);
-                              setPostEdit(post);
-                              return handleShowModal();
-                            }}
-                          >
-                            Edit
-                          </Button>
-                        ) : (
-                          <></>
-                        )}
                       </Card.Body>
                     </Card>
                   </Col>
@@ -203,14 +238,26 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
 
   return (
     <>
-      <Button
-        style={{
-          marginLeft: "400px",
-        }}
-        onClick={refreshPage}
-      >
-        Refresh Timeline
-      </Button>
+      <Container className="w-50">
+        <Row
+          className="pb-2"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Button style={{ width: "150px" }} onClick={refreshPage}>
+            Refresh Timeline
+          </Button>
+        </Row>
+        <Row style={{ display: "flex", justifyContent: "center" }}>
+          <Form.Control
+            style={{ width: "70%" }}
+            className="w-40"
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Row>
+      </Container>
+
       <div>
         {posts ? (
           posts
