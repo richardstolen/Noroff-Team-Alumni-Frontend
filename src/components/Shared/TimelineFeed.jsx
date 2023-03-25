@@ -66,7 +66,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   const mapPost = (posts) => {
     return posts.map((post, i) => {
       return (
-        <Container key={i}>
+        <Container key={i} className="w-50 p-3">
           <Row>
             <Col>
               <Card>
@@ -119,7 +119,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                    * Comment Button
                    */}
                   <Button
-                    style={{ marginLeft: "500px" }}
+                    className="mt-2"
                     onClick={() => {
                       setEditMode(false);
                       setEditCommentMode(true);
@@ -135,7 +135,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                    */}
                   {KeyCloakService.GetUserName() === post.createdBy ? (
                     <Button
-                      style={{ marginLeft: "1050px" }}
+                      className="mt-2"
                       onClick={() => {
                         setEditMode(true);
                         setPostEdit(post);
