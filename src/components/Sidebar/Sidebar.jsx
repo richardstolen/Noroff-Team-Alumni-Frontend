@@ -35,6 +35,13 @@ const Sidebar = ({userId}) => {
               </NavDropdown>
               <Nav.Link href="/event-list">Events</Nav.Link>
               <Nav.Link href="/calendar-view">Calendar</Nav.Link>
+             
+              <Nav.Link>
+                Profile
+              </Nav.Link>
+              <Nav.Link onClick={KeyCloakService.CallLogout}>
+                Log out
+              </Nav.Link>
             </Nav>
           </div>
   );
