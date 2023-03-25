@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Storage from "../storage/storage";
 import { getPosts } from "../api/apiHandler";
 import { PulseLoader } from "react-spinners";
+import { Button } from "react-bootstrap";
 
 const fetchData = async () => {
   const data = await getPosts();
@@ -42,10 +43,13 @@ const Timeline = () => {
       <Navbar1 />
       <CalendarSidebar />
       <Sidebar />
+
       {!posts ? (
         <PulseLoader className="spinning-wheel" color="#0d6efd" />
       ) : (
-        <TimelineFeed onChange={setState} postsFromParent={posts} />
+        <>
+          <TimelineFeed onChange={setState} postsFromParent={posts} />
+        </>
       )}
     </>
   );

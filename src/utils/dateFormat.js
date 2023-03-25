@@ -1,6 +1,6 @@
 export function formatDate(date) {
   const now = new Date();
-  var TWO_MIN = 2 * 60 * 1000;
+  var TWO_MIN = 5 * 60 * 1000;
   const _date = new Date(date);
   if (now - _date > TWO_MIN) {
     const month = _date.toLocaleString("no-NO", { month: "long" });

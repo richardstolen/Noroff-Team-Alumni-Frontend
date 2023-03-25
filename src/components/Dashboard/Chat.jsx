@@ -87,11 +87,19 @@ function Chat() {
               />
               <div className="pt-1">
                 <p className="fw-bold mb-0">{message.sender}</p>
-                <p className="small text-muted">{message.messages[0].body}</p>
+                <p className="small text-muted">
+                  {message.messages[0].createdBy ===
+                  KeyCloakService.GetUserName()
+                    ? "You: "
+                    : ""}
+                  {message.messages[0].body.length > 33
+                    ? message.messages[0].body.substring(0, 33) + "..."
+                    : message.messages[0].body}
+                </p>
               </div>
             </div>
             <div className="pt-1">
-              <p className="small text-muted mb-1">
+              <p className=" text-muted mb-1">
                 {message.messages[0].lastUpdate}
               </p>
             </div>
@@ -136,7 +144,7 @@ function Chat() {
                 key={message.postId}
                 className="d-flex justify-content-between mb-4"
               >
-                <MDBCard className="w-100">
+                <MDBCard className="flex-fill">
                   <MDBCardHeader className="d-flex justify-content-between p-3">
                     <p className="fw-bold mb-0">{message.createdBy}</p>
                     <p className="text-muted small mb-0">
@@ -166,8 +174,8 @@ function Chat() {
       ¨
       <MDBContainer
         fluid
-        className="py-5"
-        style={{ backgroundColor: "#eee", width: "60%" }}
+        className="py-3"
+        style={{ backgroundColor: "#eee", maxWidth: "80%" }}
       >
         <MDBRow>
           <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
@@ -186,7 +194,7 @@ function Chat() {
 
           <MDBCol md="6" lg="7" xl="8">
             <MDBRow>
-              <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
+              <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0 ">
                 <h5 className="font-weight-bold mb-3 text-center text-lg-start">
                   {current}
                 </h5>
@@ -200,6 +208,7 @@ function Chat() {
                   display: "flex",
                   flexDirection: "column-reverse",
                   maxHeight: "500px",
+                  maxWidth: "1200px",
                   overflowY: "scroll",
                 }}
               >
