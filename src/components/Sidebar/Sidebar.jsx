@@ -37,6 +37,7 @@ const Sidebar = ({userId}) => {
               {user === null ? <></> : <UserTopics topics={user.topics}/>} 
               </NavDropdown>
               <Nav.Link href="/event-list">Events</Nav.Link>
+              <Nav.Link href="/calendar-view">Calendar</Nav.Link>
             </Nav>
           </div>
         </Col>

@@ -55,6 +55,7 @@ function App() {
             <Route path="/topic-list" element={<TopicList />} />
             <Route path="/topic-detail/:id" element={<TopicDetail />} />
             <Route path="/event-list" element={<EventList />} />
+            <Route path="/calendar-view" element={<CalendarView />} />
           </Routes>
         </>
       )}

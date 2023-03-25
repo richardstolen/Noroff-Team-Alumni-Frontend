@@ -14,6 +14,11 @@
   z-index: 5;
 }
 
+.calendar {
+  display: grid;
+  row-gap: 10rem;
+}
+
 .carousel-images {
   width: 200px;
   height: 200px;
