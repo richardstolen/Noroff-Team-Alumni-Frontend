@@ -15,6 +15,7 @@ import Navbar1 from "./components/Navbar/Navbar1";
 import EventList from "./views/Event";
 import GroupDetail from "./views/GroupDetail";
 import TopicDetail from "./views/TopicDetail";
+import CalendarView from "./views/Calendar";
 
 function App() {
   const [loading, setLoading] = useState(true);
