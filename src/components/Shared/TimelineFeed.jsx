@@ -65,7 +65,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   }
 
   const mapPost = (posts) => {
-    if (search != "") {
+    if (search !== "") {
       posts = posts.filter((post) => {
         return (
           post.body.toLowerCase().match(search.toLowerCase()) ||
@@ -77,7 +77,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     }
     return posts.map((post, i) => {
       return (
-        <Container key={i} className="w-50 p-3">
+        <Container key={i} className=" p-3">
           <Row>
             <Col>
               <Card>
@@ -93,7 +93,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                     </Col>
                     <Col>
                       <h5>{post.title}</h5>
-                      <small>Intended audience: {post.target}</small>
+                      <small>Intended audience: {post.target}</small>  
                       <br />
                       <small>{post.createdBy}</small>
                       <br />
@@ -238,7 +238,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
 
   return (
     <>
-      <Container className="w-50">
+      <Container>
         <Row
           className="pb-2"
           style={{ display: "flex", justifyContent: "center" }}
@@ -249,7 +249,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
         </Row>
         <Row style={{ display: "flex", justifyContent: "center" }}>
           <Form.Control
-            style={{ width: "70%" }}
+             style={{ width: "70%" }}
             className="w-40"
             type="text"
             placeholder="Search"

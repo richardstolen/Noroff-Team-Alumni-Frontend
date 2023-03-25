@@ -46,11 +46,39 @@
   background-color: grey;
 }
 
+@media(max-width:768px){
+  .navbar-content{
+    display: none !important;
+  }
+}
+
+.nb-title{
+  margin-left: 1rem;
+}
+
 .sidebar {
+  padding-left: 0.7rem;
+  background-color: #2C3333;
+  height: 100% !important;
+}
+
+@media(min-width:768px){
+  .sidebar{
+    padding-left: 0.7rem;
+    background-color: #2C3333;
+    height: 100vh;
+  }
+  
+}
+
+
+.sidebar-col{
+  padding-left: 0 !important;
+}
+
+.sidebar-wrapper{
   height: 100vh;
-  position: fixed;
-  left: 0;
-  width: 250px;
+  position: sticky;
   top: 56px;
 }
 
