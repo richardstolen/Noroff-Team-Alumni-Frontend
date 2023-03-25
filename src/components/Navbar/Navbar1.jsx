@@ -9,8 +9,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserByUsername } from "../../api/apiHandler";
 import Storage from "../../storage/storage";
+import PropTypes from "prop-types";
 
-function Navbar1() {
+function Navbar1({onToggleClick}) {
   const [value, setValue] = useState("");
   const navigate = useNavigate();
 
@@ -29,14 +30,18 @@ function Navbar1() {
     }
   }
 
+  function handleToggle(){
+    console.log("handleToggle");
+    onToggleClick();
+  }
+
   function clearProfileStorage() {
     Storage.clearSearchedUser();
   }
   return (
-    <Navbar bg="primary" variant="dark" sticky="top">
-      {/* {fixed="top"} */}
-      <Container>
-        <Navbar.Brand href="/timeline">Alumni</Navbar.Brand>
+    <Navbar expand="md" bg="primary" variant="dark" sticky="top">
+    <Navbar.Brand className="nb-title" href="/timeline">Alumni</Navbar.Brand>
+      <Container className="navbar-content">   
         <Nav className="me-auto">
           <Nav.Link href="/timeline">Timeline</Nav.Link>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
@@ -60,16 +65,19 @@ function Navbar1() {
               value={value}
               onChange={(e) => setValue(e.target.value)}
             ></Form.Control>
-            <Button type="subtmi" variant="dark">
+            <Button type="submit" variant="dark">
               Search
             </Button>
           </Form.Group>
         </Form>
       </Container>
+      <Navbar.Toggle onClick={handleToggle}/>
     </Navbar>
   );
 }
-
+Navbar1.propTypes={
+  onToggleClick:PropTypes.func,
+}
 export default Navbar1;
 
-//test
+

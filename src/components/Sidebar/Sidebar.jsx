@@ -22,10 +22,7 @@ const Sidebar = ({userId}) => {
 
 
     return (
-    <Container>
-      <Row>
-        <Col md={3}>
-          <div className="sidebar" style={{ backgroundColor: "#ADD8E6" }}>
+          <div className="sidebar">
             <Nav className="me-auto flex-column">
               <Nav.Link href="/Timeline">Timeline</Nav.Link>
               <Nav.Link href="/group-list">Public groups</Nav.Link>
@@ -40,9 +37,6 @@ const Sidebar = ({userId}) => {
               <Nav.Link href="/calendar-view">Calendar</Nav.Link>
             </Nav>
           </div>
-        </Col>
-      </Row>
-    </Container>
   );
 };
 
