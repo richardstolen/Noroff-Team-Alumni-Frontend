@@ -58,14 +58,14 @@
 
 .sidebar {
   padding-left: 0.7rem;
-  background-color: #2C3333;
+  background-color: lightblue;
   height: 100% !important;
 }
 
 @media(min-width:768px){
   .sidebar{
     padding-left: 0.7rem;
-    background-color: #2C3333;
+    background-color: lightblue;
     height: 100vh;
   }
   
