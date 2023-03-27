@@ -153,7 +153,7 @@ function Profile({ user_id }) {
                     src={user.image}
                     alt="Profile"
                     className="rounded-circle mb-4 mt-5"
-                    style={{ width: "200px", height: "200px" }}
+                    style={{ width: "200px", height: "200px", border: "1px solid #ccc"}}
                   />
                   <h2
                     className="text-dark mb-4"
@@ -215,14 +215,14 @@ function Profile({ user_id }) {
                           src={user.image}
                           alt="Profile"
                           className="rounded-circle mb-4 mt-5"
-                          style={{ width: "200px", height: "200px" }}
+                          style={{ width: "200px", height: "200px", border: "1px solid #ccc"}}
                         />
                       ) : (
                         <Avatar
                           name={user.userName} //Er ikke ferdig her!
-                          src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1679478862~exp=1679479462~hmac=d521cabb939009438282af6efab35797ed4dbc2b1dec8abd9a96e47416df520c"
+                          src="https://img.freepik.com/free-icon/user_318-160091.jpg?t=st=1679903580~exp=1679904180~hmac=e5329a9a93e35f27a6fa00953d1f4826f70caf0691f626b1f67f9ed3469de945"
                           className="rounded-circle mb-4 mt-5"
-                          style={{ width: "200px", height: "200px" }}
+                          style={{ width: "200px", height: "200px"}}
                         />
                       )}
                       <div className="d-flex align-items-center">

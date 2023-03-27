@@ -11,6 +11,16 @@ function TopicButton() {
   const [topic, setTopic] = useState(null);
 
   const handleClick = async () => {
+    if (!/^[a-åA-Å0-9]+$/.test(topicName)) {
+      alert('Topic name can only contain letters and numbers');
+      return;
+    }
+
+    if (topicName.length < 2 || topicDesc.length < 2) {
+      alert('Topic name and description must have at least 2 characters');
+      return;
+    }
+    
     try {
       const newTopic = await createTopic(topicName, topicDesc);
       setTopic(newTopic); 

@@ -12,9 +12,19 @@ function GroupButton() {
   const [group, setGroup] = useState(null);
 
   const handleClick = async () => {
+    if (!/^[a-åA-Å0-9]+$/.test(groupName)) {
+      alert('Group name can only contain letters and numbers');
+      return;
+    }
+
+    if (groupName.length < 2 || groupDesc.length < 2) {
+      alert('Group name and description must have at least 2 characters');
+      return;
+    }
+
     try {
       const newGroup = await createGroup(groupName, groupDesc, isPrivate);
-      setGroup(newGroup); 
+      setGroup(newGroup);
       handleClose();
       //   window.location.reload();
     } catch (error) {
@@ -67,11 +77,11 @@ function GroupButton() {
           </Form.Group>
           <Form.Group controlId='formBasicCheckbox'>
             <Form.Check
-                type='checkbox'
-                label= 'Private group'
-                checked= {isPrivate}
-                onChange= {handleCheckboxChange}
-            
+              type='checkbox'
+              label='Private group'
+              checked={isPrivate}
+              onChange={handleCheckboxChange}
+
             />
           </Form.Group>
         </Modal.Body>
@@ -93,7 +103,7 @@ function GroupButton() {
             <p>Group ID: {group.groupId}</p>
             <p>Group name: {group.name}</p>
             <p>Group description: {group.description}</p>
-            <p>Private group: {group.isPrivate ? 'Yes': 'No'}</p>
+            <p>Private group: {group.isPrivate ? 'Yes' : 'No'}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary' onClick={handleClose}>
