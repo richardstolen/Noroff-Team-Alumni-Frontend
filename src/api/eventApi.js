@@ -1,7 +1,6 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
-
-//const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-const apiURL = "https://localhost:7288";
+const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+//const apiURL = "https://localhost:7288";
 
 export async function getEventbyId(id) {
   console.log("GET EVENT(ID)");
@@ -79,9 +78,11 @@ export async function createEvent(description, date) {
 }
 
 async function leaveEvent(event_id) {
-    console.log("Leave Event");
-    console.log(event_id);
-    const response = await fetch(`${apiURL}/event/event_id/invite/user/user_id/remove`, {
+  console.log("Leave Event");
+  console.log(event_id);
+  const response = await fetch(
+    `${apiURL}/event/event_id/invite/user/user_id/remove`,
+    {
       method: "POST",
       headers: new Headers({
         Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
@@ -90,16 +91,16 @@ async function leaveEvent(event_id) {
         event_id: event_id,
         type: "user",
       }),
-    });
-  
-    if (response.ok) {
-      return response;
     }
+  );
+
+  if (response.ok) {
+    return response;
   }
-  
-  const EventAPI = {
-    leaveEvent,
-  };
-  
-  export default EventAPI;
-  
+}
+
+const EventAPI = {
+  leaveEvent,
+};
+
+export default EventAPI;
