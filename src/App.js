@@ -2,7 +2,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Timeline from "./views/Timeline";
-import Dashboard from "./views/Dashboard";
 import KeyCloakService from "./security/KeyCloakService.ts";
 import Profile from "./views/Profile";
 import { useEffect, useState } from "react";
@@ -16,6 +15,7 @@ import EventList from "./views/Event";
 import GroupDetail from "./views/GroupDetail";
 import TopicDetail from "./views/TopicDetail";
 import CalendarView from "./views/Calendar";
+import Chatbox from "./views/Chatbox";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -49,7 +49,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Timeline />} />
             <Route path="/timeline" element={<Timeline />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/chat" element={<Chatbox />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/group-list" element={<GroupList />} />
             <Route path="/group-detail/:id" element={<GroupDetail />} />
