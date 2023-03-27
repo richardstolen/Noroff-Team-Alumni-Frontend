@@ -130,30 +130,52 @@ function Profile({ user_id }) {
       return (
         <div className="text-center text-muted mb-4">
           <>
-            <NavBar1 />
-            <Sidebar />
-            <CalendarSidebar />
-            <img
-              src={user.image}
-              alt="Profile"
-              className="rounded-circle mb-4 mt-5"
-              style={{ width: "200px", height: "200px" }}
-            />
-            <h2
-              className="text-dark mb-4"
-              style={{ fontSize: "2rem", fontWeight: "bold" }}
-            >
-              {user.userName}
-            </h2>
-            <h3 className="mb-4" style={{ color: "#666", fontStyle: "italic" }}>
-              {user.status}
-            </h3>
-            <h4 className="mb-4" style={{ lineHeight: "1.5" }}>
-              {user.bio}
-            </h4>
-            <h4 className="mb-4" style={{ color: "#666" }}>
-              {user.funFact}
-            </h4>
+            <NavBar1 onToggleClick={handleToggleClick} />
+            <Container style={{ paddingLeft: 0 }} fluid>
+              <Row>
+                <Col xl={2} md={3} className="d-block d-md-none sidebar">
+                  <Collapse in={showSidebar}>
+                    <div>
+                      <Sidebar />
+                    </div>
+                  </Collapse>
+                </Col>
+                <Col
+                  xl={2}
+                  md={3}
+                  className="d-none d-md-block sidebar-wrapper"
+                >
+                  <Sidebar />
+                </Col>
+                <Col xl={10} md={9}>
+                  <CalendarSidebar />
+                  <img
+                    src={user.image}
+                    alt="Profile"
+                    className="rounded-circle mb-4 mt-5"
+                    style={{ width: "200px", height: "200px" }}
+                  />
+                  <h2
+                    className="text-dark mb-4"
+                    style={{ fontSize: "2rem", fontWeight: "bold" }}
+                  >
+                    {user.userName}
+                  </h2>
+                  <h3
+                    className="mb-4"
+                    style={{ color: "#666", fontStyle: "italic" }}
+                  >
+                    {user.status}
+                  </h3>
+                  <h4 className="mb-4" style={{ lineHeight: "1.5" }}>
+                    {user.bio}
+                  </h4>
+                  <h4 className="mb-4" style={{ color: "#666" }}>
+                    {user.funFact}
+                  </h4>
+                </Col>
+              </Row>
+            </Container>
           </>
         </div>
       );
