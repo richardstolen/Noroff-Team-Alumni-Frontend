@@ -20,6 +20,10 @@ const Sidebar = ({userId}) => {
     fetchData();
   }, [userId]);
 
+  function clearProfileStorage() {
+    Storage.clearSearchedUser();
+  }
+
 
     return (
           <div className="sidebar">
@@ -35,6 +39,15 @@ const Sidebar = ({userId}) => {
               </NavDropdown>
               <Nav.Link href="/event-list">Events</Nav.Link>
               <Nav.Link href="/calendar-view">Calendar</Nav.Link>
+              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+              <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
+                Log out
+              </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
           </div>
   );

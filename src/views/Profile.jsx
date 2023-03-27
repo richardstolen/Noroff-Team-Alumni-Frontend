@@ -1,8 +1,10 @@
 import NavBar1 from "../components/Navbar/Navbar1";
 import React, { useState, useEffect } from "react";
-import Avatar from 'react-avatar';
+import Avatar from "react-avatar";
 import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
 import Sidebar from "../components/Sidebar/Sidebar";
+import { Col, Collapse, Container, Row } from "react-bootstrap";
+import { useMediaQuery } from "@react-hook/media-query";
 
 import {
   getUsers,
@@ -31,6 +33,19 @@ function Profile({ user_id }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //Sidebar state
+  const [showSidebar, setShowSidebar] = useState(false);
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    setShowSidebar(!isSmallScreen);
+  }, [isSmallScreen]);
+
+  function handleToggleClick() {
+    console.log("handleToggleClick", showSidebar);
+    setShowSidebar(!showSidebar);
+  }
+
   const handleStatusEdit = async () => {
     const newStatus = prompt("Enter new status:");
     if (newStatus !== null) {
@@ -55,7 +70,6 @@ function Profile({ user_id }) {
       document.body.style.cursor = "wait";
       await editUserBio(newBio);
       setEditMode(true);
-
     }
   };
 
@@ -89,12 +103,12 @@ function Profile({ user_id }) {
 
       if (editMode) {
         console.log("edit mode", editMode);
-        await getUser(KeyCloakService.GetId()).then(user => {
+        await getUser(KeyCloakService.GetId()).then((user) => {
           setUser(user);
           Storage.setUser(user);
           setEditMode(false);
           document.body.style.cursor = "default";
-        })
+        });
       } else {
         setUser(user);
       }
@@ -117,8 +131,8 @@ function Profile({ user_id }) {
         <div className="text-center text-muted mb-4">
           <>
             <NavBar1 />
-            <Sidebar/>
-            <CalendarSidebar/>
+            <Sidebar />
+            <CalendarSidebar />
             <img
               src={user.image}
               alt="Profile"
@@ -147,111 +161,138 @@ function Profile({ user_id }) {
       return (
         <div className="text-center text-muted mb-4">
           <>
-            <NavBar1 />
-            <Sidebar/>
-            <CalendarSidebar/>
-            <link
-              href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet"
-            ></link>
+            <NavBar1 onToggleClick={handleToggleClick} />
 
-            <div className="d-flex justify-content-center align-items-center mb-4">
-              <div className="d-flex flex-column align-items-center">
-                {user.image ? (
-                  <img
-                    src={user.image}
-                    alt="Profile"
-                    className="rounded-circle mb-4 mt-5"
-                    style={{ width: "200px", height: "200px" }}
-                  />
-                ) : (
-                  <Avatar
-                    name={user.userName} //Er ikke ferdig her! 
-                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1679478862~exp=1679479462~hmac=d521cabb939009438282af6efab35797ed4dbc2b1dec8abd9a96e47416df520c"
-                    className="rounded-circle mb-4 mt-5"
-                    style={{ width: "200px", height: "200px" }}
-                  />
-                )}
-                <div className="d-flex align-items-center">
-                  <button
-                    onClick={handleProfilePictureEdit}
-                    className="material-icons text-5xl"
-                    style={{ border: "none", background: "none", marginTop: "-10px" }}
+            <Container style={{ paddingLeft: 0 }} fluid>
+              <Row>
+                <Col xl={2} md={3} className="d-block d-md-none sidebar">
+                  <Collapse in={showSidebar}>
+                    <div>
+                      <Sidebar />
+                    </div>
+                  </Collapse>
+                </Col>
+                <Col
+                  xl={2}
+                  md={3}
+                  className="d-none d-md-block sidebar-wrapper"
+                >
+                  <Sidebar />
+                </Col>
+                <Col xl={10} md={9}>
+                  <CalendarSidebar />
+                  <link
+                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                    rel="stylesheet"
+                  ></link>
+
+                  <div className="d-flex justify-content-center align-items-center mb-4">
+                    <div className="d-flex flex-column align-items-center">
+                      {user.image ? (
+                        <img
+                          src={user.image}
+                          alt="Profile"
+                          className="rounded-circle mb-4 mt-5"
+                          style={{ width: "200px", height: "200px" }}
+                        />
+                      ) : (
+                        <Avatar
+                          name={user.userName} //Er ikke ferdig her!
+                          src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=740&t=st=1679478862~exp=1679479462~hmac=d521cabb939009438282af6efab35797ed4dbc2b1dec8abd9a96e47416df520c"
+                          className="rounded-circle mb-4 mt-5"
+                          style={{ width: "200px", height: "200px" }}
+                        />
+                      )}
+                      <div className="d-flex align-items-center">
+                        <button
+                          onClick={handleProfilePictureEdit}
+                          className="material-icons text-5xl"
+                          style={{
+                            border: "none",
+                            background: "none",
+                            marginTop: "-10px",
+                          }}
+                        >
+                          edit
+                        </button>
+                        &nbsp;
+                        <div>Edit profile picture</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2
+                    className="text-dark mb-4"
+                    style={{ fontSize: "2rem", fontWeight: "bold" }}
                   >
-                    edit
-                  </button>
-                  &nbsp;
-                  <div>Edit profile picture</div>
-                </div>
-              </div>
-            </div>
+                    {user.userName}
+                  </h2>
 
-            <h2
-              className="text-dark mb-4"
-              style={{ fontSize: "2rem", fontWeight: "bold" }}
-            >
-              {user.userName}
-            </h2>
+                  <div
+                    className="d-flex justify-content-center align-items-center mb-4"
+                    style={{ color: "#666" }}
+                  >
+                    <h4
+                      className="mb-0 mr-2"
+                      style={{ lineHeight: "1.5", fontStyle: "italic" }}
+                    >
+                      {user.status}&nbsp;&nbsp;&nbsp;
+                    </h4>
+                    <div className="d-flex align-items-center">
+                      <button
+                        onClick={handleStatusEdit}
+                        className="material-icons text-5xl"
+                        style={{ border: "none", background: "none" }}
+                      >
+                        edit
+                      </button>
+                      &nbsp;
+                      <div className="ml-2">Edit status</div>
+                    </div>
+                  </div>
 
-            <div
-              className="d-flex justify-content-center align-items-center mb-4"
-              style={{ color: "#666" }}
-            >
-              <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5", fontStyle: "italic" }}>
-                {user.status}&nbsp;&nbsp;&nbsp;
-              </h4>
-              <div className="d-flex align-items-center">
-                <button
-                  onClick={handleStatusEdit}
-                  className="material-icons text-5xl"
-                  style={{ border: "none", background: "none" }}
-                >
-                  edit
-                </button>
-                &nbsp;
-                <div className="ml-2">Edit status</div>
-              </div>
-            </div>
+                  <div
+                    className="d-flex justify-content-center align-items-center mb-4"
+                    style={{ color: "#666" }}
+                  >
+                    <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
+                      {user.bio}&nbsp;&nbsp;&nbsp;
+                    </h4>
+                    <div className="d-flex align-items-center">
+                      <button
+                        onClick={handleBioEdit}
+                        className="material-icons text-5xl"
+                        style={{ border: "none", background: "none" }}
+                      >
+                        edit
+                      </button>
+                      &nbsp;
+                      <div className="ml-2">Edit bio</div>
+                    </div>
+                  </div>
 
-            <div
-              className="d-flex justify-content-center align-items-center mb-4"
-              style={{ color: "#666" }}
-            >
-              <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
-                {user.bio}&nbsp;&nbsp;&nbsp;
-              </h4>
-              <div className="d-flex align-items-center">
-                <button
-                  onClick={handleBioEdit}
-                  className="material-icons text-5xl"
-                  style={{ border: "none", background: "none" }}
-                >
-                  edit
-                </button>
-                &nbsp;
-                <div className="ml-2">Edit bio</div>
-              </div>
-            </div>
-
-            <div
-              className="d-flex justify-content-center align-items-center mb-4"
-              style={{ color: "#666" }}
-            >
-              <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
-                {user.funFact}&nbsp;&nbsp;&nbsp;
-              </h4>
-              <div className="d-flex align-items-center">
-                <button
-                  onClick={handleFunFactEdit}
-                  className="material-icons text-5xl"
-                  style={{ border: "none", background: "none" }}
-                >
-                  edit
-                </button>
-                &nbsp;
-                <div className="ml-2">Edit funfact</div>
-              </div>
-            </div>
+                  <div
+                    className="d-flex justify-content-center align-items-center mb-4"
+                    style={{ color: "#666" }}
+                  >
+                    <h4 className="mb-0 mr-2" style={{ lineHeight: "1.5" }}>
+                      {user.funFact}&nbsp;&nbsp;&nbsp;
+                    </h4>
+                    <div className="d-flex align-items-center">
+                      <button
+                        onClick={handleFunFactEdit}
+                        className="material-icons text-5xl"
+                        style={{ border: "none", background: "none" }}
+                      >
+                        edit
+                      </button>
+                      &nbsp;
+                      <div className="ml-2">Edit funfact</div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
           </>
         </div>
       );
