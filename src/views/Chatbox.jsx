@@ -6,7 +6,7 @@ import { Col, Collapse, Container, Row } from "react-bootstrap";
 import { useMediaQuery } from "@react-hook/media-query";
 import Sidebar from "../components/Sidebar/Sidebar";
 
-const Dashboard = () => {
+const Chatbox = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
 
@@ -43,4 +43,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Chatbox;

@@ -39,7 +39,7 @@ const Sidebar = ({userId}) => {
               </NavDropdown>
               <Nav.Link href="/event-list">Events</Nav.Link>
               <Nav.Link href="/calendar-view">Calendar</Nav.Link>
-              <Nav.Link href="/dashboard" className="hide-sidebar-content">Dashboard</Nav.Link>
+              <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link>
               <NavDropdown title="Profile" id="basic-nav-dropdown" className="hide-sidebar-content">
               <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
                 Profile

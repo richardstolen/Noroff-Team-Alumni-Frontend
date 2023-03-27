@@ -44,7 +44,7 @@ function Navbar1({onToggleClick}) {
       <Container className="navbar-content">   
         <Nav className="me-auto">
           <Nav.Link href="/timeline">Timeline</Nav.Link>
-          <Nav.Link href="/dashboard">Chat</Nav.Link>
+          <Nav.Link href="/chat">Chat</Nav.Link>
           <NavDropdown title="Profile" id="basic-nav-dropdown">
             <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
               Profile
