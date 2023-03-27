@@ -1,5 +1,5 @@
 export function validInput(name, description) {
-    if (!/^[a-åA-Å0-9]+$/.test(name)) {
+    if (!/^[a-åA-Å0-9 ]+$/.test(name)) {
         alert(`The name can only contain letters and numbers`);
         return;
     }

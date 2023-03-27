@@ -5,6 +5,7 @@ import Storage from "../../storage/storage";
 import { useEffect, useState } from "react";
 import GroupAPI from "../../api/groupApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
+import { Row, Col } from "react-bootstrap";
 
 const fetchData = async () => {
   const data = await getUser(KeyCloakService.GetId());
@@ -79,6 +80,8 @@ function GroupCards(group) {
         </Card.Body>
       </Card>
     </div>
+            
+
   );
 }
 export default GroupCards;

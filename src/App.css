@@ -63,6 +63,13 @@
   margin-left: 1rem;
 }
 
+
+
+
+
+
+/* Sidebar styling*/
+
 .sidebar {
   padding-left: 0.7rem;
   background-color: lightblue;
@@ -88,6 +95,8 @@
   position: sticky;
   top: 56px;
 }
+
+/* Sidebar styling end*/
 
 .spinning-wheel {
   position: absolute;
