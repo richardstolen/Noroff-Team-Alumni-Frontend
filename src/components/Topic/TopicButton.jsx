@@ -3,6 +3,7 @@ import { createTopic } from '../../api/topicApi';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { validInput } from '../../utils/validateInput';
 
 function TopicButton() {
   const [showModal, setShowModal] = useState(false);
@@ -11,24 +12,17 @@ function TopicButton() {
   const [topic, setTopic] = useState(null);
 
   const handleClick = async () => {
-    if (!/^[a-åA-Å0-9]+$/.test(topicName)) {
-      alert('Topic name can only contain letters and numbers');
-      return;
-    }
-
-    if (topicName.length < 2 || topicDesc.length < 2) {
-      alert('Topic name and description must have at least 2 characters');
-      return;
-    }
-    
-    try {
-      const newTopic = await createTopic(topicName, topicDesc);
-      setTopic(newTopic); 
-      handleClose();
-      //   window.location.reload();
-    } catch (error) {
-      console.error('Failed to create topic:', error);
-      // Handle error
+    const isValid = validInput(topicName, topicDesc);
+    if (isValid) {
+      try {
+        const newTopic = await createTopic(topicName, topicDesc);
+        setTopic(newTopic);
+        handleClose();
+        //   window.location.reload();
+      } catch (error) {
+        console.error('Failed to create topic:', error);
+        // Handle error
+      }
     }
   };
 

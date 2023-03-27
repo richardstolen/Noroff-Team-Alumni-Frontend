@@ -153,7 +153,7 @@ function Profile({ user_id }) {
                     src={user.image}
                     alt="Profile"
                     className="rounded-circle mb-4 mt-5"
-                    style={{ width: "200px", height: "200px", border: "1px solid #ccc"}}
+                    style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
                   />
                   <h2
                     className="text-dark mb-4"
@@ -214,14 +214,14 @@ function Profile({ user_id }) {
                           src={user.image}
                           alt="Profile"
                           className="rounded-circle mb-4 mt-5"
-                          style={{ width: "200px", height: "200px", border: "1px solid #ccc"}}
+                          style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
                         />
                       ) : (
                         <Avatar
                           name={user.userName} //Er ikke ferdig her!
                           src="https://img.freepik.com/free-icon/user_318-160091.jpg?t=st=1679903580~exp=1679904180~hmac=e5329a9a93e35f27a6fa00953d1f4826f70caf0691f626b1f67f9ed3469de945"
                           className="rounded-circle mb-4 mt-5"
-                          style={{ width: "200px", height: "200px"}}
+                          style={{ width: "200px", height: "200px" }}
                         />
                       )}
                       <div className="d-flex align-items-center">

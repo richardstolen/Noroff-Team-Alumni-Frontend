@@ -3,6 +3,7 @@ import { createGroup } from '../../api/apiHandler';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { validInput } from '../../utils/validateInput';
 
 function GroupButton() {
   const [showModal, setShowModal] = useState(false);
@@ -12,24 +13,17 @@ function GroupButton() {
   const [group, setGroup] = useState(null);
 
   const handleClick = async () => {
-    if (!/^[a-åA-Å0-9]+$/.test(groupName)) {
-      alert('Group name can only contain letters and numbers');
-      return;
-    }
-
-    if (groupName.length < 2 || groupDesc.length < 2) {
-      alert('Group name and description must have at least 2 characters');
-      return;
-    }
-
-    try {
-      const newGroup = await createGroup(groupName, groupDesc, isPrivate);
-      setGroup(newGroup);
-      handleClose();
-      //   window.location.reload();
-    } catch (error) {
-      console.error('Failed to create group:', error);
-      // Handle error
+    const isValid = validInput(groupName, groupDesc);
+    if (isValid) {
+      try {
+        const newGroup = await createGroup(groupName, groupDesc, isPrivate);
+        setGroup(newGroup);
+        handleClose();
+        //   window.location.reload();
+      } catch (error) {
+        console.error('Failed to create group:', error);
+        // Handle error
+      }
     }
   };
 
