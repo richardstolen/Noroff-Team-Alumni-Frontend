@@ -1,4 +1,4 @@
-import Chat from "../components/Dashboard/Chat";
+import Chat from "../components/Chat/Chat";
 import Navbar1 from "../components/Navbar/Navbar1";
 import CalendarSidebar from "../components/Sidebar/CalendarSidebar";
 import { useState, useEffect } from "react";
