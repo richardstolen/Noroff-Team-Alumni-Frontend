@@ -52,6 +52,13 @@
   }
 }
 
+@media(min-width:768px){
+  .hide-sidebar-content{
+    display: none !important;
+  }
+}
+
+
 .nb-title{
   margin-left: 1rem;
 }
