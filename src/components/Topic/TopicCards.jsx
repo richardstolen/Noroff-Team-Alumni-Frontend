@@ -1,11 +1,12 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { getUser} from "../../api/apiHandler";
+import { getUser } from "../../api/apiHandler";
 import Storage from "../../storage/storage";
 import { useEffect, useState } from "react";
-import {joinTopic }from "../../api/topicApi";
+import { joinTopic } from "../../api/topicApi";
 import TopicAPI from "../../api/topicApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
+import Pointer from "../../utils/mousePointer";
 
 const fetchData = async () => {
   const data = await getUser(KeyCloakService.GetId());
@@ -28,6 +29,7 @@ function TopicCards(topic) {
   }, [user, setUser]);
 
   const handleJoinTopic = async () => {
+    Pointer.setLoading();
     const result = await joinTopic(topic.prop.topicId).then(
       (response) => response
     );
@@ -36,11 +38,14 @@ function TopicCards(topic) {
       fetchData().then((user) => {
         setUser(user);
         Storage.setUser(user);
+        Pointer.setDefault();
+        topic.trigger();
       });
     }
   };
 
   const handleLeaveTopic = async () => {
+    Pointer.setLoading();
     try {
       const result = await TopicAPI.leaveTopic(topic.prop.topicId).then(
         (response) => response
@@ -50,6 +55,8 @@ function TopicCards(topic) {
         fetchData().then((user) => {
           setUser(user);
           Storage.setUser(user);
+          Pointer.setDefault();
+          topic.trigger();
         });
       }
     } catch (error) {
@@ -59,27 +66,27 @@ function TopicCards(topic) {
   return (
     <div style={{ display: "flex", justifyContent: "center" }} className="mt-5">
       {topic?.prop && (
-      <Card style={{ width: "18rem", margin: "1rem" }}>
-        <Card.Body>
-          <Card.Title>{topic.prop.name}</Card.Title>
-          <Card.Text>{topic.prop.description}</Card.Text>
-          {!user.topics.some((x) => x.name === topic.prop.name) ? (
-            <Button
-              variant="primary"
-              onClick={() => handleJoinTopic(topic.prop)}
-            >
-              Join Topic
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={() => handleLeaveTopic(topic.prop)}
-            >
-              Leave Topic
-            </Button>
-          )}
-        </Card.Body>
-      </Card>
+        <Card style={{ width: "18rem", margin: "1rem" }}>
+          <Card.Body>
+            <Card.Title>{topic.prop.name}</Card.Title>
+            <Card.Text>{topic.prop.description}</Card.Text>
+            {!user.topics.some((x) => x.name === topic.prop.name) ? (
+              <Button
+                variant="primary"
+                onClick={() => handleJoinTopic(topic.prop)}
+              >
+                Join Topic
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                onClick={() => handleLeaveTopic(topic.prop)}
+              >
+                Leave Topic
+              </Button>
+            )}
+          </Card.Body>
+        </Card>
       )}
     </div>
   );
