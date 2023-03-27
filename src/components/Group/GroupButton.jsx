@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { createGroup } from '../../api/apiHandler';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import { validInput } from '../../utils/validateInput';
+import { useState } from "react";
+import { createGroup } from "../../api/apiHandler";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import { validInput } from "../../utils/validateInput";
 
 function GroupButton() {
   const [showModal, setShowModal] = useState(false);
-  const [groupName, setGroupName] = useState('');
-  const [groupDesc, setGroupDesc] = useState('');
+  const [groupName, setGroupName] = useState("");
+  const [groupDesc, setGroupDesc] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [group, setGroup] = useState(null);
 
@@ -19,9 +19,8 @@ function GroupButton() {
         const newGroup = await createGroup(groupName, groupDesc, isPrivate);
         setGroup(newGroup);
         handleClose();
-        //   window.location.reload();
       } catch (error) {
-        console.error('Failed to create group:', error);
+        console.error("Failed to create group:", error);
         // Handle error
       }
     }
@@ -39,11 +38,11 @@ function GroupButton() {
 
   const handleCheckboxChange = (event) => {
     setIsPrivate(event.target.checked);
-  }
+  };
 
   return (
-    <div className='create-button'>
-      <Button className='mt-5' onClick={() => setShowModal(true)}>
+    <div className="create-button">
+      <Button className="mt-5" onClick={() => setShowModal(true)}>
         Create Group
       </Button>
       <Modal show={showModal} onHide={handleClose}>
@@ -54,8 +53,8 @@ function GroupButton() {
           <Form.Group>
             <Form.Label>Group Name</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter group name'
+              type="text"
+              placeholder="Enter group name"
               value={groupName}
               onChange={handleNameInputChange}
             />
@@ -63,27 +62,26 @@ function GroupButton() {
           <Form.Group>
             <Form.Label>Group Description</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter group description'
+              type="text"
+              placeholder="Enter group description"
               value={groupDesc}
               onChange={handleDescInputChange}
             />
           </Form.Group>
-          <Form.Group controlId='formBasicCheckbox'>
+          <Form.Group controlId="formBasicCheckbox">
             <Form.Check
-              type='checkbox'
-              label='Private group'
+              type="checkbox"
+              label="Private group"
               checked={isPrivate}
               onChange={handleCheckboxChange}
-
             />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant='primary' onClick={handleClick}>
+          <Button variant="primary" onClick={handleClick}>
             Create
           </Button>
         </Modal.Footer>
@@ -97,10 +95,10 @@ function GroupButton() {
             <p>Group ID: {group.groupId}</p>
             <p>Group name: {group.name}</p>
             <p>Group description: {group.description}</p>
-            <p>Private group: {group.isPrivate ? 'Yes' : 'No'}</p>
+            <p>Private group: {group.isPrivate ? "Yes" : "No"}</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>
