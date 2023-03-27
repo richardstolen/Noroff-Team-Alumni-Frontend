@@ -11,7 +11,6 @@ import { Col, Collapse, Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import { useMediaQuery } from "@react-hook/media-query";
 
-
 const fetchData = async () => {
   const data = await getPosts();
   return data;
@@ -21,11 +20,11 @@ const Timeline = () => {
   const [posts, setPosts] = useState();
   const [loading, setLoading] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  const isSmallScreen = useMediaQuery('(max-width: 768px)')
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
 
-  useEffect(()=>{
-    setShowSidebar(!isSmallScreen)
-  },[isSmallScreen])
+  useEffect(() => {
+    setShowSidebar(!isSmallScreen);
+  }, [isSmallScreen]);
 
   function handleToggleClick() {
     console.log("handleToggleClick", showSidebar);
@@ -56,8 +55,8 @@ const Timeline = () => {
   return (
     <>
       <Navbar1 onToggleClick={handleToggleClick} />
-      <Container style={{paddingLeft:0}} fluid>
-        <Row >
+      <Container style={{ paddingLeft: 0 }} fluid>
+        <Row>
           <Col xl={2} md={3} className="d-block d-md-none sidebar">
             <Collapse in={showSidebar}>
               <div>
@@ -69,7 +68,6 @@ const Timeline = () => {
             <Sidebar />
           </Col>
           <Col xl={10} md={9}>
-            <CalendarSidebar />
             {!posts ? (
               <PulseLoader className="spinning-wheel" color="#0d6efd" />
             ) : (

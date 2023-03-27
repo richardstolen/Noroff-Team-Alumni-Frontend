@@ -57,7 +57,7 @@ const TopicDetail = () => {
             {topic ? (
               <Card
                 style={{ width: "40rem", height: "10rem" }}
-                className="mt-5"
+                className="mt-2"
               >
                 <Card.Body>
                   <Card.Title>{topic.name}</Card.Title>

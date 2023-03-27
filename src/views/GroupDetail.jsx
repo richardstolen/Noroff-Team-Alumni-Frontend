@@ -52,12 +52,11 @@ const GroupDetail = () => {
             <Sidebar />
           </Col>
           <Col xl={10} md={9}>
-            <CalendarSidebar />
             <div className="centralize">
               {group ? (
                 <Card
                   style={{ width: "40rem", height: "10rem" }}
-                  className="mt-5"
+                  className="mt-2"
                 >
                   <Card.Body>
                     <Card.Title>{group.name}</Card.Title>
@@ -65,7 +64,7 @@ const GroupDetail = () => {
                   </Card.Body>
                 </Card>
               ) : (
-                <p>Loading...</p>
+                <></>
               )}
             </div>
             <GetGroupPost />

@@ -242,19 +242,23 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
         <Row
           className="pb-2"
           style={{ display: "flex", justifyContent: "center" }}
-        >
-          <Button style={{ width: "150px" }} onClick={refreshPage}>
-            Refresh
-          </Button>
-        </Row>
+        ></Row>
         <Row style={{ display: "flex", justifyContent: "center" }}>
           <Form.Control
-            style={{ width: "70%" }}
+            style={{ width: "60%" }}
             className="w-40"
             type="text"
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
+
+          <Button
+            className="ms-5"
+            style={{ width: "120px" }}
+            onClick={refreshPage}
+          >
+            Refresh Feed
+          </Button>
         </Row>
       </Container>
 

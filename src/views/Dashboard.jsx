@@ -36,7 +36,6 @@ const Dashboard = () => {
           </Col>
           <Col xl={10} md={9}>
             <Chat />
-            <CalendarSidebar />
           </Col>
         </Row>
       </Container>

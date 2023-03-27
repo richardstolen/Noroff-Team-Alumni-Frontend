@@ -180,7 +180,6 @@ function Profile({ user_id }) {
                   <Sidebar />
                 </Col>
                 <Col xl={10} md={9}>
-                  <CalendarSidebar />
                   <link
                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
                     rel="stylesheet"
