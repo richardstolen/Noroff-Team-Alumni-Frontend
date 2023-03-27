@@ -93,7 +93,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                     </Col>
                     <Col>
                       <h5>{post.title}</h5>
-                      <small>Intended audience: {post.target}</small>  
+                      <small>Intended audience: {post.target}</small>
                       <br />
                       <small>{post.createdBy}</small>
                       <br />
@@ -244,12 +244,12 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Button style={{ width: "150px" }} onClick={refreshPage}>
-            Refresh Timeline
+            Refresh
           </Button>
         </Row>
         <Row style={{ display: "flex", justifyContent: "center" }}>
           <Form.Control
-             style={{ width: "70%" }}
+            style={{ width: "70%" }}
             className="w-40"
             type="text"
             placeholder="Search"

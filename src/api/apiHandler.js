@@ -360,3 +360,25 @@ export async function commentPost(post) {
     return response;
   }
 }
+
+export async function createGroupPost(post, target) {
+  console.log("CREATE GROUP POST");
+  const response = await fetch(`${apiURL}/post`, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      "Content-Type": "application/json",
+      user_id: KeyCloakService.GetId(),
+    },
+    body: JSON.stringify({
+      userId: KeyCloakService.GetId(),
+      title: post.title,
+      body: post.body,
+      targetGroup: target,
+    }),
+  });
+
+  if (response.ok) {
+    return response;
+  }
+}
