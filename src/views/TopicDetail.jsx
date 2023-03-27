@@ -53,7 +53,6 @@ const TopicDetail = () => {
             <Sidebar />
           </Col>
           <Col xl={10} md={9}>
-            <CalendarSidebar />
             {topic ? (
               <Card
                 style={{ width: "40rem", height: "10rem" }}
@@ -65,7 +64,7 @@ const TopicDetail = () => {
                 </Card.Body>
               </Card>
             ) : (
-              <p>Loading...</p>
+              <></>
             )}
             <GetTopicPost />
           </Col>

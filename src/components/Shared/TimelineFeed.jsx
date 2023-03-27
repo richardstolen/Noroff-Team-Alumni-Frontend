@@ -11,16 +11,20 @@ import {
 } from "react-bootstrap";
 import {
   commentPost,
+  createPost,
   deletePost,
   editPost,
   getPosts,
 } from "../../api/apiHandler";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
+import { useParams } from "react-router";
 
 const TimelineFeed = ({ onChange, postsFromParent }) => {
   const [showReplies, setShowReplies] = useState(-1);
   const [posts, setPosts] = useState([]);
+  const [createMode, setCreateMode] = useState(false);
+  const { id } = useParams();
   const [editMode, setEditMode] = useState(true);
   const [editCommentMode, setEditCommentMode] = useState(false);
 
@@ -44,7 +48,13 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     document.body.style.cursor = "wait";
     if (action === "delete") {
       await deletePost(postEdit);
-    } else if (editMode) {
+    } else if (createMode) {
+      if (window.location.pathname.slice(0, 13) === "/group-detail") {
+        await createPost(postEdit, id, "group");
+      } else if (window.location.pathname.slice(0, 13) === "/topic-detail") {
+        await createPost(postEdit, id, "topic");
+      }
+    } else if (editMode && !createMode) {
       // Calling edit post in API with the changed post object
       await editPost(postEdit);
     } else {
@@ -109,6 +119,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                           className="mt-2"
                           onClick={() => {
                             setEditMode(true);
+                            setCreateMode(false);
                             setPostEdit(post);
                             setEditCommentMode(false);
                             return handleShowModal();
@@ -167,6 +178,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                     className="mt-2"
                     onClick={() => {
                       setEditMode(false);
+                      setCreateMode(false);
                       setEditCommentMode(true);
                       setPostEdit(post);
                       return handleShowModal();
@@ -210,6 +222,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                                 onClick={() => {
                                   setEditMode(true);
                                   setEditCommentMode(true);
+                                  setCreateMode(false);
                                   setPostEdit(post);
                                   return handleShowModal();
                                 }}
@@ -240,10 +253,26 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     <>
       <Container>
         <Row
-          className="pb-2"
+          className="mt-2"
           style={{ display: "flex", justifyContent: "center" }}
-        ></Row>
-        <Row style={{ display: "flex", justifyContent: "center" }}>
+        >
+          {window.location.href != "http://localhost:3000/timeline" ? (
+            <Button
+              className="me-5"
+              style={{ width: "120px" }}
+              onClick={() => {
+                setCreateMode(true);
+                setEditCommentMode(false);
+                setEditMode(true);
+                return handleShowModal();
+              }}
+            >
+              New Post
+            </Button>
+          ) : (
+            <></>
+          )}
+
           <Form.Control
             style={{ width: "60%" }}
             className="w-40"
@@ -271,7 +300,13 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
         <Modal show={showEditModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>
-              {editMode ? <span>Edit post</span> : <span>Comment</span>}
+              {createMode ? (
+                <span>Create post</span>
+              ) : editMode ? (
+                <span>Edit post</span>
+              ) : (
+                <span>Comment</span>
+              )}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -282,7 +317,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder={postEdit.title}
+                      placeholder={!createMode ? postEdit.title : ""}
                       onChange={(e) => {
                         postEdit.title = e.target.value;
                         setPostEdit(postEdit);
@@ -301,7 +336,11 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                 <Form.Control
                   type="text"
                   placeholder={
-                    editCommentMode === false ? postEdit.body : "Comment"
+                    !createMode
+                      ? editCommentMode === false
+                        ? postEdit.body
+                        : "Comment"
+                      : ""
                   }
                   onChange={(e) => {
                     postEdit.body = e.target.value;
@@ -312,7 +351,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            {editMode ? (
+            {editMode && !createMode ? (
               <>
                 <Button
                   variant="primary"
@@ -328,11 +367,25 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
                 </Button>
               </>
             ) : (
+              <></>
+            )}
+
+            {!editMode ? (
+              <Button variant="primary" onClick={(e) => handlePost(e)}>
+                Comment
+              </Button>
+            ) : (
+              <></>
+            )}
+
+            {createMode && !editCommentMode ? (
               <>
-                <Button variant="primary" onClick={(e) => handlePost(e)}>
-                  Comment
+                <Button variant="primary" onClick={handlePost}>
+                  Create
                 </Button>
               </>
+            ) : (
+              <></>
             )}
           </Modal.Footer>
         </Modal>

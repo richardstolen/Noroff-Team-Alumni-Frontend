@@ -298,9 +298,15 @@ export async function getGroupPost(id) {
     }),
   });
   if (response.ok) {
-    const post = await response.json();
-    console.log(post);
-    return post;
+    const posts = await response.json();
+    posts.map((post) => {
+      post.comments.map((comment) => {
+        comment.lastUpdate = formatDate(comment.lastUpdate);
+      });
+      post.lastUpdate = formatDate(post.lastUpdate);
+      return post;
+    });
+    return posts;
   }
 }
 
@@ -361,8 +367,23 @@ export async function commentPost(post) {
   }
 }
 
-export async function createGroupPost(post, target) {
-  console.log("CREATE GROUP POST");
+export async function createPost(post, target_id, target) {
+  console.log("CREATE POST");
+
+  let body = {
+    userId: KeyCloakService.GetId(),
+    title: post.title,
+    body: post.body,
+  };
+
+  if (target === "group") {
+    body.targetGroup = target_id;
+  } else if (target === "topic") {
+    body.targetTopic = target_id;
+  } else if (target === "event") {
+    body.targetEvent = target_id;
+  }
+
   const response = await fetch(`${apiURL}/post`, {
     method: "POST",
     headers: {
@@ -370,12 +391,7 @@ export async function createGroupPost(post, target) {
       "Content-Type": "application/json",
       user_id: KeyCloakService.GetId(),
     },
-    body: JSON.stringify({
-      userId: KeyCloakService.GetId(),
-      title: post.title,
-      body: post.body,
-      targetGroup: target,
-    }),
+    body: JSON.stringify(body),
   });
 
   if (response.ok) {

@@ -171,10 +171,9 @@ function Chat() {
 
   return (
     <>
-      ¨
       <MDBContainer
         fluid
-        className="py-3"
+        className="py-3 mt-1"
         style={{ backgroundColor: "#eee", maxWidth: "100%" }}
       >
         <MDBRow>

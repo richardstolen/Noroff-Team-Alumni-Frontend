@@ -1,20 +1,28 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
+import { formatDate } from "../utils/dateFormat";
 
 const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
+//const apiURL = "https://localhost:7288";
 
 export async function getTopicPost(id) {
   console.log("GET topicPost(ID)");
   const response = await fetch(`${apiURL}/post/topic/topic_id`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
-      targetGroup: id,
+      targetTopic: id,
       // "content-type": "application/json",
     }),
   });
   if (response.ok) {
-    const post = await response.json();
-    console.log(post);
-    return post;
+    const posts = await response.json();
+    posts.map((post) => {
+      post.comments.map((comment) => {
+        comment.lastUpdate = formatDate(comment.lastUpdate);
+      });
+      post.lastUpdate = formatDate(post.lastUpdate);
+      return post;
+    });
+    return posts;
   }
 }
 
@@ -65,7 +73,7 @@ export async function getTopic(topic_id) {
     const topic = await response.json();
     console.log(topic);
     return topic;
-  } 
+  }
 }
 
 export async function getTopics() {
@@ -80,8 +88,6 @@ export async function getTopics() {
     return topics;
   }
 }
-
-
 
 async function leaveTopic(topic_id) {
   console.log("LEAVE TOPIC");
