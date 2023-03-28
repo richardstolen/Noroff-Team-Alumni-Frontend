@@ -70,12 +70,15 @@ const Sidebar = ({ userId }) => {
           <GoCalendar size={20} style={{ marginRight: "5px" }} />
           Calendar
         </Nav.Link>
-        <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link>
+        <Nav.Link href="/chat" style={{ marginRight: "18px" }} className="hide-sidebar-content">
+          <BiChat size={20} style={{ marginRight: "5px" }} />
+          Chat
+        </Nav.Link>
         <Nav.Link href="/Timeline" className="hide-sidebar-content">
           <RiPagesLine size={20} style={{ marginRight: "5px" }} />
           Timeline
         </Nav.Link>
-        <NavDropdown title="Profile" id="basic-nav-dropdown" className="hide-sidebar-content">
+        <NavDropdown title={<><FaUserGraduate size={20} style={{ marginRight: "5px" }} /> Profile</>} id="basic-nav-dropdown" className="hide-sidebar-content">
           <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
             Profile
           </NavDropdown.Item>
