@@ -4,7 +4,7 @@ import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { getEventbyId, getEventByUser, createEvent } from "../../api/eventApi";
-import EventCards from "../Testing/EventCardsT";
+import EventCards from "./EventCards";
 
 const fetchData = async () => {
   const data = await getEventByUser();
