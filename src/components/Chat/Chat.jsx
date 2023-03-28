@@ -16,6 +16,7 @@ import { getMessages } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { sendMessage } from "../../api/apiHandler";
 import Pointer from "../../utils/mousePointer";
+import { Button } from "react-bootstrap";
 
 // Copied from https://mdbootstrap.com/docs/react/extended/chat/
 
@@ -217,19 +218,27 @@ function Chat() {
               <MDBTextArea
                 className="bg-white mb-3"
                 id="textArea"
+                style={{ maxWidth: "1200px", height: "80px" }}
                 rows={4}
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}
               />
-              <MDBBtn
-                color="info"
-                rounded
+              <Button
                 className="float-end"
+                style={{ width: "100px" }}
                 onClick={handleSendMessage}
               >
                 Send
-              </MDBBtn>
+              </Button>
+              {/* <MDBBtn
+                color="info"
+                rounded
+                style={{ width: "100px" }}
+                onClick={handleSendMessage}
+              >
+                Send
+              </MDBBtn> */}
             </MDBRow>
           </MDBCol>
         </MDBRow>
