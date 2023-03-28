@@ -33,10 +33,6 @@ const Sidebar = ({ userId }) => {
   return (
     <div className="sidebar">
       <Nav className="me-auto flex-column">
-        <Nav.Link href="/Timeline">
-          <RiPagesLine size={20} style={{ marginRight: "5px" }} />
-          Timeline
-        </Nav.Link>
         <Nav.Link href="/group-list">
           <HiOutlineUserGroup size={20} style={{ marginRight: "5px" }} />
           Public groups
@@ -73,6 +69,10 @@ const Sidebar = ({ userId }) => {
         </Nav.Link>
         <Nav.Link href="/chat" className="hide-sidebar-content">
           Chat
+        </Nav.Link>
+        <Nav.Link href="/Timeline" className="hide-sidebar-content">
+          <RiPagesLine size={20} style={{ marginRight: "5px" }} />
+          Timeline
         </Nav.Link>
         <NavDropdown
           title="Profile"
