@@ -3,6 +3,7 @@ import Keycloak from "keycloak-js";
 import { KeycloakInitOptions } from "keycloak-js";
 import Storage from "../storage/storage";
 
+
 const keycloak = new Keycloak({
   // TODO MUST HIDE IN ENV VARIABLES
   url: "https://teamalumnikeycloak.azurewebsites.net/auth",

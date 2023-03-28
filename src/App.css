@@ -71,7 +71,7 @@
 .sidebar {
   padding-left: 0.7rem;
   background-color: #DAE6F3;
-  height: 100% !important;
+  height: 100%;
 }
 
 @media(min-width:768px){
@@ -85,7 +85,7 @@
 
 
 .sidebar-col{
-  padding-left: 0 !important;
+  padding-left: 0;
 }
 
 .sidebar-wrapper{

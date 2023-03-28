@@ -12,6 +12,11 @@ import { MdOutlineTopic, MdTopic } from "react-icons/md";
 import { TbCalendarEvent } from "react-icons/tb"; 
 import { GoCalendar } from "react-icons/go"; 
 import { BiGroup } from "react-icons/bi"; 
+import { FaUserGraduate } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
+import { BiChat } from "react-icons/bi"; 
+
+
 
 
 const Sidebar = ({ userId }) => {
@@ -61,13 +66,18 @@ const Sidebar = ({ userId }) => {
           <GoCalendar size={20} style={{ marginRight: "5px" }} />
           Calendar
         </Nav.Link>
-        <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link>
-        <NavDropdown title="Profile" id="basic-nav-dropdown" className="hide-sidebar-content">
+        {/* <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link> */}
+        <Nav.Link href="/chat" style={{ marginRight: "18px" }}>
+            <BiChat size={20} style={{ marginRight: "5px" }} />
+            Chat
+        </Nav.Link>
+        <NavDropdown title={<><FaUserGraduate size={20} style={{ marginRight: "5px" }} /> Profile</>} id="basic-nav-dropdown">
           <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
             Log out
+            <FiLogOut style={{ marginLeft: '5px' }} />
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>
