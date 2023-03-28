@@ -9,10 +9,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { RiPagesLine } from "react-icons/ri";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineTopic, MdTopic } from "react-icons/md";
-import { TbCalendarEvent } from "react-icons/tb";
-import { GoCalendar } from "react-icons/go";
-import { BiGroup } from "react-icons/bi";
+import { TbCalendarEvent } from "react-icons/tb"; 
+import { GoCalendar } from "react-icons/go"; 
+import { BiGroup } from "react-icons/bi"; 
+import { FiLogOut } from "react-icons/fi";
 import Storage from "../../storage/storage";
+
 
 const Sidebar = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -67,23 +69,18 @@ const Sidebar = ({ userId }) => {
           <GoCalendar size={20} style={{ marginRight: "5px" }} />
           Calendar
         </Nav.Link>
-        <Nav.Link href="/chat" className="hide-sidebar-content">
-          Chat
-        </Nav.Link>
+        <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link>
         <Nav.Link href="/Timeline" className="hide-sidebar-content">
           <RiPagesLine size={20} style={{ marginRight: "5px" }} />
           Timeline
         </Nav.Link>
-        <NavDropdown
-          title="Profile"
-          id="basic-nav-dropdown"
-          className="hide-sidebar-content"
-        >
+        <NavDropdown title="Profile" id="basic-nav-dropdown" className="hide-sidebar-content">
           <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
             Log out
+            <FiLogOut style={{ marginLeft: '5px' }} />
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>
