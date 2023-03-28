@@ -2,6 +2,7 @@ export function formatDate(date) {
   const now = new Date();
   var TWO_MIN = 5 * 60 * 1000;
   const _date = new Date(date);
+  _date.setHours(_date.getHours() + 2);
   if (now - _date > TWO_MIN) {
     const month = _date.toLocaleString("no-NO", { month: "long" });
     const dateString = ` ${_date.getDate()}. ${month} at ${

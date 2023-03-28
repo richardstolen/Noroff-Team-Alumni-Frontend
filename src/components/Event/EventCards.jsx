@@ -33,6 +33,7 @@ function EventCards(event) {
         setUser(user);
         Storage.setUser(user);
         Pointer.setDefault();
+        window.location.reload();
       });
     }
   };
@@ -48,6 +49,7 @@ function EventCards(event) {
         fetchData().then((user) => {
           setUser(user);
           Storage.setUser(user);
+          window.location.reload();
         });
       }
     } catch (error) {

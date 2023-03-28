@@ -36,7 +36,6 @@ const EventList = () => {
             <Sidebar />
           </Col>
           <Col xl={10} md={9}>
-            <CreateEventButton />
             <EventThread />
           </Col>
         </Row>

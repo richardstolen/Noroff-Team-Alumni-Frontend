@@ -46,49 +46,43 @@
   background-color: grey;
 }
 
-@media(max-width:768px){
-  .navbar-content{
+@media (max-width: 768px) {
+  .navbar-content {
     display: none !important;
   }
 }
 
-@media(min-width:768px){
-  .hide-sidebar-content{
+@media (min-width: 768px) {
+  .hide-sidebar-content {
     display: none !important;
   }
 }
 
-
-.nb-title{
+.nb-title {
   margin-left: 1rem;
 }
-
-
-
 
 /* Sidebar styling*/
 
 .sidebar {
   padding-left: 0.7rem;
-  background-color: #DAE6F3;
+  background-color: #dae6f3;
   height: 100% !important;
 }
 
-@media(min-width:768px){
-  .sidebar{
+@media (min-width: 768px) {
+  .sidebar {
     padding-left: 0.7rem;
-    background-color: #DAE6F3; /*endret farge fra lightblue*/
+    background-color: #dae6f3; /*endret farge fra lightblue*/
     height: 100vh;
   }
-  
 }
 
-
-.sidebar-col{
+.sidebar-col {
   padding-left: 0 !important;
 }
 
-.sidebar-wrapper{
+.sidebar-wrapper {
   height: 100vh;
   position: sticky;
   top: 56px;
@@ -98,7 +92,7 @@
 
 .spinning-wheel {
   position: absolute;
-  left: 50%;
+  left: 55%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);

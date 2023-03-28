@@ -9,8 +9,6 @@ import {
   createEvent,
   getAcceptedEventByUser,
 } from "../../api/eventApi";
-import EventCards from "../Testing/EventCardsT";
-import { getEventbyId, getEventByUser, createEvent } from "../../api/eventApi";
 import EventCards from "./EventCards";
 
 const fetchData = async () => {

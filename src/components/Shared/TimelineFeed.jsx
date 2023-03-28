@@ -71,8 +71,6 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     handleCloseModal();
   }
 
-  async function createEvent() {}
-
   async function refreshPage() {
     Pointer.setLoading();
     onChange(true);
@@ -256,10 +254,18 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   return (
     <>
       <Container>
-        <CreateEventButton
-          url={window.location.pathname.slice(0, 13)}
-          id={id}
-        />
+        {[
+          "http://localhost:3000/timeline",
+          "http://localhost:3000/Timeline",
+          "http://localhost:3000/",
+        ].includes(window.location.href) ? (
+          <></>
+        ) : (
+          <CreateEventButton
+            url={window.location.pathname.slice(0, 13)}
+            id={id}
+          />
+        )}
 
         <Row
           className="mt-2"

@@ -15,33 +15,39 @@ function CreateEventButton(prop) {
   const [event, setEvent] = useState(null);
 
   const handleClick = async () => {
-    Pointer.setLoading();
-    try {
-      const formattedDate = new Date(eventDate).toLocaleDateString();
+    if (eventDescription == "" || eventTitle == "" || eventDate == "") {
+      alert("Invalid input");
+    } else {
+      Pointer.setLoading();
+      try {
+        const formattedDate = new Date(eventDate).toLocaleDateString();
 
-      let type = "";
-      let name = "";
+        let type = "";
+        let name = "";
 
-      if (prop.url === "/group-detail") {
-        type = "group";
-        let group = await getGroup(prop.id);
-        console.log(group);
-      } else if (prop.url === "/topic-detail") {
-        type = "topic";
+        if (prop.url === "/group-detail") {
+          type = "group";
+          let group = await getGroup(prop.id);
+          name = group.name;
+        } else if (prop.url === "/topic-detail") {
+          type = "topic";
+        }
+
+        const newEvent = await createEvent(
+          eventTitle + " - " + name,
+          eventDescription,
+          formattedDate,
+          type,
+          prop.id
+        );
+        setEvent(newEvent);
+        setShowModal(false);
+        Pointer.setDefault();
+        window.location.reload();
+      } catch (error) {
+        Pointer.setDefault();
+        console.error("Failed to create event", error);
       }
-
-      const newEvent = await createEvent(
-        eventTitle + " - " + name,
-        eventDescription,
-        formattedDate,
-        type,
-        prop.id
-      );
-      setEvent(newEvent);
-      Pointer.setDefault();
-      setShowModal(false);
-    } catch (error) {
-      console.error("Failed to create event", error);
     }
   };
 
