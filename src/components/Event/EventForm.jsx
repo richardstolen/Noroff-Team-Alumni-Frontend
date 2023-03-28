@@ -10,6 +10,7 @@ import {
   getAcceptedEventByUser,
 } from "../../api/eventApi";
 import EventCards from "./EventCards";
+import { Row, Col } from "react-bootstrap";
 
 const fetchData = async () => {
   const data = await getEventByUser();
@@ -33,10 +34,6 @@ const EventThread = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetchData().then((event) => {
-    //   setEvent(mapEvents(event));
-    //   Storage.setEvent(event);
-    // });
     if (loading) {
       fetchEvents().then((events) => {
         setAvailableEvents(events.available);
@@ -54,39 +51,44 @@ const EventThread = () => {
   }, [loading, setEvent, setAvailableEvents, setAcceptedEvents]);
 
   const mapEvents = (events) => {
-    return events.map((event, i) => {
-      if (acceptedEvents.some((x) => x.eventId === event.eventId)) {
-        return (
-          <EventCards
-            prop={event}
-            accepted={true}
-            key={i}
-            style={{ textAlign: "center" }}
-          >
-            {event.description}
-          </EventCards>
-        );
-      } else {
-        return (
-          <EventCards
-            prop={event}
-            accepted={false}
-            key={i}
-            style={{ textAlign: "center" }}
-          >
-            {event.description}
-          </EventCards>
-        );
-      }
+    if (!events) {
+      return null;
+    }
+
+    const numCols = 3;
+    const numRows = Math.ceil(events.length / numCols);
+    const rows = Array.from({ length: numRows }, (_, i) => []);
+
+    events.forEach((event, i) => {
+      const row = Math.floor(i / numCols);
+      rows[row].push(event);
     });
+
+    const eventRows = rows.map((row, i) => (
+      <Row key={i} className="justify-content-center">
+        {row.map((event, j) => (
+          <Col key={j} sm={12} md={6} lg={3} className="my-2">
+            <EventCards prop={event} accepted={acceptedEvents.some((x) => x.eventId === event.eventId)} />
+          </Col>
+        ))}
+      </Row>
+    ));
+
+    return eventRows;
   };
 
   return (
     <>
-      {event ? (
-        event
-      ) : (
+      {loading ? (
         <PulseLoader className="spinning-wheel" color="#0d6efd" />
+      ) : (
+        <>
+          {event ? (
+            event
+          ) : (
+            <p style={{ textAlign: "center" }}>No events available.</p>
+          )}
+        </>
       )}
     </>
   );

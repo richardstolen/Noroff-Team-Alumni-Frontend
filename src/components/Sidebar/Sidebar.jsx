@@ -11,8 +11,9 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineTopic, MdTopic } from "react-icons/md";
 import { TbCalendarEvent } from "react-icons/tb"; 
 import { GoCalendar } from "react-icons/go"; 
-import { BiGroup } from "react-icons/bi"; 
+import { BiGroup, BiChat } from "react-icons/bi"; 
 import { FiLogOut } from "react-icons/fi";
+import { FaUserGraduate } from "react-icons/fa"; 
 import Storage from "../../storage/storage";
 
 
