@@ -55,7 +55,7 @@ const TopicDetail = () => {
           <Col xl={10} md={9}>
             {topic ? (
               <Card
-                style={{ width: "40rem", height: "10rem" }}
+                style={{ width: "40rem", height: "10rem", margin: "auto"}}
                 className="mt-2"
               >
                 <Card.Body>
