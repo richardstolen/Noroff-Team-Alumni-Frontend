@@ -19,6 +19,7 @@ import {
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { useParams } from "react-router";
+import Pointer from "../../utils/mousePointer";
 
 const TimelineFeed = ({ onChange, postsFromParent }) => {
   const [showReplies, setShowReplies] = useState(-1);
@@ -45,7 +46,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
    * Function for handling edit post
    */
   async function handlePost(action) {
-    document.body.style.cursor = "wait";
+    Pointer.setLoading();
     if (action === "delete") {
       await deletePost(postEdit);
     } else if (createMode) {
@@ -70,7 +71,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   }
 
   async function refreshPage() {
-    document.body.style.cursor = "wait";
+    Pointer.setLoading();
     onChange(true);
   }
 

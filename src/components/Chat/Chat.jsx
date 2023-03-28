@@ -15,6 +15,7 @@ import Storage from "../../storage/storage";
 import { getMessages } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { sendMessage } from "../../api/apiHandler";
+import Pointer from "../../utils/mousePointer";
 
 // Copied from https://mdbootstrap.com/docs/react/extended/chat/
 
@@ -49,14 +50,14 @@ function Chat() {
 
   async function handleSendMessage() {
     if (message) {
-      document.body.style.cursor = "wait";
+      Pointer.setLoading();
       const response = await sendMessage(message, current);
 
       fetchData().then((messages) => {
         setDmSideBar(mapMessagesSideBar(messages));
         setDmChat(mapMessagesChatBox(messages));
         Storage.setDirectMessages(messages);
-        document.body.style.cursor = "default";
+        Pointer.setDefault();
         document.getElementById("textArea").value = "";
         setMessage(null);
       });

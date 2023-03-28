@@ -20,6 +20,7 @@ import {
 import KeyCloakService from "../security/KeyCloakService.ts";
 import Storage from "../storage/storage";
 import { PulseLoader } from "react-spinners";
+import Pointer from "../utils/mousePointer";
 
 function Profile({ user_id }) {
   const searchedUser = Storage.getSearchedUser();
@@ -49,7 +50,7 @@ function Profile({ user_id }) {
   const handleStatusEdit = async () => {
     const newStatus = prompt("Enter new status:");
     if (newStatus !== null) {
-      document.body.style.cursor = "wait";
+      Pointer.setLoading();
       await editUserStatus(newStatus);
       setEditMode(true);
     }
@@ -58,7 +59,7 @@ function Profile({ user_id }) {
   const handleProfilePictureEdit = async () => {
     const newProfilePicture = prompt("Enter new profile picture URL:");
     if (newProfilePicture !== null) {
-      document.body.style.cursor = "wait";
+      Pointer.setLoading();
       await editUserProfilePicture(newProfilePicture);
       setEditMode(true);
     }
@@ -67,7 +68,7 @@ function Profile({ user_id }) {
   const handleBioEdit = async () => {
     const newBio = prompt("Enter new bio:");
     if (newBio !== null) {
-      document.body.style.cursor = "wait";
+      Pointer.setLoading();
       await editUserBio(newBio);
       setEditMode(true);
     }
@@ -76,7 +77,7 @@ function Profile({ user_id }) {
   const handleFunFactEdit = async () => {
     const newFunFact = prompt("Enter new fun fact:");
     if (newFunFact !== null) {
-      document.body.style.cursor = "wait";
+      Pointer.setLoading();
       await editUserFunFact(newFunFact);
       setEditMode(true);
     }
@@ -107,7 +108,7 @@ function Profile({ user_id }) {
           setUser(user);
           Storage.setUser(user);
           setEditMode(false);
-          document.body.style.cursor = "default";
+          Pointer.setDefault();
         });
       } else {
         setUser(user);
@@ -154,7 +155,11 @@ function Profile({ user_id }) {
                       src={user.image}
                       alt="Profile"
                       className="rounded-circle mb-4 mt-3"
-                      style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        border: "1px solid #ccc",
+                      }}
                     />
                   ) : (
                     <Avatar
@@ -223,7 +228,11 @@ function Profile({ user_id }) {
                           src={user.image}
                           alt="Profile"
                           className="rounded-circle mb-4 mt-3"
-                          style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
+                          style={{
+                            width: "200px",
+                            height: "200px",
+                            border: "1px solid #ccc",
+                          }}
                         />
                       ) : (
                         <Avatar

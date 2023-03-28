@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import GroupAPI from "../../api/groupApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { Row, Col } from "react-bootstrap";
+import Pointer from "../../utils/mousePointer";
 
 const fetchData = async () => {
   const data = await getUser(KeyCloakService.GetId());
@@ -28,6 +29,7 @@ function GroupCards(group) {
   }, [user, setUser]);
 
   const handleJoinGroup = async () => {
+    Pointer.setLoading();
     const result = await joinGroup(group.prop.groupId).then(
       (response) => response
     );
@@ -36,11 +38,15 @@ function GroupCards(group) {
       fetchData().then((user) => {
         setUser(user);
         Storage.setUser(user);
+        Pointer.setDefault();
+        // Dirty fix to update page after joining/leaving group
+        window.location.reload();
       });
     }
   };
 
   const handleLeaveGroup = async () => {
+    Pointer.setLoading();
     try {
       const result = await GroupAPI.leaveGroup(group.prop.groupId).then(
         (response) => response
@@ -50,6 +56,9 @@ function GroupCards(group) {
         fetchData().then((user) => {
           setUser(user);
           Storage.setUser(user);
+          Pointer.setDefault();
+          // Dirty fix to update page after joining/leaving group
+          window.location.reload();
         });
       }
     } catch (error) {
@@ -80,8 +89,6 @@ function GroupCards(group) {
         </Card.Body>
       </Card>
     </div>
-            
-
   );
 }
 export default GroupCards;

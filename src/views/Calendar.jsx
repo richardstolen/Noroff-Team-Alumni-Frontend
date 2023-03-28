@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { getEventByUser, getEventsByGroup } from "../api/eventApi";
 import { getUser } from "../api/apiHandler";
@@ -11,6 +11,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import "../App.css";
 import { Col, Collapse, Container, Row } from "react-bootstrap";
 import { useMediaQuery } from "@react-hook/media-query";
+import Pointer from "../utils/mousePointer";
 
 const mapEvents = (events) => {
   return events.map((event) => {
@@ -18,7 +19,7 @@ const mapEvents = (events) => {
       id: event.id,
       start: new Date(event.date),
       end: new Date(event.date),
-      title: event.description
+      title: event.description,
     };
   });
 };
@@ -82,7 +83,7 @@ function CalendarView({ userId }) {
           setUser(user);
           Storage.setUser(user);
           setEditMode(false);
-          document.body.style.cursor = "default";
+          Pointer.setDefault();
         });
       } else {
         setUser(user);
@@ -118,38 +119,42 @@ function CalendarView({ userId }) {
             <Sidebar />
           </Col>
           <Col xl={10} md={9}>
-      <div className="calendar align-items-center text-center">
-        <Calendar
-          localizer={localizer}
-          events={event}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500, width: "70%", marginLeft: "100px", marginTop:"20px" }}
-          className="border-0 shadow-sm"
-          value={new Date()}
-          eventPropGetter={(event, start, end, isSelected) => {
-            let newStyle = {
-              backgroundColor: "lightgray",
-              color: "black",
-              borderRadius: "0px",
-              border: "none"
-            };
+            <div className="calendar align-items-center text-center">
+              <Calendar
+                localizer={localizer}
+                events={event}
+                startAccessor="start"
+                endAccessor="end"
+                style={{
+                  height: 500,
+                  width: "70%",
+                  marginLeft: "100px",
+                  marginTop: "20px",
+                }}
+                className="border-0 shadow-sm"
+                value={new Date()}
+                eventPropGetter={(event, start, end, isSelected) => {
+                  let newStyle = {
+                    backgroundColor: "lightgray",
+                    color: "black",
+                    borderRadius: "0px",
+                    border: "none",
+                  };
 
-            if (event.group === user.group) {
-              newStyle.backgroundColor = "#3174ad";
-            }
+                  if (event.group === user.group) {
+                    newStyle.backgroundColor = "#3174ad";
+                  }
 
-            return {
-              className: "",
-              style: newStyle
-            };
-          }}
-        />
-      </div>
-      </Col>
-      </Row>
+                  return {
+                    className: "",
+                    style: newStyle,
+                  };
+                }}
+              />
+            </div>
+          </Col>
+        </Row>
       </Container>
-
     </>
   );
 }

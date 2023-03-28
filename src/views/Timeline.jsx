@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap";
 import { Col, Collapse, Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import { useMediaQuery } from "@react-hook/media-query";
+import Pointer from "../utils/mousePointer";
 
 const fetchData = async () => {
   const data = await getPosts();
@@ -36,7 +37,7 @@ const Timeline = () => {
       fetchData().then((posts) => {
         setPosts(posts);
         Storage.setPosts(posts);
-        document.body.style.cursor = "default";
+        Pointer.setDefault();
         setLoading(false);
       });
     }

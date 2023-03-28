@@ -4,6 +4,7 @@ import { id } from "date-fns/locale";
 import { useParams } from "react-router-dom";
 import TimelineFeed from "../Shared/TimelineFeed";
 import { PulseLoader } from "react-spinners";
+import Pointer from "../../utils/mousePointer";
 
 const fetchData = async (id) => {
   const data = await getTopicPost(id);
@@ -19,7 +20,7 @@ const GetTopicPost = () => {
     if (value) {
       fetchData(id).then((posts) => {
         setPosts(posts);
-        document.body.style.cursor = "default";
+        Pointer.setDefault();
         setState(false);
       });
     }
@@ -31,7 +32,6 @@ const GetTopicPost = () => {
 
   return (
     <>
-      
       {!posts ? (
         <PulseLoader className="spinning-wheel" color="#0d6efd" />
       ) : (
