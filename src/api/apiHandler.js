@@ -1,10 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 import { formatDate } from "../utils/dateFormat";
 
-const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-//const apiURL = "https://localhost:7288";
-
-//export const user_id = "BF47A31B-1EFC-4E11-8765-D530577FDCB3";
+const apiURL = process.env.REACT_APP_API_URL;
 
 export async function getUsers() {
   console.log("GET USERS");
@@ -155,6 +152,19 @@ export async function getGroups() {
 export async function getGroup(groupId) {
   console.log("GET GROUP(ID)");
   const response = await fetch(`${apiURL}/group/${groupId}`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+    }),
+  });
+  if (response.ok) {
+    const group = await response.json();
+    return group;
+  }
+}
+
+export async function getTopic(topicId) {
+  console.log("GET TOPIC(ID)");
+  const response = await fetch(`${apiURL}/topic/${topicId}`, {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
     }),

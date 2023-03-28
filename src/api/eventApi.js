@@ -1,6 +1,6 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
-const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-//const apiURL = "https://localhost:7288";
+
+const apiURL = process.env.REACT_APP_API_URL;
 
 export async function getEventbyId(id) {
   console.log("GET EVENT(ID)");
@@ -25,26 +25,34 @@ export async function getEventByUser() {
   });
   if (response.ok) {
     const eventUser = await response.json();
-    console.log(eventUser);
+    return eventUser;
+  }
+}
+
+export async function getAcceptedEventByUser() {
+  console.log("GET ACCEPTED EVENTS(USER_ID)");
+  const response = await fetch(`${apiURL}/event/accepted`, {
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      user_id: KeyCloakService.GetId(),
+    }),
+  });
+  if (response.ok) {
+    const eventUser = await response.json();
     return eventUser;
   }
 }
 
 export async function joinEvent(event_id) {
   console.log("Join Event");
-  console.log(event_id);
-  const response = await fetch(`${apiURL}/event/event_id/invite/user/user_id`, {
+  const response = await fetch(`${apiURL}/event/join`, {
     method: "POST",
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
       "Content-Type": "application/json",
       user_id: KeyCloakService.GetId(),
       event_id: event_id,
-      type: "user",
     }),
-    // body: JSON.stringify({
-
-    // }),
   });
 
   if (response.ok) {
@@ -52,7 +60,7 @@ export async function joinEvent(event_id) {
   }
 }
 
-export async function createEvent(description, date) {
+export async function createEvent(title, description, date, type, id) {
   console.log("CREATE EVENT");
   console.log(description);
   console.log(new Date(date).toISOString());
@@ -61,11 +69,12 @@ export async function createEvent(description, date) {
     headers: new Headers({
       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
       "Content-Type": "application/json",
-      type: "group",
-      id: "1",
+      type: type,
+      id: id,
     }),
     body: JSON.stringify({
       userID: KeyCloakService.GetId(),
+      title: title,
       description: description,
       date: new Date(date).toISOString(),
     }),
@@ -77,22 +86,33 @@ export async function createEvent(description, date) {
   }
 }
 
+// async function leaveEvent(event_id) {
+//   console.log("Leave Event");
+//   const response = await fetch(`${apiURL}/event/leave`, {
+//     method: "POST",
+//     headers: new Headers({
+//       Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+//       "Content-Type": "application/json",
+//       user_id: KeyCloakService.GetId(),
+//       event_id: event_id,
+//     }),
+//   });
+
+//   if (response.ok) {
+//     return response;
+//   }
+// }
+
 async function leaveEvent(event_id) {
   console.log("Leave Event");
-  console.log(event_id);
-  const response = await fetch(
-    `${apiURL}/event/event_id/invite/user/user_id/remove`,
-    {
-      method: "POST",
-      headers: new Headers({
-        Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
-        "Content-Type": "application/json",
-        user_id: KeyCloakService.GetId(),
-        event_id: event_id,
-        type: "user",
-      }),
-    }
-  );
+  const response = await fetch(`${apiURL}/event/${event_id}/remove`, {
+    method: "POST",
+    headers: new Headers({
+      Authorization: "Bearer " + KeyCloakService.GetAccesstoken(),
+      "Content-Type": "application/json",
+      user_id: KeyCloakService.GetId(),
+    }),
+  });
 
   if (response.ok) {
     return response;

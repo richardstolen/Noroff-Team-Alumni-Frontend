@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { validInput } from "../../utils/validateInput";
+import Pointer from "../../utils/mousePointer";
 
 function GroupButton() {
   const [showModal, setShowModal] = useState(false);
@@ -13,12 +14,15 @@ function GroupButton() {
   const [group, setGroup] = useState(null);
 
   const handleClick = async () => {
+    Pointer.setLoading();
     const isValid = validInput(groupName, groupDesc);
     if (isValid) {
       try {
         const newGroup = await createGroup(groupName, groupDesc, isPrivate);
         setGroup(newGroup);
+        Pointer.setDefault();
         handleClose();
+        window.location.reload();
       } catch (error) {
         console.error("Failed to create group:", error);
         // Handle error
@@ -86,7 +90,7 @@ function GroupButton() {
           </Button>
         </Modal.Footer>
       </Modal>
-      {group && (
+      {/* {group && (
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Group created</Modal.Title>
@@ -103,7 +107,7 @@ function GroupButton() {
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }

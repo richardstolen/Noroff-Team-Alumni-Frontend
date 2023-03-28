@@ -20,6 +20,7 @@ import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { useParams } from "react-router";
 import Pointer from "../../utils/mousePointer";
+import CreateEventButton from "../Event/EventButton";
 
 const TimelineFeed = ({ onChange, postsFromParent }) => {
   const [showReplies, setShowReplies] = useState(-1);
@@ -69,6 +70,8 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
     // Closing the modal
     handleCloseModal();
   }
+
+  async function createEvent() {}
 
   async function refreshPage() {
     Pointer.setLoading();
@@ -253,11 +256,22 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
   return (
     <>
       <Container>
+        <CreateEventButton
+          url={window.location.pathname.slice(0, 13)}
+          id={id}
+        />
+
         <Row
           className="mt-2"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          {window.location.href != "http://localhost:3000/timeline" ? (
+          {[
+            "http://localhost:3000/timeline",
+            "http://localhost:3000/Timeline",
+            "http://localhost:3000/",
+          ].includes(window.location.href) ? (
+            <></>
+          ) : (
             <Button
               className="me-5"
               style={{ width: "120px" }}
@@ -270,8 +284,6 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
             >
               New Post
             </Button>
-          ) : (
-            <></>
           )}
 
           <Form.Control

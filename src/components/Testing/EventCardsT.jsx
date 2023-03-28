@@ -1,6 +1,10 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { getEventByUser, joinEvent } from "../../api/eventApi";
+import {
+  getAcceptedEventByUser,
+  getEventByUser,
+  joinEvent,
+} from "../../api/eventApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { getUser } from "../../api/apiHandler";
 import { useEffect, useState } from "react";
@@ -9,29 +13,14 @@ import Storage from "../../storage/storage";
 import Pointer from "../../utils/mousePointer";
 
 const fetchData = async () => {
-  const data = await getUser(KeyCloakService.GetId());
-  const allEvent = await getEventByUser();
-  const userWithEvents = {
-    ...data,
-    events: allEvent,
-  };
-  return userWithEvents;
+  let user = await getUser(KeyCloakService.GetId());
+  return user;
 };
 
 function EventCards(event) {
   const [user, setUser] = useState(Storage.getUser());
 
-  useEffect(() => {
-    let userFromStorage = Storage.getUser();
-    if (!userFromStorage) {
-      fetchData().then((user) => {
-        setUser(user);
-        Storage.setUser(user);
-      });
-    } else {
-      Storage.setUser(userFromStorage);
-    }
-  }, [user, setUser]);
+  useEffect(() => {}, []);
 
   const handleJoinEvent = async () => {
     Pointer.setLoading();
@@ -59,12 +48,12 @@ function EventCards(event) {
         fetchData().then((user) => {
           setUser(user);
           Storage.setUser(user);
-          Pointer.setDefault();
         });
       }
     } catch (error) {
       console.log("error", error);
     }
+    Pointer.setDefault();
   };
 
   return (
@@ -72,9 +61,9 @@ function EventCards(event) {
       {event?.prop && (
         <Card style={{ width: "18rem", margin: "1rem" }}>
           <Card.Body>
+            <Card.Text>{event.prop.title}</Card.Text>
             <Card.Text>{event.prop.description}</Card.Text>
-            {console.log(user)}
-            {!user.events.some((x) => x.eventId === event.prop.eventId) ? (
+            {!event.accepted ? (
               <Button
                 variant="primary"
                 onClick={() => handleJoinEvent(event.prop)}

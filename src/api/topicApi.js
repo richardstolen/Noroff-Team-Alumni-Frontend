@@ -1,8 +1,7 @@
 import KeyCloakService from "../security/KeyCloakService.ts";
 import { formatDate } from "../utils/dateFormat";
 
-const apiURL = "https://teamalumninetbackend20230314105723.azurewebsites.net";
-//const apiURL = "https://localhost:7288";
+const apiURL = process.env.REACT_APP_API_URL;
 
 export async function getTopicPost(id) {
   console.log("GET topicPost(ID)");

@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { getEventByUser, getEventsByGroup } from "../api/eventApi";
+import {
+  getAcceptedEventByUser,
+  getEventByUser,
+  getEventsByGroup,
+} from "../api/eventApi";
 import { getUser } from "../api/apiHandler";
 import KeyCloakService from "../security/KeyCloakService.ts";
 import Storage from "../storage/storage";
@@ -27,12 +31,11 @@ const mapEvents = (events) => {
 const localizer = momentLocalizer(moment);
 
 const fetchData = async () => {
-  const data = await getEventByUser();
+  const data = await getAcceptedEventByUser(KeyCloakService.GetId());
   return data;
 };
 
 function CalendarView({ userId }) {
-  const [userEvents, setUserEvents] = useState([]);
   const searchedUser = Storage.getSearchedUser();
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -58,12 +61,6 @@ function CalendarView({ userId }) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    const fetchUserEvents = async () => {
-      const events = await getEventByUser(userId);
-      setUserEvents(events);
-    };
-
-    fetchUserEvents();
     const fetchUser = async () => {
       let searchedUser = Storage.getSearchedUser();
 
@@ -90,15 +87,10 @@ function CalendarView({ userId }) {
       }
     };
 
-    let eventFromStorage = Storage.getEventByUser();
-    if (eventFromStorage == null) {
-      fetchData().then((event) => {
-        setEvent(mapEvents(event));
-        Storage.setEvent(event);
-      });
-    } else {
-      setEvent(mapEvents(eventFromStorage));
-    }
+    fetchData().then((event) => {
+      setEvent(mapEvents(event));
+      Storage.setEvent(event);
+    });
 
     fetchUser();
   }, [userId, editMode]);

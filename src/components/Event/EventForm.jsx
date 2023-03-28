@@ -3,7 +3,12 @@ import Button from "react-bootstrap/Button";
 import Storage from "../../storage/storage";
 import { PulseLoader } from "react-spinners";
 import KeyCloakService from "../../security/KeyCloakService.ts";
-import { getEventbyId, getEventByUser, createEvent } from "../../api/eventApi";
+import {
+  getEventbyId,
+  getEventByUser,
+  createEvent,
+  getAcceptedEventByUser,
+} from "../../api/eventApi";
 import EventCards from "../Testing/EventCardsT";
 
 const fetchData = async () => {
@@ -11,49 +16,80 @@ const fetchData = async () => {
   return data;
 };
 
+const fetchEvents = async () => {
+  const available = await getEventByUser();
+  const accepted = await getAcceptedEventByUser();
+  const events = {
+    available: available,
+    accepted: accepted,
+  };
+  return events;
+};
+
 const EventThread = () => {
-  const [event, setEvent] = useState([]);
+  const [event, setEvent] = useState();
+  const [availableEvents, setAvailableEvents] = useState();
+  const [acceptedEvents, setAcceptedEvents] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let eventFromStorage = Storage.getEventByUser();
-    if (eventFromStorage == null) {
-      fetchData().then(event => {
-        setEvent(mapEvents(event));
+    // fetchData().then((event) => {
+    //   setEvent(mapEvents(event));
+    //   Storage.setEvent(event);
+    // });
+    if (loading) {
+      fetchEvents().then((events) => {
+        setAvailableEvents(events.available);
+        setAcceptedEvents(events.accepted);
+
+        setLoading(false);
+
         Storage.setEvent(event);
-
       });
-      console.log(event)
-    } else {
-      setEvent(mapEvents(eventFromStorage));
     }
-  }, []);
 
+    if (loading == false) {
+      setEvent(mapEvents(availableEvents));
+    }
+  }, [loading, setEvent, setAvailableEvents, setAcceptedEvents]);
 
   const mapEvents = (events) => {
     return events.map((event, i) => {
-      return <EventCards prop={event} key={i} style={{ textAlign: "center" }}>{event.description}</EventCards>})
-    }
-  
-  // event.map((event, i) => {
-  //   return ( <p
-  //     prop={event}
-  //     key={i}
-  //     style={{
-  //       display: "flex", 
-  //       justifyContent: "center", 
-  //       alignItems: "center", 
-  //       height: "100vh", 
-  //     }}>
-  //       {event.description}
-  //   </p> )
-
+      if (acceptedEvents.some((x) => x.eventId === event.eventId)) {
+        return (
+          <EventCards
+            prop={event}
+            accepted={true}
+            key={i}
+            style={{ textAlign: "center" }}
+          >
+            {event.description}
+          </EventCards>
+        );
+      } else {
+        return (
+          <EventCards
+            prop={event}
+            accepted={false}
+            key={i}
+            style={{ textAlign: "center" }}
+          >
+            {event.description}
+          </EventCards>
+        );
+      }
+    });
+  };
 
   return (
-    <>{event ? event : <PulseLoader className="spinning-wheel" color="#0d6efd" />}</>
-
-  )
-}
+    <>
+      {event ? (
+        event
+      ) : (
+        <PulseLoader className="spinning-wheel" color="#0d6efd" />
+      )}
+    </>
+  );
+};
 
 export default EventThread;
-
-

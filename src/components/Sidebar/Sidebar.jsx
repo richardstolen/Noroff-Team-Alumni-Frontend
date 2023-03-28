@@ -9,20 +9,19 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { RiPagesLine } from "react-icons/ri";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineTopic, MdTopic } from "react-icons/md";
-import { TbCalendarEvent } from "react-icons/tb"; 
-import { GoCalendar } from "react-icons/go"; 
-import { BiGroup } from "react-icons/bi"; 
-
+import { TbCalendarEvent } from "react-icons/tb";
+import { GoCalendar } from "react-icons/go";
+import { BiGroup } from "react-icons/bi";
+import Storage from "../../storage/storage";
 
 const Sidebar = ({ userId }) => {
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    console.log(userId);
     async function fetchData() {
-      const user = await getUser(KeyCloakService.GetId()); // call the getUser function with the userId prop
-      setUser(user);
+      // const user = await getUser(KeyCloakService.GetId()); // call the getUser function with the userId prop
+
+      setUser(Storage.getUser());
     }
     fetchData();
   }, [userId]);
@@ -30,7 +29,6 @@ const Sidebar = ({ userId }) => {
   function clearProfileStorage() {
     Storage.clearSearchedUser();
   }
-
 
   return (
     <div className="sidebar">
@@ -43,14 +41,26 @@ const Sidebar = ({ userId }) => {
           <HiOutlineUserGroup size={20} style={{ marginRight: "5px" }} />
           Public groups
         </Nav.Link>
-        <NavDropdown title={<><BiGroup size={20} style={{ marginRight: "5px" }} /> My groups</>}>
+        <NavDropdown
+          title={
+            <>
+              <BiGroup size={20} style={{ marginRight: "5px" }} /> My groups
+            </>
+          }
+        >
           {user === null ? <></> : <UserGroups groups={user.groups} />}
         </NavDropdown>
         <Nav.Link href="/topic-list">
           <MdOutlineTopic size={20} style={{ marginRight: "5px" }} />
           Public Topics
         </Nav.Link>
-        <NavDropdown title={<><MdTopic size={20} style={{ marginRight: "5px" }} /> My topics</>}>
+        <NavDropdown
+          title={
+            <>
+              <MdTopic size={20} style={{ marginRight: "5px" }} /> My topics
+            </>
+          }
+        >
           {user === null ? <></> : <UserTopics topics={user.topics} />}
         </NavDropdown>
         <Nav.Link href="/event-list">
@@ -61,8 +71,14 @@ const Sidebar = ({ userId }) => {
           <GoCalendar size={20} style={{ marginRight: "5px" }} />
           Calendar
         </Nav.Link>
-        <Nav.Link href="/chat" className="hide-sidebar-content">Chat</Nav.Link>
-        <NavDropdown title="Profile" id="basic-nav-dropdown" className="hide-sidebar-content">
+        <Nav.Link href="/chat" className="hide-sidebar-content">
+          Chat
+        </Nav.Link>
+        <NavDropdown
+          title="Profile"
+          id="basic-nav-dropdown"
+          className="hide-sidebar-content"
+        >
           <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
             Profile
           </NavDropdown.Item>
@@ -76,5 +92,3 @@ const Sidebar = ({ userId }) => {
 };
 
 export default Sidebar;
-
-
