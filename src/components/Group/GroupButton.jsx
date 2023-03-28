@@ -72,14 +72,14 @@ function GroupButton() {
               onChange={handleDescInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
+          {/* <Form.Group controlId="formBasicCheckbox">
             <Form.Check
               type="checkbox"
               label="Private group"
               checked={isPrivate}
               onChange={handleCheckboxChange}
             />
-          </Form.Group>
+          </Form.Group> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

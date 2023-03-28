@@ -185,13 +185,14 @@ export async function createUser() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      UserId: KeyCloakService.GetId(),
-      UserName: KeyCloakService.GetUserName(),
+      userId: KeyCloakService.GetId(),
+      userName: KeyCloakService.GetUserName(),
     }),
   });
 
   if (response.ok) {
     const user = await response.json();
+    console.log("Create user: ", user);
     return user;
   }
 }

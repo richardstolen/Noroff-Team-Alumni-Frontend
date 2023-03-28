@@ -14,3 +14,11 @@ export function formatDate(date) {
   }
   return date;
 }
+
+export function formatEventDate(date) {
+  const _date = new Date(date);
+  const month = _date.toLocaleString("no-NO", { month: "long" });
+  const dateString = ` ${_date.getDate()}. ${month}`;
+
+  return dateString;
+}

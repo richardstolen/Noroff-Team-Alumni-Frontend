@@ -29,9 +29,13 @@ function App() {
         let user = await getUser(KeyCloakService.GetId());
         if (user == null) {
           user = await createUser();
+          console.log(user);
+          Storage.setUser(user);
+          setLoading(false);
+        } else {
+          Storage.setUser(user);
+          setLoading(false);
         }
-        Storage.setUser(user);
-        setLoading(false);
       }
     }
     fetchData();

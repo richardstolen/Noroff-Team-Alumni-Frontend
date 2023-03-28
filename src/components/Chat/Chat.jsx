@@ -12,11 +12,11 @@ import {
   MDBCardHeader,
 } from "mdb-react-ui-kit";
 import Storage from "../../storage/storage";
-import { getMessages } from "../../api/apiHandler";
+import { getMessages, getUserByUsername } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { sendMessage } from "../../api/apiHandler";
 import Pointer from "../../utils/mousePointer";
-import { Button } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
 // Copied from https://mdbootstrap.com/docs/react/extended/chat/
 
@@ -30,14 +30,18 @@ function Chat() {
   const [dmChat, setDmChat] = useState([]);
   const [current, setCurrent] = useState();
   const [message, setMessage] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [newUser, setNewUser] = useState();
 
   useEffect(() => {
     let dmsFromStorage = Storage.getDirectMessages();
     if (dmsFromStorage === null) {
+      Pointer.setLoading();
       fetchData().then((messages) => {
         setDmSideBar(mapMessagesSideBar(messages));
         setDmChat(mapMessagesChatBox(messages));
         Storage.setDirectMessages(messages);
+        Pointer.setDefault();
       });
     } else {
       setDmSideBar(mapMessagesSideBar(dmsFromStorage));
@@ -49,10 +53,35 @@ function Chat() {
     setCurrent(username);
   }
 
-  async function handleSendMessage() {
+  async function refresh() {
+    Pointer.setLoading();
+    fetchData().then((messages) => {
+      setDmSideBar(mapMessagesSideBar(messages));
+      setDmChat(mapMessagesChatBox(messages));
+      Storage.setDirectMessages(messages);
+      Pointer.setDefault();
+    });
+  }
+
+  async function handleSendMessage(action) {
     if (message) {
+      let response = null;
       Pointer.setLoading();
-      const response = await sendMessage(message, current);
+      console.log(newUser);
+      if (action === "new-user") {
+        const user = await getUserByUsername(newUser);
+
+        if (!user) {
+          alert("No user found");
+          Pointer.setDefault();
+          return;
+        }
+
+        response = await sendMessage(message, newUser);
+        setShowModal(false);
+      } else {
+        response = await sendMessage(message, current);
+      }
 
       fetchData().then((messages) => {
         setDmSideBar(mapMessagesSideBar(messages));
@@ -61,11 +90,15 @@ function Chat() {
         Pointer.setDefault();
         document.getElementById("textArea").value = "";
         setMessage(null);
+        setNewUser(null);
       });
     } else {
+      Pointer.setDefault();
       alert("Invalid message");
     }
   }
+
+  const handleClose = () => setShowModal(false);
 
   const mapMessagesSideBar = (messages) => {
     return messages.map((message, i) => {
@@ -128,8 +161,8 @@ function Chat() {
                   width="90"
                 />
                 <MDBCard className="flex-fill">
-                  <MDBCardHeader className="d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">{message.createdBy}</p>
+                  <MDBCardHeader className="d-flex justify-content-between p-2">
+                    <p className="fw-bold ms-1 mb-0">{message.createdBy}</p>
                     <p className="text-muted small mb-0">
                       <MDBIcon far icon="clock" /> {message.lastUpdate}
                     </p>
@@ -144,11 +177,11 @@ function Chat() {
             return (
               <li
                 key={message.postId}
-                className="d-flex justify-content-between mb-4"
+                className="d-flex justify-content-between mb-2"
               >
                 <MDBCard className="flex-fill">
-                  <MDBCardHeader className="d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">{message.createdBy}</p>
+                  <MDBCardHeader className="d-flex justify-content-between p-2">
+                    <p className="fw-bold ms-1 mb-0">{message.createdBy}</p>
                     <p className="text-muted small mb-0">
                       <MDBIcon far icon="clock" /> {message.lastUpdate}
                     </p>
@@ -180,11 +213,25 @@ function Chat() {
       >
         <MDBRow>
           <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
+            <Button
+              className="float-end"
+              style={{ width: "80px" }}
+              onClick={refresh}
+            >
+              Refresh
+            </Button>
+            <Button
+              className="float-end me-1"
+              style={{ width: "170px" }}
+              onClick={() => setShowModal(true)}
+            >
+              Message a new user
+            </Button>
             <h5 className="font-weight-bold mb-3 text-center text-lg-start">
-              Member
+              Users
             </h5>
 
-            <MDBCard>
+            <MDBCard className="mt-4">
               <MDBCardBody>
                 <MDBTypography listUnStyled className="mb-0">
                   {dmSideBar}
@@ -195,8 +242,8 @@ function Chat() {
 
           <MDBCol md="6" lg="7" xl="8">
             <MDBRow>
-              <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0 ">
-                <h5 className="font-weight-bold mb-3 text-center text-lg-start">
+              <MDBCol md="6" lg="5" xl="4" className="mb-2 mb-md-0 ">
+                <h5 className="font-weight-bold mb-2 text-center text-lg-start">
                   {current}
                 </h5>
               </MDBCol>
@@ -231,18 +278,46 @@ function Chat() {
               >
                 Send
               </Button>
-              {/* <MDBBtn
-                color="info"
-                rounded
-                style={{ width: "100px" }}
-                onClick={handleSendMessage}
-              >
-                Send
-              </MDBBtn> */}
             </MDBRow>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Send message to new user</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label>User</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter user"
+              onChange={(e) => {
+                setNewUser(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Message</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter message"
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={() => handleSendMessage("new-user")}
+          >
+            Send
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

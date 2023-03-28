@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import EventAPI from "../../api/eventApi";
 import Storage from "../../storage/storage";
 import Pointer from "../../utils/mousePointer";
+import { formatEventDate } from "../../utils/dateFormat";
 
 const fetchData = async () => {
   let user = await getUser(KeyCloakService.GetId());
@@ -19,8 +20,6 @@ const fetchData = async () => {
 
 function EventCards(event) {
   const [user, setUser] = useState(Storage.getUser());
-
-  useEffect(() => {}, []);
 
   const handleJoinEvent = async () => {
     Pointer.setLoading();
@@ -64,6 +63,7 @@ function EventCards(event) {
         <Card style={{ width: "18rem", margin: "1rem" }}>
           <Card.Body>
             <Card.Text>{event.prop.title}</Card.Text>
+            <Card.Text>{formatEventDate(event.prop.date)}</Card.Text>
             <Card.Text>{event.prop.description}</Card.Text>
             {!event.accepted ? (
               <Button
