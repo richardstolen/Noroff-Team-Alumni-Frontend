@@ -66,20 +66,18 @@
 
 
 
-
-
 /* Sidebar styling*/
 
 .sidebar {
   padding-left: 0.7rem;
-  background-color: lightblue;
+  background-color: #DAE6F3;
   height: 100% !important;
 }
 
 @media(min-width:768px){
   .sidebar{
     padding-left: 0.7rem;
-    background-color: lightblue;
+    background-color: #DAE6F3; /*endret farge fra lightblue*/
     height: 100vh;
   }
   
@@ -125,4 +123,3 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-

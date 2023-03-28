@@ -149,12 +149,21 @@ function Profile({ user_id }) {
                 </Col>
                 <Col xl={10} md={9}>
                   <CalendarSidebar />
-                  <img
-                    src={user.image}
-                    alt="Profile"
-                    className="rounded-circle mb-4 mt-5"
-                    style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
-                  />
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt="Profile"
+                      className="rounded-circle mb-4 mt-3"
+                      style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
+                    />
+                  ) : (
+                    <Avatar
+                      name={user.userName}
+                      src="https://img.freepik.com/free-icon/user_318-160091.jpg?t=st=1679903580~exp=1679904180~hmac=e5329a9a93e35f27a6fa00953d1f4826f70caf0691f626b1f67f9ed3469de945"
+                      className="rounded-circle mb-4 mt-3"
+                      style={{ width: "200px", height: "200px" }}
+                    />
+                  )}
                   <h2
                     className="text-dark mb-4"
                     style={{ fontSize: "2rem", fontWeight: "bold" }}
@@ -213,14 +222,14 @@ function Profile({ user_id }) {
                         <img
                           src={user.image}
                           alt="Profile"
-                          className="rounded-circle mb-4 mt-5"
+                          className="rounded-circle mb-4 mt-3"
                           style={{ width: "200px", height: "200px", border: "1px solid #ccc" }}
                         />
                       ) : (
                         <Avatar
-                          name={user.userName} //Er ikke ferdig her!
+                          name={user.userName}
                           src="https://img.freepik.com/free-icon/user_318-160091.jpg?t=st=1679903580~exp=1679904180~hmac=e5329a9a93e35f27a6fa00953d1f4826f70caf0691f626b1f67f9ed3469de945"
-                          className="rounded-circle mb-4 mt-5"
+                          className="rounded-circle mb-4 mt-3"
                           style={{ width: "200px", height: "200px" }}
                         />
                       )}
