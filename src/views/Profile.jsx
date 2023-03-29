@@ -149,7 +149,6 @@ function Profile({ user_id }) {
                   <Sidebar />
                 </Col>
                 <Col xl={10} md={9}>
-                  <CalendarSidebar />
                   {user.image ? (
                     <img
                       src={user.image}

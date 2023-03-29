@@ -140,7 +140,7 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
 
                   <span>
                     <Image
-                      src="Images/comment.png"
+                      src="../Images/comment.png"
                       fluid
                       width={25}
                       style={{ marginRight: "10px" }}
