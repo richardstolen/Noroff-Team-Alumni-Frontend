@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "Offcanvas"
-    ]
+  "cSpell.words": ["Offcanvas"],
+  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"]
 }

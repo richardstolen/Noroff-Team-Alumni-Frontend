@@ -9,13 +9,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { RiPagesLine } from "react-icons/ri";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdOutlineTopic, MdTopic } from "react-icons/md";
-import { TbCalendarEvent } from "react-icons/tb"; 
-import { GoCalendar } from "react-icons/go"; 
-import { BiGroup, BiChat } from "react-icons/bi"; 
+import { TbCalendarEvent } from "react-icons/tb";
+import { GoCalendar } from "react-icons/go";
+import { BiGroup, BiChat } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
-import { FaUserGraduate } from "react-icons/fa"; 
+import { FaUserGraduate } from "react-icons/fa";
 import Storage from "../../storage/storage";
-
 
 const Sidebar = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -47,7 +46,13 @@ const Sidebar = ({ userId }) => {
             </>
           }
         >
-          {user === null ? <></> : <UserGroups groups={user.groups} />}
+          {user === null ? (
+            <></>
+          ) : user.groups === null ? (
+            <></>
+          ) : (
+            <UserGroups groups={user.groups} />
+          )}
         </NavDropdown>
         <Nav.Link href="/topic-list">
           <MdOutlineTopic size={20} style={{ marginRight: "5px" }} />
@@ -60,7 +65,13 @@ const Sidebar = ({ userId }) => {
             </>
           }
         >
-          {user === null ? <></> : <UserTopics topics={user.topics} />}
+          {user === null ? (
+            <></>
+          ) : user.topics === null ? (
+            <></>
+          ) : (
+            <UserTopics topics={user.topics} />
+          )}
         </NavDropdown>
         <Nav.Link href="/event-list">
           <TbCalendarEvent size={20} style={{ marginRight: "5px" }} />
@@ -70,7 +81,11 @@ const Sidebar = ({ userId }) => {
           <GoCalendar size={20} style={{ marginRight: "5px" }} />
           Calendar
         </Nav.Link>
-        <Nav.Link href="/chat" style={{ marginRight: "18px" }} className="hide-sidebar-content">
+        <Nav.Link
+          href="/chat"
+          style={{ marginRight: "18px" }}
+          className="hide-sidebar-content"
+        >
           <BiChat size={20} style={{ marginRight: "5px" }} />
           Chat
         </Nav.Link>
@@ -78,13 +93,22 @@ const Sidebar = ({ userId }) => {
           <RiPagesLine size={20} style={{ marginRight: "5px" }} />
           Timeline
         </Nav.Link>
-        <NavDropdown title={<><FaUserGraduate size={20} style={{ marginRight: "5px" }} /> Profile</>} id="basic-nav-dropdown" className="hide-sidebar-content">
+        <NavDropdown
+          title={
+            <>
+              <FaUserGraduate size={20} style={{ marginRight: "5px" }} />{" "}
+              Profile
+            </>
+          }
+          id="basic-nav-dropdown"
+          className="hide-sidebar-content"
+        >
           <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
             Log out
-            <FiLogOut style={{ marginLeft: '5px' }} />
+            <FiLogOut style={{ marginLeft: "5px" }} />
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>
