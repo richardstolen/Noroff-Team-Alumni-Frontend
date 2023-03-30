@@ -12,6 +12,13 @@ function getUser() {
 }
 
 function setUser(user) {
+  if (user.groups === null) {
+    user.groups = [];
+  }
+  if (user.topics === null) {
+    user.topics = [];
+  }
+
   storage.setItem(USER_KEY, JSON.stringify(user));
 }
 
