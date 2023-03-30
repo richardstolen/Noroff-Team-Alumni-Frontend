@@ -15,9 +15,12 @@ import { BiGroup, BiChat } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserGraduate } from "react-icons/fa";
 import Storage from "../../storage/storage";
+import { useContext } from "react";
+import { TriggerContext } from "../../contexts/triggerContext";
 
 const Sidebar = ({ userId }) => {
   const [user, setUser] = useState(null);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,7 +29,7 @@ const Sidebar = ({ userId }) => {
       setUser(Storage.getUser());
     }
     fetchData();
-  }, [userId]);
+  }, [userId, trigger]);
 
   function clearProfileStorage() {
     Storage.clearSearchedUser();

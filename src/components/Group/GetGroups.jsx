@@ -4,6 +4,8 @@ import { getGroups } from "../../api/apiHandler";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { Row, Col } from "react-bootstrap";
 import GroupCards from "./GroupCards";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
 
 const fetchData = async () => {
   const data = await getGroups();
@@ -36,6 +38,7 @@ function displayCardsInColumns(cards) {
 function GetGroups() {
   const [loading, setLoading] = useState(true);
   const [groupRows, setGroupRows] = useState([]);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   useEffect(() => {
     fetchData().then((groups) => {
@@ -49,7 +52,7 @@ function GetGroups() {
         console.error("Error: groups is undefined");
       }
     });
-  }, []);
+  }, [trigger]);
 
   return (
     <div>
@@ -58,9 +61,7 @@ function GetGroups() {
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
       ) : (
-        <>
-          {groupRows}
-        </>
+        <>{groupRows}</>
       )}
     </div>
   );

@@ -6,6 +6,8 @@ import Modal from "react-bootstrap/Modal";
 import DateObject from "react-date-object";
 import Pointer from "../../utils/mousePointer";
 import { getGroup } from "../../api/apiHandler";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
 
 function CreateEventButton(prop) {
   const [showModal, setShowModal] = useState(false);
@@ -13,6 +15,7 @@ function CreateEventButton(prop) {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [event, setEvent] = useState(null);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   const handleClick = async () => {
     if (eventDescription == "" || eventTitle == "" || eventDate == "") {
@@ -43,7 +46,7 @@ function CreateEventButton(prop) {
         setEvent(newEvent);
         setShowModal(false);
         Pointer.setDefault();
-        window.location.reload();
+        triggerRender();
       } catch (error) {
         Pointer.setDefault();
         console.error("Failed to create event", error);

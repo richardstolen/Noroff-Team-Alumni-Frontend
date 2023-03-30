@@ -4,6 +4,8 @@ import { getTopics } from "../../api/topicApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { Row, Col } from "react-bootstrap";
 import TopicCards from "./TopicCards";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
 
 const fetchData = async () => {
   const data = await getTopics();
@@ -36,6 +38,7 @@ function displayGroupCardsInColumns(cards) {
 function GetTopics() {
   const [loading, setLoading] = useState(true);
   const [topiclist, setTopicList] = useState([]);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   useEffect(() => {
     fetchData().then((topics) => {
@@ -49,7 +52,7 @@ function GetTopics() {
         console.error("Error: topics is undefined");
       }
     });
-  }, []);
+  }, [trigger]);
 
   return (
     <div>
@@ -64,4 +67,3 @@ function GetTopics() {
   );
 }
 export default GetTopics;
-

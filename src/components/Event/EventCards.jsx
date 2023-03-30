@@ -12,6 +12,8 @@ import EventAPI from "../../api/eventApi";
 import Storage from "../../storage/storage";
 import Pointer from "../../utils/mousePointer";
 import { formatEventDate } from "../../utils/dateFormat";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
 
 const fetchData = async () => {
   let user = await getUser(KeyCloakService.GetId());
@@ -20,6 +22,18 @@ const fetchData = async () => {
 
 function EventCards(event) {
   const [user, setUser] = useState(Storage.getUser());
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
+  useEffect(() => {
+    let userFromStorage = Storage.getUser();
+    if (!userFromStorage) {
+      fetchData().then((user) => {
+        setUser(user);
+        Storage.setUser(user);
+      });
+    } else {
+      Storage.setUser(userFromStorage);
+    }
+  }, [user, setUser, trigger]);
 
   const handleJoinEvent = async () => {
     Pointer.setLoading();
@@ -31,8 +45,7 @@ function EventCards(event) {
       fetchData().then((user) => {
         setUser(user);
         Storage.setUser(user);
-        Pointer.setDefault();
-        window.location.reload();
+        triggerRender();
       });
     }
   };
@@ -48,13 +61,12 @@ function EventCards(event) {
         fetchData().then((user) => {
           setUser(user);
           Storage.setUser(user);
-          window.location.reload();
+          triggerRender();
         });
       }
     } catch (error) {
       console.log("error", error);
     }
-    Pointer.setDefault();
   };
 
   return (

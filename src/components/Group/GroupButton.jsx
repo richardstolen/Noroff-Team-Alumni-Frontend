@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { validInput } from "../../utils/validateInput";
 import Pointer from "../../utils/mousePointer";
+import { useContext } from "react";
+import { TriggerContext } from "../../contexts/triggerContext";
 
 function GroupButton() {
   const [showModal, setShowModal] = useState(false);
@@ -12,6 +14,8 @@ function GroupButton() {
   const [groupDesc, setGroupDesc] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [group, setGroup] = useState(null);
+
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   const handleClick = async () => {
     Pointer.setLoading();
@@ -22,7 +26,7 @@ function GroupButton() {
         setGroup(newGroup);
         Pointer.setDefault();
         handleClose();
-        window.location.reload();
+        triggerRender();
       } catch (error) {
         console.error("Failed to create group:", error);
         // Handle error

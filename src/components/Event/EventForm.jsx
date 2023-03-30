@@ -11,6 +11,9 @@ import {
 } from "../../api/eventApi";
 import EventCards from "./EventCards";
 import { Row, Col } from "react-bootstrap";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
+import Pointer from "../../utils/mousePointer";
 
 const fetchData = async () => {
   const data = await getEventByUser();
@@ -29,26 +32,21 @@ const fetchEvents = async () => {
 
 const EventThread = () => {
   const [event, setEvent] = useState();
-  const [availableEvents, setAvailableEvents] = useState();
-  const [acceptedEvents, setAcceptedEvents] = useState();
   const [loading, setLoading] = useState(true);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   useEffect(() => {
-    if (loading) {
-      fetchEvents().then((events) => {
-        setAvailableEvents(events.available);
-        setAcceptedEvents(events.accepted);
+    Pointer.setLoading();
+    fetchEvents().then((events) => {
+      const mappedEvents = mapEvents(events);
 
-        setLoading(false);
+      Storage.setEvent(event);
+      setEvent(mappedEvents);
 
-        Storage.setEvent(event);
-      });
-    }
-
-    if (loading == false) {
-      setEvent(mapEvents(availableEvents));
-    }
-  }, [loading, setEvent, setAvailableEvents, setAcceptedEvents]);
+      setLoading(false);
+      Pointer.setDefault();
+    });
+  }, [setEvent, trigger]);
 
   const mapEvents = (events) => {
     if (!events) {
@@ -56,10 +54,10 @@ const EventThread = () => {
     }
 
     const numCols = 3;
-    const numRows = Math.ceil(events.length / numCols);
+    const numRows = Math.ceil(events.available.length / numCols);
     const rows = Array.from({ length: numRows }, (_, i) => []);
 
-    events.forEach((event, i) => {
+    events.available.forEach((event, i) => {
       const row = Math.floor(i / numCols);
       rows[row].push(event);
     });
@@ -68,12 +66,17 @@ const EventThread = () => {
       <Row key={i} className="justify-content-center">
         {row.map((event, j) => (
           <Col key={j} sm={12} md={6} lg={3} className="my-2">
-            <EventCards prop={event} accepted={acceptedEvents.some((x) => x.eventId === event.eventId)} />
+            <EventCards
+              prop={event}
+              accepted={events.accepted.some(
+                (x) => x.eventId === event.eventId
+              )}
+            />
           </Col>
         ))}
       </Row>
     ));
-
+    console.log("event mapping done");
     return eventRows;
   };
 

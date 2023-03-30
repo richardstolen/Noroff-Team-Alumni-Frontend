@@ -265,7 +265,6 @@ export async function getMessages() {
     }),
   });
   if (response.ok) {
-    console.log(response);
     const messages = await response.json();
 
     messages.map((messageList) => {

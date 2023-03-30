@@ -7,6 +7,8 @@ import GroupAPI from "../../api/groupApi";
 import KeyCloakService from "../../security/KeyCloakService.ts";
 import { Row, Col } from "react-bootstrap";
 import Pointer from "../../utils/mousePointer";
+import { TriggerContext } from "../../contexts/triggerContext";
+import { useContext } from "react";
 
 const fetchData = async () => {
   const data = await getUser(KeyCloakService.GetId());
@@ -15,6 +17,7 @@ const fetchData = async () => {
 
 function GroupCards(group) {
   const [user, setUser] = useState(Storage.getUser());
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   useEffect(() => {
     let userFromStorage = Storage.getUser();
@@ -39,8 +42,8 @@ function GroupCards(group) {
         setUser(user);
         Storage.setUser(user);
         Pointer.setDefault();
-        // Dirty fix to update page after joining/leaving group
-        window.location.reload();
+
+        triggerRender();
       });
     }
   };
@@ -57,8 +60,8 @@ function GroupCards(group) {
           setUser(user);
           Storage.setUser(user);
           Pointer.setDefault();
-          // Dirty fix to update page after joining/leaving group
-          window.location.reload();
+
+          triggerRender();
         });
       }
     } catch (error) {

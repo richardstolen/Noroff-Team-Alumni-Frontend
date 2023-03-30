@@ -13,9 +13,9 @@ import PropTypes from "prop-types";
 import { TbSchool } from "react-icons/tb";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserGraduate } from "react-icons/fa";
-import { BiChat } from "react-icons/bi"; 
+import { BiChat } from "react-icons/bi";
 import { RiPagesLine } from "react-icons/ri";
-
+import Pointer from "../../utils/mousePointer";
 
 function Navbar1({ onToggleClick }) {
   const [value, setValue] = useState("");
@@ -23,9 +23,11 @@ function Navbar1({ onToggleClick }) {
 
   async function handleSearch(e) {
     e.preventDefault();
+    Pointer.setLoading();
     const user = await getUserByUsername(value);
     if (user) {
       Storage.setSearchedUser(user);
+      Pointer.setDefault();
       if (window.location.pathname === "/profile") {
         window.location.reload();
       } else {
@@ -46,9 +48,16 @@ function Navbar1({ onToggleClick }) {
   }
   return (
     <Navbar expand="md" bg="primary" variant="dark" sticky="top">
-      <Navbar.Brand className="nb-title" href="/timeline" style={{ display: 'flex', alignItems: 'center', marginRight: "1.2rem" }}>
-        <TbSchool style={{ marginRight: '1rem', marginLeft: "5px" }} size={37} />
-        <span style={{ fontSize: '1.5rem' }}>Alumni</span>
+      <Navbar.Brand
+        className="nb-title"
+        href="/timeline"
+        style={{ display: "flex", alignItems: "center", marginRight: "1.2rem" }}
+      >
+        <TbSchool
+          style={{ marginRight: "1rem", marginLeft: "5px" }}
+          size={37}
+        />
+        <span style={{ fontSize: "1.5rem" }}>Alumni</span>
       </Navbar.Brand>
       <Container className="navbar-content">
         <Nav className="me-auto">
@@ -60,13 +69,21 @@ function Navbar1({ onToggleClick }) {
             <BiChat size={20} style={{ marginRight: "5px" }} />
             Chat
           </Nav.Link>
-          <NavDropdown title={<><FaUserGraduate size={20} style={{ marginRight: "5px" }} /> Profile</>} id="basic-nav-dropdown">
+          <NavDropdown
+            title={
+              <>
+                <FaUserGraduate size={20} style={{ marginRight: "5px" }} />{" "}
+                Profile
+              </>
+            }
+            id="basic-nav-dropdown"
+          >
             <NavDropdown.Item href="/profile" onClick={clearProfileStorage}>
               Profile
             </NavDropdown.Item>
             <NavDropdown.Item onClick={KeyCloakService.CallLogout}>
               Log out
-              <FiLogOut style={{ marginLeft: '5px' }} />
+              <FiLogOut style={{ marginLeft: "5px" }} />
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
@@ -93,7 +110,5 @@ function Navbar1({ onToggleClick }) {
 }
 Navbar1.propTypes = {
   onToggleClick: PropTypes.func,
-}
+};
 export default Navbar1;
-
-

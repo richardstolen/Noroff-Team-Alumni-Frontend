@@ -16,6 +16,7 @@ import GroupDetail from "./views/GroupDetail";
 import TopicDetail from "./views/TopicDetail";
 import CalendarView from "./views/Calendar";
 import Chatbox from "./views/Chatbox";
+import TriggerProvider from "./contexts/triggerContext";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,7 @@ function App() {
           <PulseLoader className="spinning-wheel" color="#0d6efd" />
         </div>
       ) : (
-        <>
+        <TriggerProvider>
           <Routes>
             <Route path="/" element={<Timeline />} />
             <Route path="/timeline" element={<Timeline />} />
@@ -62,7 +63,7 @@ function App() {
             <Route path="/event-list" element={<EventList />} />
             <Route path="/calendar-view" element={<CalendarView />} />
           </Routes>
-        </>
+        </TriggerProvider>
       )}
     </>
   );

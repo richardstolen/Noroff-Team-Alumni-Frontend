@@ -5,12 +5,15 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { validInput } from "../../utils/validateInput";
 import Pointer from "../../utils/mousePointer";
+import { useContext } from "react";
+import { TriggerContext } from "../../contexts/triggerContext";
 
 function TopicButton() {
   const [showModal, setShowModal] = useState(false);
   const [topicName, setTopicName] = useState("");
   const [topicDesc, setTopicDesc] = useState("");
   const [topic, setTopic] = useState(null);
+  const [trigger, setTrigger, triggerRender] = useContext(TriggerContext);
 
   const handleClick = async () => {
     Pointer.setLoading();
@@ -21,7 +24,7 @@ function TopicButton() {
         setTopic(newTopic);
         Pointer.setDefault();
         handleClose();
-        window.location.reload();
+        triggerRender();
       } catch (error) {
         console.error("Failed to create topic:", error);
         // Handle error
