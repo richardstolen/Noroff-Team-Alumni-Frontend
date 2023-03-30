@@ -278,6 +278,9 @@ const TimelineFeed = ({ onChange, postsFromParent }) => {
             "http://localhost:3000/timeline",
             "http://localhost:3000/Timeline",
             "http://localhost:3000/",
+            "https://team-alumni.vercel.app/",
+            "https://team-alumni.vercel.app/timeline",
+            "https://team-alumni.vercel.app/Timeline",
           ].includes(window.location.href) ? (
             <></>
           ) : (
